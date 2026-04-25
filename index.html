@@ -218,6 +218,7 @@
 </script>
 
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -382,10 +383,10 @@ nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;j
 .faq-item{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
 .faq-q{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:var(--navy);padding:1.1rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase;letter-spacing:0.02em;user-select:none;}
 .faq-q:hover{background:var(--amber-light);}
-.faq-arrow{font-size:1rem;color:var(--amber);transition:transform .3s;flex-shrink:0;margin-left:1rem;}
+.faq-arrow{font-size:1.1rem;color:var(--amber);flex-shrink:0;margin-left:1rem;display:flex;align-items:center;}
 .faq-a{font-size:0.88rem;color:var(--muted);line-height:1.75;padding:0 1.5rem 1.1rem;font-weight:300;display:none;}
 .faq-item.open .faq-a{display:block;}
-.faq-item.open .faq-arrow{transform:rotate(180deg);}
+.faq-arrow i{transition:transform .3s;}.faq-item.open .faq-arrow i{transform:rotate(180deg);}
 
 /* WHY */
 .why-inner{display:grid;grid-template-columns:1fr 1fr;}
@@ -446,6 +447,63 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 .float-wa{position:fixed;bottom:1rem;right:1rem;background:#25d366;color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform .2s;white-space:nowrap;}
 .float-wa:hover{transform:scale(1.05);}
 @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,0.4);}50%{box-shadow:0 4px 28px rgba(192,57,43,0.65);}}
+/* ICONS — Modern 2026 coloured style */
+.ph{display:inline-flex;align-items:center;vertical-align:middle;flex-shrink:0;}
+.nav-cta .ph,.nav-wa .ph{font-size:1.15rem;}
+.hero-btn .ph,.hero-btn-wa .ph{font-size:1.25rem;}
+.float-call .ph,.float-wa .ph{font-size:1.4rem;}
+
+/* Contact card icons — coloured circles */
+.c-icon-svg{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;
+}
+.c-icon-svg.icon-phone{background:#fff0f0;color:#c0392b;}
+.c-icon-svg.icon-wa{background:#e8f8ef;color:#25d366;}
+.c-icon-svg.icon-email{background:#eef3ff;color:#3b5bdb;}
+.c-icon-svg.icon-location{background:#fff8e6;color:var(--amber);}
+.c-icon-svg.icon-clock{background:#f0f4ff;color:#5c7cfa;}
+
+/* Service card icons — large coloured icons */
+.svc-icon-box{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;font-size:1.9rem;
+}
+.svc-icon-box.icon-battery{background:#fff8e6;color:#d4900a;}
+.svc-icon-box.icon-ac{background:#e8f4ff;color:#1c7ed6;}
+.svc-icon-box.icon-repair{background:#f0fff4;color:#2f9e44;}
+
+/* Why Us trust icons — coloured circles */
+.t-icon-circle{
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;margin-top:2px;
+}
+.t-icon-circle.icon-lightning{background:rgba(245,192,48,0.15);color:var(--amber-mid);}
+.t-icon-circle.icon-shield{background:rgba(37,211,102,0.12);color:#2f9e44;}
+.t-icon-circle.icon-wrench{background:rgba(92,124,250,0.12);color:#5c7cfa;}
+.t-icon-circle.icon-clock{background:rgba(255,255,255,0.1);color:#fff;}
+
+/* Area card icons */
+.area-icon-svg{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--amber-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--amber);
+  margin-bottom:0.6rem;
+}
+
+/* Stat icons */
+.stat-icon-wrap{display:flex;align-items:center;justify-content:center;font-size:1.9rem;color:var(--amber-mid);}
+
+@media(max-width:600px){
+  .float-call .ph,.float-wa .ph{font-size:1.5rem;}
+  .svc-icon-box{width:52px;height:52px;font-size:1.5rem;border-radius:12px;}
+  .c-icon-svg{width:38px;height:38px;font-size:1.1rem;}
+}
+
 /* AREAS GRID */
 .areas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:0.5rem;}
 .area-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.2rem;transition:transform .2s,box-shadow .2s,border-color .2s;}
@@ -597,7 +655,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     font-size:0 !important;
     overflow:hidden;
   }
-  .float-call::after{content:'📞';font-size:1.3rem;line-height:1;}
+  
   .float-wa{
     width:52px;height:52px;border-radius:50%;
     padding:0;justify-content:center;
@@ -605,21 +663,27 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     font-size:0 !important;
     overflow:hidden;
   }
-  .float-wa::after{content:'💬';font-size:1.3rem;line-height:1;}
-  .float-txt{display:none;}
+  
+  
 }
 </style>
 </head>
 <body>
 
 <!-- FLOATING BUTTONS -->
-<a href="tel:+971523408703" class="float-call" aria-label="Call Moon Light Car Batteries Abu Dhabi"><span class="float-txt">📞 Call Now</span></a>
-<a href="https://wa.me/971523408703?text=Hello%20Moon%20Light%20Car%20Batteries!%20I%20need%20help%20with%20my%20car." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Batteries"><span class="float-txt">💬 WhatsApp</span></a>
+<a href="tel:+971523408703" class="float-call" aria-label="Call Moon Light Car Batteries Abu Dhabi">
+  <i class="ph ph-phone-call"></i>
+  <span class="float-txt">Call Now</span>
+</a>
+<a href="https://wa.me/971523408703?text=Hello%20Moon%20Light%20Car%20Batteries!%20I%20need%20help%20with%20my%20car." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Batteries">
+  <i class="ph ph-whatsapp-logo"></i>
+  <span class="float-txt">WhatsApp</span>
+</a>
 
 <!-- NAVIGATION -->
 <nav role="navigation" aria-label="Main navigation">
   <div class="logo">
-    <div class="logo-icon" aria-hidden="true">🌙</div>
+    <i class="ph ph-moon-stars" style="font-size:1.7rem;color:var(--amber);"></i>
     <div>
       <div class="logo-name">MOON <em>LIGHT</em></div>
       <div class="logo-tag">Car Batteries &amp; Auto Care — Abu Dhabi, UAE</div>
@@ -633,9 +697,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
   </ul>
   <div class="nav-actions">
-    <span class="nav-delivery">🚗 Delivery Available</span>
-    <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us">💬 WhatsApp</a>
-    <a href="tel:+971523408703" class="nav-cta" aria-label="Call us now">📞 Call Now</a>
+    <span class="nav-delivery"><i class="ph ph-truck"></i> Delivery Available</span>
+    <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+    <a href="tel:+971523408703" class="nav-cta" aria-label="Call us now"><i class="ph ph-phone-call"></i> Call Now</a>
   </div>
   <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
     <span></span><span></span><span></span>
@@ -646,15 +710,15 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu" onclick="closeMobileMenu(event)">
   <div class="mobile-menu-inner">
     <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')" aria-label="Close menu">✕</button>
-    <div class="menu-logo"><span>🌙</span> MOON <em>LIGHT</em></div>
-    <div style="padding:0.6rem 1.4rem;background:#e8f5e9;color:#1a7a3c;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid #a5d6a7;">🚗 Delivery Available — Abu Dhabi</div>
-    <a href="#services" role="menuitem">🔋 Services</a>
-    <a href="#areas" role="menuitem">📍 Areas We Cover</a>
-    <a href="#reviews" role="menuitem">⭐ Reviews</a>
-    <a href="#faq" role="menuitem">❓ FAQ</a>
-    <a href="#contact" role="menuitem">📍 Contact</a>
-    <a href="tel:+971523408703" class="menu-call" role="menuitem">📞 Call +971 52 340 8703</a>
-    <a href="https://wa.me/971523408703" class="menu-wa" target="_blank" rel="noopener" role="menuitem">💬 WhatsApp Us</a>
+    <div class="menu-logo"><i class="ph ph-moon-stars" style="color:var(--amber);font-size:1.3rem;"></i> MOON <em>LIGHT</em></div>
+    <div style="padding:0.6rem 1.4rem;background:#e8f5e9;color:#1a7a3c;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid #a5d6a7;display:flex;align-items:center;gap:0.4rem;"><i class="ph ph-truck"></i> Delivery Available — Abu Dhabi</div>
+    <a href="#services" role="menuitem"><i class="ph ph-battery-charging" style="margin-right:0.5rem;"></i> Services</a>
+    <a href="#areas" role="menuitem"><i class="ph ph-map-pin" style="margin-right:0.5rem;"></i> Areas We Cover</a>
+    <a href="#reviews" role="menuitem"><i class="ph ph-star" style="margin-right:0.5rem;"></i> Reviews</a>
+    <a href="#faq" role="menuitem"><i class="ph ph-question" style="margin-right:0.5rem;"></i> FAQ</a>
+    <a href="#contact" role="menuitem"><i class="ph ph-envelope" style="margin-right:0.5rem;"></i> Contact</a>
+    <a href="tel:+971523408703" class="menu-call" role="menuitem"><i class="ph ph-phone-call" style="margin-right:0.5rem;"></i> Call +971 52 340 8703</a>
+    <a href="https://wa.me/971523408703" class="menu-wa" target="_blank" rel="noopener" role="menuitem"><i class="ph ph-whatsapp-logo" style="margin-right:0.5rem;"></i> WhatsApp Us</a>
   </div>
 </div>
 
@@ -692,14 +756,14 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="hero-text">
       <h1>MOON <em>LIGHT</em><br>CAR CARE</h1>
       <div class="hero-delivery-strip">
-        <span class="hero-delivery-pill">🚗 Delivery Available</span>
-        <span class="hero-delivery-pill">⚡ Same Day Service</span>
+        <span class="hero-delivery-pill"><i class="ph ph-truck"></i> Delivery Available</span>
+        <span class="hero-delivery-pill"><i class="ph ph-lightning"></i> Same Day Service</span>
       </div>
-      <div class="hero-slogan">✔ Reliable &amp; Trustworthy — Abu Dhabi, UAE</div>
+      <div class="hero-slogan"><i class="ph ph-check-circle"></i> Reliable &amp; Trustworthy — Abu Dhabi, UAE</div>
       <p>Car battery replacement, AC gas refilling &amp; car repairs across Abu Dhabi, UAE. All makes &amp; models. Fast, honest and affordable.</p>
       <div class="hero-btns">
-        <a href="tel:+971523408703" class="hero-btn" aria-label="Call Moon Light Car Batteries">📞 Call +971 52 340 8703</a>
-        <a href="https://wa.me/971523408703?text=Hello!%20I%20need%20car%20service." class="hero-btn-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light">💬 WhatsApp</a>
+        <a href="tel:+971523408703" class="hero-btn" aria-label="Call Moon Light Car Batteries"><i class="ph ph-phone-call"></i> Call +971 52 340 8703</a>
+        <a href="https://wa.me/971523408703?text=Hello!%20I%20need%20car%20service." class="hero-btn-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
       </div>
     </div>
   </div>
@@ -709,7 +773,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <div class="stats-bar" aria-label="Key highlights">
   <div class="stat"><div class="stat-num">Fast</div><div class="stat-lbl">Response Time</div></div>
   <div class="stat"><div class="stat-num">4.9★</div><div class="stat-lbl">Customer Rating</div></div>
-  <div class="stat"><div class="stat-num">🚗</div><div class="stat-lbl">Delivery Available</div></div>
+  <div class="stat"><div class="stat-num"><i class="ph ph-truck" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Delivery Available</div></div>
   <div class="stat"><div class="stat-num">Abu Dhabi</div><div class="stat-lbl">UAE Coverage</div></div>
 </div>
 
@@ -751,7 +815,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <div class="services-grid">
 
     <article class="svc" itemscope itemtype="https://schema.org/Service">
-      <span class="svc-icon" aria-hidden="true">🔋</span>
+      <div class="svc-icon-box icon-battery"><i class="ph ph-battery-charging"></i></div>
       <h3 class="svc-name" itemprop="name">Car Battery Replacement &amp; Delivery — Abu Dhabi</h3>
       <p class="svc-desc" itemprop="description">Dead car battery in Abu Dhabi? We supply, deliver and fit premium car batteries for all vehicle makes and models — Toyota, Nissan, Honda, BMW, Mercedes, Hyundai, Kia and more. Same-day battery delivery available across Abu Dhabi. We carry Amaron, Bosch, Yuasa and Varta batteries. Jump start service also available 24 hours.</p>
       <div class="svc-keywords" aria-label="Related searches">
@@ -769,7 +833,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </article>
 
     <article class="svc" itemscope itemtype="https://schema.org/Service">
-      <span class="svc-icon" aria-hidden="true">❄️</span>
+      <div class="svc-icon-box icon-ac"><i class="ph ph-snowflake"></i></div>
       <h3 class="svc-name" itemprop="name">Car AC Gas Refilling &amp; Regas — Abu Dhabi</h3>
       <p class="svc-desc" itemprop="description">Is your car AC blowing warm air in Abu Dhabi's heat? We provide expert car AC gas refilling, AC regas and aircon regas services for all vehicles. Our specialists refill R134a and R1234yf refrigerant gas quickly and affordably. Don't suffer the UAE summer heat — get your car AC gas refilled today.</p>
       <div class="svc-keywords" aria-label="Related searches">
@@ -785,7 +849,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </article>
 
     <article class="svc" itemscope itemtype="https://schema.org/Service">
-      <span class="svc-icon" aria-hidden="true">🔧</span>
+      <div class="svc-icon-box icon-repair"><i class="ph ph-wrench"></i></div>
       <h3 class="svc-name" itemprop="name">Car AC Repair &amp; General Car Repairs — UAE</h3>
       <p class="svc-desc" itemprop="description">Full car AC repair in Abu Dhabi — AC compressor replacement, AC leak fixing, condenser repair and complete AC system servicing. We also handle all general car repairs: engine diagnostics, brake repairs, suspension and electrical faults. Trusted mechanics with honest, transparent pricing across Abu Dhabi UAE.</p>
       <div class="svc-keywords" aria-label="Related searches">
@@ -809,34 +873,34 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="why-left">
       <div>
         <h2 class="why-big" id="why-heading">WHY<br>CHOOSE<br><em>US?</em></h2>
-        <div class="why-slogan">✔ Reliable &amp; Trustworthy</div>
+        <div class="why-slogan"><i class="ph ph-check-circle"></i> Reliable &amp; Trustworthy</div>
         <p class="why-desc">Moon Light Car Batteries Abu Dhabi — built on one promise. Honest, high-quality car battery, AC gas refilling and auto care you can count on. No shortcuts. No surprises.</p>
       </div>
     </div>
     <div class="why-right">
       <div class="trust">
-        <div class="t-icon" aria-hidden="true">⚡</div>
+        <div class="t-icon-circle icon-lightning"><i class="ph ph-lightning"></i></div>
         <div>
           <div class="t-name">Fast Same-Day Service</div>
           <div class="t-desc">Car battery replaced or AC gas refilled the same day. We move fast without cutting corners.</div>
         </div>
       </div>
       <div class="trust">
-        <div class="t-icon" aria-hidden="true">🛡️</div>
+        <div class="t-icon-circle icon-shield"><i class="ph ph-shield-check"></i></div>
         <div>
           <div class="t-name">Honest &amp; Transparent Pricing</div>
           <div class="t-desc">No hidden charges. Clear quote before work begins — always. Trusted by hundreds in Abu Dhabi.</div>
         </div>
       </div>
       <div class="trust">
-        <div class="t-icon" aria-hidden="true">🔩</div>
+        <div class="t-icon-circle icon-wrench"><i class="ph ph-wrench"></i></div>
         <div>
           <div class="t-name">Expert Certified Technicians</div>
           <div class="t-desc">Our trained team handles car batteries, AC gas refills, AC compressor repairs and all mechanical services.</div>
         </div>
       </div>
       <div class="trust">
-        <div class="t-icon" aria-hidden="true">🌙</div>
+        <div class="t-icon-circle icon-clock"><i class="ph ph-clock"></i></div>
         <div>
           <div class="t-name">Trusted Across UAE — Open Daily</div>
           <div class="t-desc">Open every day 8am – 11:30pm. Hundreds of satisfied customers across Abu Dhabi rely on Moon Light.</div>
@@ -892,7 +956,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">Where can I get a car battery replaced in Abu Dhabi?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">Moon Light Car Batteries provides fast car battery replacement in Abu Dhabi, UAE. We supply and fit batteries for all car makes and models. Call or WhatsApp +971 52 340 8703 for same-day service.</span>
@@ -901,7 +965,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">How much does car AC gas refilling cost in Abu Dhabi?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">Car AC gas refilling prices in Abu Dhabi depend on your vehicle type and the refrigerant required. Moon Light Car Batteries offers competitive and fully transparent pricing with no hidden charges. Call +971 52 340 8703 for an instant quote.</span>
@@ -910,7 +974,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">Why is my car AC not cooling in UAE?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">The most common causes of car AC not cooling in UAE include low or empty refrigerant gas, a faulty AC compressor, a blocked condenser, or an electrical fault. Moon Light Car Batteries can quickly diagnose and fix all car AC problems in Abu Dhabi. Call us on +971 52 340 8703.</span>
@@ -919,7 +983,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">Do you replace batteries for all car brands in Abu Dhabi?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">Yes. We replace batteries for all car makes including Toyota, Nissan, Honda, Hyundai, Kia, Mitsubishi, BMW, Mercedes-Benz, Audi, Ford, Chevrolet, Land Rover and more across Abu Dhabi and UAE.</span>
@@ -928,7 +992,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">Are you open on weekends and public holidays?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">Yes! Moon Light Car Batteries is open every day including weekends and public holidays from 8:00 AM to 11:30 PM in Abu Dhabi, UAE. Call or WhatsApp +971 52 340 8703 anytime.</span>
@@ -937,7 +1001,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
         <span itemprop="name">How long does a car AC gas refill take?</span>
-        <span class="faq-arrow">▼</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
       <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
         <span itemprop="text">A standard car AC gas refill at Moon Light Car Batteries takes approximately 30 to 60 minutes. If there is an AC leak that needs repairing first, it may take longer. We always explain the process before starting.</span>
@@ -954,82 +1018,82 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 
   <div class="areas-grid">
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Khalidiyah</div>
       <div class="area-detail">Car battery delivery &amp; AC gas refilling</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Reem Island</div>
       <div class="area-detail">Car battery replacement &amp; car AC repair</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Nahyan</div>
       <div class="area-detail">Battery delivery &amp; aircon regas</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Mushrif</div>
       <div class="area-detail">Car battery &amp; AC gas refilling</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Karamah</div>
       <div class="area-detail">Battery shop near me — we deliver</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Markaziyah</div>
       <div class="area-detail">Car battery &amp; jump start service</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Corniche Abu Dhabi</div>
       <div class="area-detail">Car battery delivery &amp; AC regas</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Tourist Club Area</div>
       <div class="area-detail">24hr battery service &amp; car repair</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Zahiyah</div>
       <div class="area-detail">Car battery &amp; AC gas refill</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Madinat Zayed</div>
       <div class="area-detail">Battery replacement &amp; AC repair</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Mohammed Bin Zayed City</div>
       <div class="area-detail">Car battery &amp; aircon regas</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Yas Island</div>
       <div class="area-detail">Car battery delivery &amp; car repair</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Saadiyat Island</div>
       <div class="area-detail">Battery &amp; AC gas refilling service</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Shamkha</div>
       <div class="area-detail">Car battery &amp; AC repair</div>
     </div>
     <div class="area-card">
-      <div class="area-icon">🔋</div>
+      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
       <div class="area-name">Al Falah</div>
       <div class="area-detail">Battery delivery &amp; car AC fixing</div>
     </div>
     <div class="area-card" style="background:var(--navy);border-color:var(--navy);">
-      <div class="area-icon">📞</div>
+      <div class="area-icon-svg" style="background:rgba(255,255,255,0.1);color:var(--amber-mid);"><i class="ph ph-phone-call"></i></div>
       <div class="area-name" style="color:#fff;">Not Listed?</div>
       <div class="area-detail" style="color:var(--amber-mid);">Call us — we cover all of Abu Dhabi!</div>
     </div>
@@ -1050,23 +1114,23 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <p class="contact-intro">Need a car battery, AC gas refill or car repair in Abu Dhabi? Call, WhatsApp or send a message — our team responds fast every day.</p>
       <div class="c-items">
         <a href="tel:+971523408703" class="c-item" aria-label="Call Moon Light Car Batteries">
-          <div class="c-icon" aria-hidden="true">📞</div>
+          <div class="c-icon-svg icon-phone"><i class="ph ph-phone-call"></i></div>
           <div><div class="c-lbl">Phone — Call Anytime</div><div class="c-val">+971 52 340 8703</div></div>
         </a>
         <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light!%20I%20need%20help%20with%20my%20car." class="c-item" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Batteries">
-          <div class="c-icon" aria-hidden="true">💬</div>
+          <div class="c-icon-svg icon-wa"><i class="ph ph-whatsapp-logo"></i></div>
           <div><div class="c-lbl">WhatsApp — Quick Reply</div><div class="c-val" style="color:#25d366;">+971 52 340 8703</div></div>
         </a>
         <a href="mailto:info@moonlightautocare.com" class="c-item" aria-label="Email Moon Light">
-          <div class="c-icon" aria-hidden="true">✉️</div>
+          <div class="c-icon-svg icon-email"><i class="ph ph-envelope-simple"></i></div>
           <div><div class="c-lbl">Email</div><div class="c-val">info@moonlightautocare.com</div></div>
         </a>
         <div class="c-item">
-          <div class="c-icon" aria-hidden="true">📍</div>
+          <div class="c-icon-svg icon-location"><i class="ph ph-map-pin"></i></div>
           <div><div class="c-lbl">Service Area</div><div class="c-val">Abu Dhabi, United Arab Emirates</div></div>
         </div>
         <div class="c-item">
-          <div class="c-icon" aria-hidden="true">🕐</div>
+          <div class="c-icon-svg icon-clock"><i class="ph ph-clock"></i></div>
           <div><div class="c-lbl">Working Hours — Every Day</div><div class="c-val">8:00 AM – 11:30 PM</div></div>
         </div>
       </div>
@@ -1090,8 +1154,8 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       </div>
       <div class="fg"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Describe your car issue — e.g. car battery dead, AC not cooling..."></textarea></div>
       <div class="submit-row">
-        <button type="button" class="submit" onclick="handleSubmit('email')">📧 Send Message</button>
-        <button type="button" class="submit-wa" onclick="handleSubmit('wa')">💬 WhatsApp Us</button>
+        <button type="button" class="submit" onclick="handleSubmit('email')"><i class="ph ph-paper-plane-tilt"></i> Send Message</button>
+        <button type="button" class="submit-wa" onclick="handleSubmit('wa')"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</button>
       </div>
     </div>
   </div>
@@ -1102,7 +1166,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <div class="footer-top">
     <div>
       <div class="f-logo" style="margin-bottom:0.6rem;">
-        <div class="f-logo-icon" aria-hidden="true">🌙</div>
+        <i class="ph ph-moon-stars" style="font-size:1.4rem;color:var(--amber-mid);"></i>
         <div class="f-logo-name">MOON <em>LIGHT</em> Car Batteries</div>
       </div>
       <div class="f-logo-arabic" itemprop="name">مون لايت لبطاريات السيارات — أبوظبي</div>
@@ -1121,11 +1185,11 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
     <div class="f-col">
       <h4>Contact</h4>
-      <a href="tel:+971523408703" itemprop="telephone">📞 +971 52 340 8703</a>
-      <a href="https://wa.me/971523408703" target="_blank" rel="noopener">💬 WhatsApp</a>
-      <a href="mailto:info@moonlightautocare.com" itemprop="email">✉️ info@moonlightautocare.com</a>
-      <p itemprop="openingHours" content="Mo-Su 08:00-23:30">🕐 Open Daily: 8am – 11:30pm</p>
-      <p itemprop="address">📍 Abu Dhabi, UAE</p>
+      <a href="tel:+971523408703" itemprop="telephone" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
+      <a href="https://wa.me/971523408703" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+      <a href="mailto:info@moonlightautocare.com" itemprop="email" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-envelope-simple"></i> info@moonlightautocare.com</a>
+      <p itemprop="openingHours" content="Mo-Su 08:00-23:30" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-clock"></i> Open Daily: 8am – 11:30pm</p>
+      <p itemprop="address" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-map-pin"></i> Abu Dhabi, UAE</p>
     </div>
   </div>
   <div class="footer-bottom">
