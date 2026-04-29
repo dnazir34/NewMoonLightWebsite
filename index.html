@@ -484,7 +484,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 .t-icon-circle.icon-lightning{background:rgba(245,192,48,0.15);color:var(--amber-mid);}
 .t-icon-circle.icon-shield{background:rgba(37,211,102,0.12);color:#2f9e44;}
 .t-icon-circle.icon-wrench{background:rgba(92,124,250,0.12);color:#5c7cfa;}
-.t-icon-circle.icon-clock{background:rgba(255,255,255,0.1);color:#fff;}
+.t-icon-circle.icon-clock{background:rgba(245,192,48,0.18);color:var(--amber-mid);}
 
 /* Area card icons */
 .area-icon-svg{
@@ -504,15 +504,16 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .c-icon-svg{width:38px;height:38px;font-size:1.1rem;}
 }
 
-/* AREAS GRID */
-.areas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:0.5rem;}
-.area-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.2rem;transition:transform .2s,box-shadow .2s,border-color .2s;}
-.area-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(14,30,61,0.08);border-color:var(--amber-btn);}
-.area-icon{font-size:1.3rem;margin-bottom:0.4rem;}
-.area-name{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:0.2rem;}
-.area-detail{font-size:0.75rem;color:var(--muted);line-height:1.5;}
-@media(max-width:900px){.areas-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:600px){.areas-grid{grid-template-columns:repeat(2,1fr);gap:0.7rem;}.area-card{padding:0.9rem 0.8rem;}.area-name{font-size:0.9rem;}.area-detail{font-size:0.68rem;}}
+/* MAP LAYOUT — full width, no sidebar */
+.map-layout{display:block;margin-top:0.5rem;}
+.map-container{position:relative;max-width:900px;margin:0 auto;}
+.map-label-top{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:0.7rem;display:flex;align-items:center;}
+.map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.18);border:1px solid var(--border);background:#0a1628;aspect-ratio:7/4;}
+.map-hint{font-size:0.78rem;color:var(--muted);text-align:center;margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+/* Pin pulse animation */
+.pin-pulse{animation:pinPulse 2s ease-in-out infinite;}
+@keyframes pinPulse{0%,100%{opacity:0.1;}50%{opacity:0.28;}}
+@media(max-width:600px){.map-wrap{aspect-ratio:4/3;}}
 
 /* DELIVERY BADGE */
 .delivery-badge{
@@ -699,7 +700,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <div class="nav-actions">
     <span class="nav-delivery"><i class="ph ph-truck"></i> Delivery Available</span>
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
-    <a href="tel:+971523408703" class="nav-cta" aria-label="Call us now"><i class="ph ph-phone-call"></i> Call Now</a>
+    <a href="tel:+971523408703" class="nav-cta" aria-label="Call us now"><i class="ph ph-phone-call"></i> Call</a>
   </div>
   <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
     <span></span><span></span><span></span>
@@ -762,7 +763,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <div class="hero-slogan"><i class="ph ph-check-circle"></i> Reliable &amp; Trustworthy — Abu Dhabi, UAE</div>
       <p>Car battery replacement, AC gas refilling &amp; car repairs across Abu Dhabi, UAE. All makes &amp; models. Fast, honest and affordable.</p>
       <div class="hero-btns">
-        <a href="tel:+971523408703" class="hero-btn" aria-label="Call Moon Light Car Batteries"><i class="ph ph-phone-call"></i> Call +971 52 340 8703</a>
+        <a href="tel:+971523408703" class="hero-btn" aria-label="Call Moon Light Car Batteries"><i class="ph ph-phone-call"></i> Call</a>
         <a href="https://wa.me/971523408703?text=Hello!%20I%20need%20car%20service." class="hero-btn-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
       </div>
     </div>
@@ -771,10 +772,10 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 
 <!-- STATS -->
 <div class="stats-bar" aria-label="Key highlights">
-  <div class="stat"><div class="stat-num">Fast</div><div class="stat-lbl">Response Time</div></div>
+  <div class="stat"><div class="stat-num"><i class="ph ph-lightning" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Fast Response Time</div></div>
   <div class="stat"><div class="stat-num">4.9★</div><div class="stat-lbl">Customer Rating</div></div>
   <div class="stat"><div class="stat-num"><i class="ph ph-truck" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Delivery Available</div></div>
-  <div class="stat"><div class="stat-num">Abu Dhabi</div><div class="stat-lbl">UAE Coverage</div></div>
+  <div class="stat"><div class="stat-num"><i class="ph ph-map-pin" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Abu Dhabi, UAE</div></div>
 </div>
 
 <!-- MARQUEE -->
@@ -1011,95 +1012,249 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 </section>
 
 <!-- AREAS WE COVER -->
-<section class="section" id="areas" aria-labelledby="areas-heading" style="background:var(--white);">
+<section class="section" id="areas" aria-labelledby="areas-heading" style="background:var(--white);padding-top:2.5rem;padding-bottom:2.5rem;">
   <div class="sec-label">Where We Serve</div>
   <h2 class="sec-title" id="areas-heading">Areas We Cover in Abu Dhabi</h2>
   <p class="sec-sub">Moon Light Car Batteries delivers car batteries and provides AC gas refilling and car repairs across all major areas of Abu Dhabi, UAE. Can't come to us? We come to you.</p>
 
-  <div class="areas-grid">
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Khalidiyah</div>
-      <div class="area-detail">Car battery delivery &amp; AC gas refilling</div>
+  <!-- MAP + LIST LAYOUT -->
+  <div class="map-layout">
+
+    <!-- INTERACTIVE ABU DHABI MAP -->
+    <div class="map-container">
+      <div class="map-label-top"><i class="ph ph-map-trifold" style="font-size:1.1rem;color:var(--amber);vertical-align:middle;margin-right:0.4rem;"></i> Abu Dhabi — Service Coverage Map</div>
+      <div class="map-wrap">
+        <svg id="abuDhabiMap" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#1a2f52;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1"/>
+            </radialGradient>
+            <radialGradient id="glowAmber" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#f5c030;stop-opacity:0.6"/>
+              <stop offset="100%" style="stop-color:#f5c030;stop-opacity:0"/>
+            </radialGradient>
+            <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#25d366;stop-opacity:0.5"/>
+              <stop offset="100%" style="stop-color:#25d366;stop-opacity:0"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="softglow">
+              <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Background -->
+          <rect width="700" height="500" fill="url(#bgGrad)" rx="12"/>
+
+          <!-- Grid lines -->
+          <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+            <line x1="0" y1="100" x2="700" y2="100"/>
+            <line x1="0" y1="200" x2="700" y2="200"/>
+            <line x1="0" y1="300" x2="700" y2="300"/>
+            <line x1="0" y1="400" x2="700" y2="400"/>
+            <line x1="100" y1="0" x2="100" y2="500"/>
+            <line x1="200" y1="0" x2="200" y2="500"/>
+            <line x1="300" y1="0" x2="300" y2="500"/>
+            <line x1="400" y1="0" x2="400" y2="500"/>
+            <line x1="500" y1="0" x2="500" y2="500"/>
+            <line x1="600" y1="0" x2="600" y2="500"/>
+          </g>
+
+          <!-- COASTLINE — Abu Dhabi island shape (simplified) -->
+          <path d="M 80 200 Q 120 160 160 155 Q 200 150 240 145 Q 280 140 310 150 Q 340 155 370 148 Q 410 140 450 145 Q 490 148 520 155 Q 550 162 570 175 Q 590 188 600 200 Q 610 215 605 230 Q 598 245 580 255 Q 560 265 540 268 Q 510 272 480 270 Q 460 268 440 275 Q 420 282 400 285 Q 380 288 360 282 Q 340 276 320 278 Q 300 280 280 290 Q 255 302 230 308 Q 200 315 170 310 Q 140 305 115 295 Q 90 282 80 265 Q 70 248 75 230 Q 78 215 80 200Z"
+            fill="rgba(30,55,100,0.9)" stroke="rgba(100,150,220,0.4)" stroke-width="1.5"/>
+
+          <!-- Water areas -->
+          <path d="M0 0 L80 0 L80 200 Q75 230 80 265 Q90 282 115 295 Q140 305 170 310 L160 400 L0 400Z"
+            fill="rgba(10,30,70,0.5)"/>
+          <path d="M600 200 Q610 215 605 230 Q598 245 580 255 L620 320 L700 320 L700 0 L600 0Z"
+            fill="rgba(10,30,70,0.5)"/>
+          <path d="M170 310 Q200 315 230 308 Q255 302 280 290 Q300 280 320 278 Q340 276 360 282 Q380 288 400 285 Q420 282 440 275 Q460 268 480 270 Q510 272 540 268 Q560 265 580 255 L620 320 L500 380 L300 420 L160 400Z"
+            fill="rgba(10,30,70,0.35)"/>
+
+          <!-- Sea label -->
+          <text x="30" y="350" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic">Arabian Gulf</text>
+          <text x="620" y="180" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic" transform="rotate(90,630,200)">Arabian Gulf</text>
+
+          <!-- Service radius pulse -->
+          <circle cx="340" cy="210" r="180" fill="none" stroke="rgba(245,192,48,0.06)" stroke-width="1" stroke-dasharray="6,4">
+            <animateTransform attributeName="transform" type="rotate" from="0 340 210" to="360 340 210" dur="30s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="340" cy="210" r="130" fill="none" stroke="rgba(245,192,48,0.08)" stroke-width="1" stroke-dasharray="4,6">
+            <animateTransform attributeName="transform" type="rotate" from="360 340 210" to="0 340 210" dur="20s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- CENTER GLOW — business location -->
+          <circle cx="340" cy="215" r="40" fill="url(#glowAmber)" opacity="0.7"/>
+
+          <!-- AREA PINS — real Abu Dhabi approximate positions -->
+          <!-- Al Markaziyah (City Centre) -->
+          <g class="map-pin" data-area="Al Markaziyah" onclick="selectArea('Al Markaziyah')" style="cursor:pointer;">
+            <circle cx="310" cy="195" r="18" fill="rgba(245,192,48,0.12)" class="pin-pulse"/>
+            <circle cx="310" cy="195" r="9" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="310" cy="195" r="4" fill="#fff"/>
+          </g>
+
+          <!-- Al Khalidiyah -->
+          <g class="map-pin" data-area="Al Khalidiyah" onclick="selectArea('Al Khalidiyah')" style="cursor:pointer;">
+            <circle cx="265" cy="200" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="265" cy="200" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="265" cy="200" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Corniche -->
+          <g class="map-pin" data-area="Corniche Abu Dhabi" onclick="selectArea('Corniche Abu Dhabi')" style="cursor:pointer;">
+            <circle cx="230" cy="178" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="230" cy="178" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="230" cy="178" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Al Reem Island -->
+          <g class="map-pin" data-area="Al Reem Island" onclick="selectArea('Al Reem Island')" style="cursor:pointer;">
+            <circle cx="370" cy="165" r="16" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="370" cy="165" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="370" cy="165" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Tourist Club Area -->
+          <g class="map-pin" data-area="Tourist Club Area" onclick="selectArea('Tourist Club Area')" style="cursor:pointer;">
+            <circle cx="345" cy="185" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="345" cy="185" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="345" cy="185" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Zahiyah -->
+          <g class="map-pin" data-area="Al Zahiyah" onclick="selectArea('Al Zahiyah')" style="cursor:pointer;">
+            <circle cx="360" cy="200" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="360" cy="200" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="360" cy="200" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Karamah -->
+          <g class="map-pin" data-area="Al Karamah" onclick="selectArea('Al Karamah')" style="cursor:pointer;">
+            <circle cx="290" cy="215" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="290" cy="215" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="290" cy="215" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Nahyan -->
+          <g class="map-pin" data-area="Al Nahyan" onclick="selectArea('Al Nahyan')" style="cursor:pointer;">
+            <circle cx="340" cy="235" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="340" cy="235" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="340" cy="235" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Mushrif -->
+          <g class="map-pin" data-area="Al Mushrif" onclick="selectArea('Al Mushrif')" style="cursor:pointer;">
+            <circle cx="390" cy="240" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="390" cy="240" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="390" cy="240" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Madinat Zayed -->
+          <g class="map-pin" data-area="Madinat Zayed" onclick="selectArea('Madinat Zayed')" style="cursor:pointer;">
+            <circle cx="200" cy="225" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="200" cy="225" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="200" cy="225" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Saadiyat Island -->
+          <g class="map-pin" data-area="Saadiyat Island" onclick="selectArea('Saadiyat Island')" style="cursor:pointer;">
+            <circle cx="430" cy="158" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="430" cy="158" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="430" cy="158" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Yas Island -->
+          <g class="map-pin" data-area="Yas Island" onclick="selectArea('Yas Island')" style="cursor:pointer;">
+            <circle cx="490" cy="175" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="490" cy="175" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="490" cy="175" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Mohammed Bin Zayed City -->
+          <g class="map-pin" data-area="Mohammed Bin Zayed City" onclick="selectArea('Mohammed Bin Zayed City')" style="cursor:pointer;">
+            <circle cx="430" cy="280" r="15" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="430" cy="280" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="430" cy="280" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Al Shamkha -->
+          <g class="map-pin" data-area="Al Shamkha" onclick="selectArea('Al Shamkha')" style="cursor:pointer;">
+            <circle cx="310" cy="310" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="310" cy="310" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="310" cy="310" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Falah -->
+          <g class="map-pin" data-area="Al Falah" onclick="selectArea('Al Falah')" style="cursor:pointer;">
+            <circle cx="380" cy="330" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="380" cy="330" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="380" cy="330" r="3" fill="#fff"/>
+          </g>
+
+          <!-- PIN LABELS -->
+          <g font-family="Barlow Condensed,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.92)" font-weight="700" letter-spacing="0.02em">
+            <text x="310" y="180" text-anchor="middle">Al Markaziyah</text>
+            <text x="255" y="188" text-anchor="middle">Al Khalidiyah</text>
+            <text x="218" y="166" text-anchor="middle">Corniche</text>
+            <text x="378" y="153" text-anchor="middle">Al Reem Island</text>
+            <text x="348" y="172" text-anchor="middle">Tourist Club</text>
+            <text x="372" y="213" text-anchor="middle">Al Zahiyah</text>
+            <text x="278" y="230" text-anchor="middle">Al Karamah</text>
+            <text x="352" y="250" text-anchor="middle">Al Nahyan</text>
+            <text x="402" y="256" text-anchor="middle">Al Mushrif</text>
+            <text x="190" y="240" text-anchor="middle">Madinat Zayed</text>
+            <text x="432" y="146" text-anchor="middle">Saadiyat</text>
+            <text x="492" y="163" text-anchor="middle">Yas Island</text>
+            <text x="445" y="295" text-anchor="middle">MBZ City</text>
+            <text x="310" y="325" text-anchor="middle">Al Shamkha</text>
+            <text x="382" y="346" text-anchor="middle">Al Falah</text>
+          </g>
+
+          <!-- TOOLTIP BOX — bottom centre, away from Moon Light label -->
+          <g id="mapTooltip" style="display:none;">
+            <rect id="tooltipBg" x="175" y="415" width="350" height="56" rx="8" fill="rgba(14,30,61,0.97)" stroke="#f5c030" stroke-width="1.5"/>
+            <text id="tooltipName" x="350" y="436" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="15" fill="#f5c030" font-weight="800"></text>
+            <text id="tooltipDetail" x="350" y="456" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.82)" font-weight="600"></text>
+          </g>
+
+          <!-- LEGEND — bottom left -->
+          <g transform="translate(16, 476)">
+            <circle cx="8" cy="6" r="6" fill="#f5c030" filter="url(#glow)"/>
+            <text x="19" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">City Area</text>
+            <circle cx="90" cy="6" r="6" fill="#25d366" filter="url(#glow)"/>
+            <text x="101" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">Island Area</text>
+          </g>
+
+          <!-- BUSINESS MARKER -->
+          <g filter="url(#softglow)">
+            <circle cx="310" cy="195" r="22" fill="none" stroke="#f5c030" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5">
+              <animateTransform attributeName="transform" type="rotate" from="0 310 195" to="360 310 195" dur="8s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+
+          <!-- MOON LIGHT Label — bottom RIGHT, clear of tooltip -->
+          <g transform="translate(548, 472)">
+            <rect width="138" height="24" rx="5" fill="rgba(245,192,48,0.15)" stroke="rgba(245,192,48,0.3)" stroke-width="1"/>
+            <text x="8" y="16" font-family="Barlow Condensed,sans-serif" font-size="12" fill="#f5c030" font-weight="800">🌙 MOON LIGHT</text>
+          </g>
+
+          <!-- Tap hint — top right -->
+          <text x="686" y="18" font-family="Barlow,sans-serif" font-size="9" fill="rgba(255,255,255,0.35)" text-anchor="end">Tap any pin for details</text>
+        </svg>
+      </div>
+      <div class="map-hint"><i class="ph ph-cursor-click" style="color:var(--amber);font-size:1rem;"></i> Tap or click any glowing pin to see service details for that area</div>
     </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Reem Island</div>
-      <div class="area-detail">Car battery replacement &amp; car AC repair</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Nahyan</div>
-      <div class="area-detail">Battery delivery &amp; aircon regas</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Mushrif</div>
-      <div class="area-detail">Car battery &amp; AC gas refilling</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Karamah</div>
-      <div class="area-detail">Battery shop near me — we deliver</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Markaziyah</div>
-      <div class="area-detail">Car battery &amp; jump start service</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Corniche Abu Dhabi</div>
-      <div class="area-detail">Car battery delivery &amp; AC regas</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Tourist Club Area</div>
-      <div class="area-detail">24hr battery service &amp; car repair</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Zahiyah</div>
-      <div class="area-detail">Car battery &amp; AC gas refill</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Madinat Zayed</div>
-      <div class="area-detail">Battery replacement &amp; AC repair</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Mohammed Bin Zayed City</div>
-      <div class="area-detail">Car battery &amp; aircon regas</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Yas Island</div>
-      <div class="area-detail">Car battery delivery &amp; car repair</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Saadiyat Island</div>
-      <div class="area-detail">Battery &amp; AC gas refilling service</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Shamkha</div>
-      <div class="area-detail">Car battery &amp; AC repair</div>
-    </div>
-    <div class="area-card">
-      <div class="area-icon-svg"><i class="ph ph-map-pin"></i></div>
-      <div class="area-name">Al Falah</div>
-      <div class="area-detail">Battery delivery &amp; car AC fixing</div>
-    </div>
-    <div class="area-card" style="background:var(--navy);border-color:var(--navy);">
-      <div class="area-icon-svg" style="background:rgba(255,255,255,0.1);color:var(--amber-mid);"><i class="ph ph-phone-call"></i></div>
-      <div class="area-name" style="color:#fff;">Not Listed?</div>
-      <div class="area-detail" style="color:var(--amber-mid);">Call us — we cover all of Abu Dhabi!</div>
-    </div>
+
   </div>
 
-  <!-- Hidden SEO text — keyword rich paragraph for Google crawlers -->
+  <!-- Hidden SEO text -->
   <p style="font-size:0.75rem;color:var(--muted);margin-top:2rem;line-height:1.8;max-width:900px;">
     Moon Light Car Batteries provides car battery replacement, car battery delivery, car AC gas refilling, aircon regas, AC refrigerant recharge, jump start service and car repairs across Abu Dhabi UAE including Al Khalidiyah, Al Reem Island, Al Nahyan, Al Mushrif, Al Karamah, Al Markaziyah, Corniche Abu Dhabi, Tourist Club Area, Al Zahiyah, Madinat Zayed, Mohammed Bin Zayed City, Yas Island, Saadiyat Island, Al Shamkha, Al Falah and all surrounding areas. We stock Amaron, Bosch, Yuasa and Varta batteries. Call or WhatsApp +971 52 340 8703 for same-day car battery delivery and AC gas refilling in Abu Dhabi.
   </p>
@@ -1208,7 +1363,49 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 </footer>
 
 <script>
-// Hamburger toggle
+// MAP PIN INTERACTION
+var areaDetails = {
+  'Al Markaziyah': 'Car battery & jump start service',
+  'Al Khalidiyah': 'Car battery delivery & AC gas refilling',
+  'Corniche Abu Dhabi': 'Car battery delivery & AC regas',
+  'Al Reem Island': 'Car battery replacement & car AC repair',
+  'Tourist Club Area': '24hr battery service & car repair',
+  'Al Zahiyah': 'Car battery & AC gas refill',
+  'Al Karamah': 'Battery shop near me — we deliver',
+  'Al Nahyan': 'Battery delivery & aircon regas',
+  'Al Mushrif': 'Car battery & AC gas refilling',
+  'Madinat Zayed': 'Battery replacement & AC repair',
+  'Saadiyat Island': 'Battery & AC gas refilling service',
+  'Yas Island': 'Car battery delivery & car repair',
+  'Mohammed Bin Zayed City': 'Car battery & aircon regas',
+  'Al Shamkha': 'Car battery & AC repair',
+  'Al Falah': 'Battery delivery & car AC fixing'
+};
+function selectArea(name, scrollSidebar) {
+  // Show tooltip at bottom of map
+  var tooltip = document.getElementById('mapTooltip');
+  var tName = document.getElementById('tooltipName');
+  var tDetail = document.getElementById('tooltipDetail');
+  if(tooltip && tName && tDetail) {
+    tName.textContent = name;
+    tDetail.textContent = areaDetails[name] || '';
+    tooltip.style.display = 'block';
+  }
+  // Highlight selected pin, dim others
+  document.querySelectorAll('.map-pin').forEach(function(pin){
+    pin.style.opacity = pin.getAttribute('data-area') === name ? '1' : '0.45';
+    pin.style.transition = 'opacity 0.4s';
+  });
+}
+// Auto-cycle — never touches page scroll
+var areas = Object.keys(areaDetails);
+var cycleIdx = 0;
+setInterval(function(){
+  if(!document.querySelector('.map-pin:hover')){
+    selectArea(areas[cycleIdx % areas.length], false);
+    cycleIdx++;
+  }
+}, 2800);
 document.getElementById('hamburger').addEventListener('click',function(){
   document.getElementById('mobileMenu').classList.toggle('open');
 });
