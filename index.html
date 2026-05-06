@@ -224,8 +224,8 @@
 <!-- Fonts: non-blocking (media=print trick — zero render blocking) -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap"></noscript>
-<!-- Icons: deferred + faster jsDelivr CDN -->
-<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/index.min.js"></script>
+<!-- Icons: only regular variant CSS — saves 70 KiB vs full package -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
