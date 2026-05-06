@@ -8,7 +8,7 @@
 <!-- PERFORMANCE: preconnect -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://unpkg.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
 <!-- PRIMARY SEO -->
 <title>Car Battery & AC Gas Refilling Abu Dhabi | Moon Light Car Care</title>
@@ -221,9 +221,11 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<!-- Icons: deferred so they don't block render -->
-<script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<!-- Fonts: non-blocking (media=print trick — zero render blocking) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap"></noscript>
+<!-- Icons: deferred + faster jsDelivr CDN -->
+<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/index.min.js"></script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -243,10 +245,10 @@
   --green:#1a7a3c;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6;}
 img{max-width:100%;display:block;}
 a{text-decoration:none;}
-h1,h2,h3,.logo-name{font-family:'Barlow Condensed',sans-serif;}
+h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;}
 
 /* NAV */
 nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
