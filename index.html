@@ -8,6 +8,7 @@
 <!-- PERFORMANCE: preconnect -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com">
 
 <!-- PRIMARY SEO -->
 <title>Car Battery & AC Gas Refilling Abu Dhabi | Moon Light Car Care</title>
@@ -220,8 +221,11 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<!-- Fonts: non-render-blocking -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+<!-- Icons: deferred so they don't block render -->
+<script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -813,6 +817,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   </div>
 </div>
 
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
 <!-- SERVICES -->
 <section class="section" id="services" aria-labelledby="services-heading">
   <div class="sec-label">What We Do</div>
@@ -1322,6 +1329,8 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 </section>
 
 <!-- FOOTER -->
+</main><!-- end #main-content -->
+
 <footer role="contentinfo" itemscope itemtype="https://schema.org/AutoRepair">
   <div class="footer-top">
     <div>
@@ -1333,7 +1342,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <p style="font-size:0.78rem;color:rgba(255,255,255,0.3);max-width:280px;line-height:1.65;margin-top:0.8rem;">Trusted for car battery replacement, AC gas refilling &amp; car repairs. Al Funoud St, Al Danah - Zone 1, Abu Dhabi.</p>
     </div>
     <div class="f-col">
-      <h4>Services</h4>
+      <h3>Services</h3>
       <a href="#services">Car Battery Replacement Abu Dhabi</a>
       <a href="#services">Car Battery Delivery UAE</a>
       <a href="#services">Battery Jump Start Abu Dhabi</a>
@@ -1344,7 +1353,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <a href="#areas">Areas We Cover</a>
     </div>
     <div class="f-col">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <a href="tel:+971523408703" itemprop="telephone" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
       <a href="https://wa.me/971523408703" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
       <a href="mailto:info@moonlightautocare.com" itemprop="email" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-envelope-simple"></i> info@moonlightautocare.com</a>
