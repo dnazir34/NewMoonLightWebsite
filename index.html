@@ -51,7 +51,7 @@
   "@id": "https://moonlightautocare.com/#business",
   "name": "Moon Light Car Care",
   "alternateName": ["Moon Light Car Care Abu Dhabi", "Moon Light Car Care Al Danah", "Moon Light Car Batteries Abu Dhabi"],
-  "description": "Trusted car battery replacement & AC gas refilling specialist in Abu Dhabi. Located at Al Funoud St, Al Danah - Zone 1, Abu Dhabi. Car repair also available. Fast, honest service for all makes and models.",
+  "description": "Trusted car battery replacement and AC gas refilling specialist in Abu Dhabi. Located at Al Funoud St, Al Danah - Zone 1, Abu Dhabi. Car repair also available. Fast, honest service for all makes and models.",
   "url": "https://moonlightautocare.com",
   "telephone": "+971523408703",
   "email": "info@moonlightautocare.com",
@@ -98,7 +98,7 @@
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Car Battery, AC Gas & Car Repair Services — Abu Dhabi",
+    "name": "Car Battery, AC Gas and Car Repair Services - Abu Dhabi",
     "itemListElement": [
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Battery Replacement Abu Dhabi", "description": "Supply and fit car batteries for all makes and models in Abu Dhabi UAE. Amaron, Bosch, Yuasa, Varta batteries available."}},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Battery Delivery Abu Dhabi", "description": "Same-day car battery home delivery across Abu Dhabi UAE. Call +971 52 340 8703."}},
@@ -117,18 +117,33 @@
   "review": [
     {
       "@type": "Review",
+      "itemReviewed": {
+        "@type": "AutoRepair",
+        "@id": "https://moonlightautocare.com/#business",
+        "name": "Moon Light Car Care"
+      },
       "author": {"@type": "Person", "name": "Ahmed Al Mansoori"},
       "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
       "reviewBody": "Excellent and fast service. My car battery was replaced within 30 minutes. Very honest pricing, no hidden charges. Highly recommend Moon Light Car Care in Abu Dhabi."
     },
     {
       "@type": "Review",
+      "itemReviewed": {
+        "@type": "AutoRepair",
+        "@id": "https://moonlightautocare.com/#business",
+        "name": "Moon Light Car Care"
+      },
       "author": {"@type": "Person", "name": "Sara K."},
       "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
       "reviewBody": "Got my car AC gas refilled here. The AC is now blowing ice cold air. Great technicians, fast work and very reasonable price. Best car AC service in Abu Dhabi!"
     },
     {
       "@type": "Review",
+      "itemReviewed": {
+        "@type": "AutoRepair",
+        "@id": "https://moonlightautocare.com/#business",
+        "name": "Moon Light Car Care"
+      },
       "author": {"@type": "Person", "name": "Mohammed R."},
       "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
       "reviewBody": "My car AC was not cooling at all in the Abu Dhabi heat. Moon Light fixed it same day. Very professional and trustworthy team. Will come back for all my car needs."
@@ -137,63 +152,7 @@
 }
 </script>
 
-<!-- STRUCTURED DATA: FAQPage -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Where can I get a car battery replacement in Abu Dhabi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Moon Light Car Care provides fast car battery replacement in Abu Dhabi, UAE. Located at Al Funoud St, Al Danah - Zone 1, Abu Dhabi. We supply and fit batteries for all car makes and models. Call +971 52 340 8703 for same-day service."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How much does car AC gas refilling cost in UAE?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Car AC gas refilling prices in UAE depend on your vehicle and the type of refrigerant needed. Moon Light Car Care offers competitive and transparent pricing with no hidden charges. Call +971 52 340 8703 for a quick quote."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why is my car AC not cooling in UAE?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The most common reasons for car AC not cooling in UAE are low refrigerant gas, a faulty compressor, a blocked condenser, or an electrical fault. Moon Light Car Care can diagnose and fix all car AC problems in Abu Dhabi. Call us on +971 52 340 8703."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you replace car batteries for all car brands in Abu Dhabi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Moon Light Car Care replaces batteries for all car makes and models including Toyota, Nissan, Honda, Mitsubishi, Hyundai, Kia, BMW, Mercedes, Ford, Chevrolet and more across Abu Dhabi and UAE."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How long does a car AC gas refill take?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A standard car AC gas refill at Moon Light Car Care takes approximately 30 to 60 minutes depending on the vehicle and whether any leaks need to be fixed first."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is Moon Light Car Care open on weekends in Abu Dhabi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, Moon Light Car Care is open every day including weekends and public holidays from 8:00 AM to 11:30 PM. We are located at Al Funoud St, Al Danah - Zone 1, Abu Dhabi, UAE."
-      }
-    }
-  ]
-}
-</script>
+<!-- FAQPage schema moved to visible HTML microdata below (avoids duplicate detection) -->
 
 <!-- STRUCTURED DATA: WebSite with Sitelinks Searchbox -->
 <script type="application/ld+json">
@@ -961,65 +920,72 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 </section>
 
 <!-- FAQ -->
-<section class="section section-alt" id="faq" aria-labelledby="faq-heading">
+<section class="section section-alt" id="faq" aria-labelledby="faq-heading" itemscope itemtype="https://schema.org/FAQPage">
   <div class="sec-label">Common Questions</div>
   <h2 class="sec-title" id="faq-heading">Frequently Asked Questions</h2>
   <p class="sec-sub">Answers to the most common questions about car battery replacement, AC gas refilling and car repairs in Abu Dhabi, UAE.</p>
   <div class="faq-list">
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>Where can I get a car battery replaced in Abu Dhabi?</span>
+        <span itemprop="name">Where can I get a car battery replaced in Abu Dhabi?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>Moon Light Car Care provides fast car battery replacement in Abu Dhabi, UAE. We supply and fit batteries for all car makes and models. Call or WhatsApp +971 52 340 8703 for same-day service.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Moon Light Car Care provides fast car battery replacement in Abu Dhabi, UAE. We supply and fit batteries for all car makes and models. Call or WhatsApp +971 52 340 8703 for same-day service.</span>
       </div>
     </div>
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>How much does car AC gas refilling cost in Abu Dhabi?</span>
+        <span itemprop="name">How much does car AC gas refilling cost in Abu Dhabi?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>Car AC gas refilling prices in Abu Dhabi depend on your vehicle type and the refrigerant required. Moon Light Car Care offers competitive and fully transparent pricing with no hidden charges. Call +971 52 340 8703 for an instant quote.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Car AC gas refilling prices in Abu Dhabi depend on your vehicle type and the refrigerant required. Moon Light Car Care offers competitive and fully transparent pricing with no hidden charges. Call +971 52 340 8703 for an instant quote.</span>
       </div>
     </div>
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>Why is my car AC not cooling in UAE?</span>
+        <span itemprop="name">Why is my car AC not cooling in UAE?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>The most common causes of car AC not cooling in UAE include low or empty refrigerant gas, a faulty AC compressor, a blocked condenser, or an electrical fault. Moon Light Car Care can quickly diagnose and fix all car AC problems in Abu Dhabi. Call us on +971 52 340 8703.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">The most common causes of car AC not cooling in UAE include low or empty refrigerant gas, a faulty AC compressor, a blocked condenser, or an electrical fault. Moon Light Car Care can quickly diagnose and fix all car AC problems in Abu Dhabi. Call us on +971 52 340 8703.</span>
       </div>
     </div>
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>Do you replace batteries for all car brands in Abu Dhabi?</span>
+        <span itemprop="name">Do you replace batteries for all car brands in Abu Dhabi?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>Yes. We replace batteries for all car makes including Toyota, Nissan, Honda, Hyundai, Kia, Mitsubishi, BMW, Mercedes-Benz, Audi, Ford, Chevrolet, Land Rover and more across Abu Dhabi and UAE.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Yes. We replace batteries for all car makes including Toyota, Nissan, Honda, Hyundai, Kia, Mitsubishi, BMW, Mercedes-Benz, Audi, Ford, Chevrolet, Land Rover and more across Abu Dhabi and UAE.</span>
       </div>
     </div>
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>Are you open on weekends and public holidays?</span>
+        <span itemprop="name">Are you open on weekends and public holidays?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>Yes! Moon Light Car Care is open every day including weekends and public holidays from 8:00 AM to 11:30 PM in Abu Dhabi, UAE. Call or WhatsApp +971 52 340 8703 anytime.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Yes! Moon Light Car Care is open every day including weekends and public holidays from 8:00 AM to 11:30 PM in Abu Dhabi, UAE. Call or WhatsApp +971 52 340 8703 anytime.</span>
       </div>
     </div>
-    <div class="faq-item">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
       <div class="faq-q" onclick="toggleFAQ(this)">
-        <span>How long does a car AC gas refill take?</span>
+        <span itemprop="name">How long does a car AC gas refill take?</span>
         <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
       </div>
-      <div class="faq-a">
-        <span>A standard car AC gas refill at Moon Light Car Care takes approximately 30 to 60 minutes. If there is an AC leak that needs repairing first, it may take longer. We always explain the process before starting.</span>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">A standard car AC gas refill at Moon Light Car Care takes approximately 30 to 60 minutes. If there is an AC leak that needs repairing first, it may take longer. We always explain the process before starting.</span>
       </div>
     </div>
+
   </div>
 </section>
 

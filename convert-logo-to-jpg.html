@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Converting logo to JPG...</title>
+</head>
+<body style="font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f0f0f0;">
+<div style="text-align:center;">
+  <p id="status" style="font-size:1.2rem;color:#333;">Converting logo to JPG — please wait...</p>
+  <canvas id="c" style="display:none;"></canvas>
+</div>
+<script>
+var svgString = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="680" height="680" viewBox="0 0 680 680" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Moon Light – crescent moon icon</title>
+  <defs>
+    <mask id="crescent-mask">
+      <circle cx="340" cy="340" r="145" fill="white"/>
+      <circle cx="412" cy="285" r="128" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="680" height="680" fill="white"/>
+  <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#crescent-mask)"/>
+  <circle cx="185"  cy="125" r="18" fill="#f5c030"/>
+  <circle cx="338"  cy="108" r="14" fill="#f5c030"/>
+  <circle cx="490"  cy="122" r="16" fill="#f5c030"/>
+  <circle cx="118"  cy="275" r="12" fill="#f5c030" opacity="0.85"/>
+  <circle cx="562"  cy="248" r="11" fill="#f5c030" opacity="0.85"/>
+  <circle cx="248"  cy="100" r="8"  fill="#f5c030" opacity="0.7"/>
+  <circle cx="428"  cy="95"  r="7"  fill="#f5c030" opacity="0.7"/>
+</svg>`;
+
+var blob = new Blob([svgString], {type: 'image/svg+xml'});
+var url  = URL.createObjectURL(blob);
+var img  = new Image();
+
+img.onload = function() {
+  var canvas = document.getElementById('c');
+  canvas.width  = 680;
+  canvas.height = 680;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, 680, 680);
+  ctx.drawImage(img, 0, 0);
+  URL.revokeObjectURL(url);
+
+  var link = document.createElement('a');
+  link.download = 'moonlight-logo.jpg';
+  link.href = canvas.toDataURL('image/jpeg', 0.95);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  document.getElementById('status').innerHTML =
+    '<span style="color:green;font-size:1.4rem;">&#10003; Done!</span><br><span style="font-size:1rem;color:#555;">moonlight-logo.jpg has been downloaded to your Downloads folder.</span>';
+};
+
+img.onerror = function() {
+  document.getElementById('status').innerHTML =
+    '<span style="color:red;">Error loading SVG. Please try again.</span>';
+};
+
+img.src = url;
+</script>
+</body>
+</html>
