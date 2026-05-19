@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>OG Image Generator — Moon Light Car Care</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #222; display: flex; flex-direction: column; align-items: center; padding: 30px; font-family: Arial, sans-serif; }
+  h2 { color: #fff; margin-bottom: 16px; font-size: 14px; letter-spacing: 1px; }
+  #canvas-wrap {
+    width: 1200px; height: 630px;
+    transform-origin: top left;
+    transform: scale(0.65);
+    margin-bottom: -220px;
+  }
+  canvas { display: block; }
+  .btns { margin-top: 20px; display: flex; gap: 12px; }
+  button {
+    background: #f0a500; color: #0e1e3d; border: none; padding: 14px 32px;
+    font-size: 15px; font-weight: 700; border-radius: 6px; cursor: pointer;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  button:hover { background: #d4920a; }
+  p { color: #aaa; font-size: 12px; margin-top: 10px; text-align: center; max-width: 500px; }
+</style>
+</head>
+<body>
+<h2>🌙 MOON LIGHT CAR CARE — OG IMAGE PREVIEW (1200 × 630)</h2>
+<div id="canvas-wrap">
+  <canvas id="og" width="1200" height="630"></canvas>
+</div>
+<div class="btns">
+  <button onclick="downloadJPG()">⬇ Download og-image.jpg</button>
+</div>
+<p>Click the button above to download <strong>og-image.jpg</strong>, then place it in your website root folder.</p>
+
+<script>
+const c = document.getElementById('og');
+const ctx = c.getContext('2d');
+const W = 1200, H = 630;
+
+function pill(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function draw() {
+
+  // ── BACKGROUND — clean, consistent deep navy ──
+  ctx.fillStyle = '#0c1b36';
+  ctx.fillRect(0, 0, W, H);
+
+  // subtle vertical gradient overlay (very gentle — no colour inconsistency)
+  const bgOverlay = ctx.createLinearGradient(0, 0, 0, H);
+  bgOverlay.addColorStop(0, 'rgba(0,0,0,0.18)');
+  bgOverlay.addColorStop(0.5, 'rgba(0,0,0,0)');
+  bgOverlay.addColorStop(1, 'rgba(0,0,0,0.22)');
+  ctx.fillStyle = bgOverlay;
+  ctx.fillRect(0, 0, W, H);
+
+  // ── RIGHT SIDE MOON GLOW ──
+  const glow = ctx.createRadialGradient(950, 270, 0, 950, 270, 340);
+  glow.addColorStop(0,   'rgba(245,192,48,0.14)');
+  glow.addColorStop(0.45,'rgba(245,192,48,0.06)');
+  glow.addColorStop(1,   'rgba(245,192,48,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  // atmosphere rings
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.strokeStyle = '#f5c030';
+  ctx.lineWidth = 1.5;
+  [190, 260, 330].forEach(r => {
+    ctx.beginPath(); ctx.arc(950, 270, r, 0, Math.PI * 2); ctx.stroke();
+  });
+  ctx.restore();
+
+  // moon filled glow
+  ctx.save();
+  const moonFill = ctx.createRadialGradient(950, 270, 0, 950, 270, 160);
+  moonFill.addColorStop(0,   'rgba(245,192,48,0.20)');
+  moonFill.addColorStop(0.55,'rgba(245,192,48,0.07)');
+  moonFill.addColorStop(1,   'rgba(245,192,48,0)');
+  ctx.fillStyle = moonFill;
+  ctx.beginPath(); ctx.arc(950, 270, 160, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // moon emoji
+  ctx.save();
+  ctx.globalAlpha = 0.88;
+  ctx.font = 'bold 120px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('🌙', 950, 325);
+  ctx.restore();
+
+  // ── LEFT ACCENT BAR ──
+  ctx.fillStyle = '#f5c030';
+  ctx.fillRect(68, 88, 6, 454);
+
+  // ── TOP LOCATION LABEL ──
+  ctx.fillStyle = 'rgba(245,192,48,0.75)';
+  ctx.font = '600 20px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('ABU DHABI, UAE  •  AL DANAH – ZONE 1', 100, 118);
+
+  // ── BRAND NAME ──
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '800 88px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('MOON LIGHT', 100, 218);
+
+  ctx.fillStyle = '#f5c030';
+  ctx.font = '800 88px Arial';
+  ctx.fillText('CAR CARE', 100, 315);
+
+  // ── DIVIDER ──
+  ctx.strokeStyle = 'rgba(245,192,48,0.30)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(100, 342); ctx.lineTo(720, 342); ctx.stroke();
+
+  // ── SERVICE PILLS — properly spaced, wider pills ──
+  const services = [
+    { label: '🔋  Car Battery',      w: 192 },
+    { label: '❄️  AC Gas Refilling', w: 224 },
+    { label: '🔧  Car Repair',        w: 178 },
+  ];
+  let px = 100;
+  const py = 358, ph = 44, gap = 14;
+  services.forEach(svc => {
+    // pill bg
+    ctx.fillStyle = 'rgba(245,192,48,0.13)';
+    pill(px, py, svc.w, ph, 7);
+    ctx.fill();
+    // pill border
+    ctx.strokeStyle = 'rgba(245,192,48,0.28)';
+    ctx.lineWidth = 1;
+    pill(px, py, svc.w, ph, 7);
+    ctx.stroke();
+    // label
+    ctx.fillStyle = '#f5c030';
+    ctx.font = '700 19px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(svc.label, px + 14, py + 28);
+    px += svc.w + gap;
+  });
+
+  // ── ADDRESS ──
+  ctx.fillStyle = 'rgba(255,255,255,0.55)';
+  ctx.font = '400 21px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('📍  Al Funoud St, Al Danah – Zone 1, Abu Dhabi', 100, 440);
+
+  // ── PHONE ──
+  ctx.fillStyle = 'rgba(255,255,255,0.90)';
+  ctx.font = '700 26px Arial';
+  ctx.fillText('📞  +971 52 340 8703', 100, 485);
+
+  // ── TAGLINE ──
+  ctx.fillStyle = 'rgba(255,255,255,0.32)';
+  ctx.font = '400 17px Arial';
+  ctx.fillText('Reliable & Trusted  •  All Makes & Models  •  Open Daily 8am – 11:30pm', 100, 520);
+
+  // ── CALL NOW CTA BUTTON ──
+  const btnX = 100, btnY = 540, btnW = 226, btnH = 50, btnR = 8;
+  ctx.fillStyle = '#f5c030';
+  pill(btnX, btnY, btnW, btnH, btnR);
+  ctx.fill();
+  ctx.fillStyle = '#0c1b36';
+  ctx.font = 'bold 22px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('📞  CALL NOW', btnX + btnW / 2, btnY + 33);
+
+  // ── BOTTOM AMBER BAR ──
+  ctx.fillStyle = '#f5c030';
+  ctx.fillRect(0, 618, W, 12);
+}
+
+function downloadJPG() {
+  const link = document.createElement('a');
+  link.download = 'og-image.jpg';
+  link.href = c.toDataURL('image/jpeg', 0.95);
+  link.click();
+}
+
+draw();
+</script>
+</body>
+</html>
