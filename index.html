@@ -635,8 +635,8 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .submit-row{grid-template-columns:1fr;}
   /* Reviews */
   .rating-summary{padding:1rem;gap:1rem;width:100%;}
-  /* Footer — bottom padding clears floating call/WA buttons (~88px); navy bg fills it, no white gap */
-  footer{padding:1.5rem 1rem 6.5rem;margin-bottom:0;}
+  /* Footer — bottom padding clears floating call/WA buttons; navy bg fills it, no white gap */
+  footer{padding:1.5rem 1rem 4rem;margin-bottom:0;}
   body{padding-bottom:0;}
   .f-logo-name{font-size:1rem;}
   .f-seo-links{flex-direction:column;gap:0.5rem;align-items:center;}
@@ -1803,9 +1803,16 @@ function toggleFAQ(el){
     });
   },{threshold:0.13,rootMargin:'0px 0px -30px 0px'});
 
-  /* Register elements for scroll reveal */
+  /* Register elements for scroll reveal.
+     Skip elements already in the viewport when JS runs — avoids
+     flash-of-invisible-content and stutter on sections near top. */
   function reg(sel,extraClass,delay){
     document.querySelectorAll(sel).forEach(function(el,i){
+      var r=el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0){
+        /* already visible — show immediately, no animation */
+        return;
+      }
       el.classList.add('will-anim');
       if(extraClass) el.classList.add(extraClass);
       if(delay) el.classList.add('d'+Math.min(i%6+1,6));
@@ -1819,7 +1826,7 @@ function toggleFAQ(el){
   reg('.svc','',true);
   reg('.review-card','',true);
   reg('.faq-item','',true);
-  reg('.trust','from-left',true);
+  reg('.trust','',true);          /* fade-only — no translateX to avoid paint burst */
   reg('.c-item','',true);
   reg('.stat','from-scale',true);
   reg('.rating-summary','from-scale');
@@ -1827,8 +1834,8 @@ function toggleFAQ(el){
   reg('.contact-intro');
   reg('.map-container');
   reg('.area-card','',true);
-  reg('.why-slogan','from-left');
-  reg('.why-desc','from-left');
+  reg('.why-slogan');              /* fade-only on Why section items */
+  reg('.why-desc');
 
   /* ── 2. Counter animation ── */
   function countUp(el,target,duration,suffix,isFloat){
