@@ -212,6 +212,7 @@ h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-ser
 /* NAV */
 nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
 .logo{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
+.logo>svg{width:54px;height:54px;flex-shrink:0;}
 .logo-icon{font-size:1.7rem;line-height:1;}
 .logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
@@ -474,10 +475,12 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 .map-layout{display:block;margin-top:0.5rem;}
 .map-container{position:relative;max-width:900px;margin:0 auto;}
 .map-label-top{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:0.7rem;display:flex;align-items:center;}
-.map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.18);border:1px solid var(--border);background:#0a1628;aspect-ratio:7/4;}
+/* content-visibility defers paint of the complex SVG until near viewport — big first-load win */
+.map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.18);border:1px solid var(--border);background:#0a1628;aspect-ratio:7/4;will-change:transform;transform:translateZ(0);isolation:isolate;content-visibility:auto;contain-intrinsic-size:0 350px;}
 .map-hint{font-size:0.78rem;color:var(--muted);text-align:center;margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
-/* Pin pulse animation */
-.pin-pulse{animation:pinPulse 2s ease-in-out infinite;}
+/* Pin pulse — paused until map enters viewport (saves CPU on page load) */
+.pin-pulse{animation:pinPulse 2s ease-in-out infinite;animation-play-state:paused;}
+#abuDhabiMap.map-active .pin-pulse{animation-play-state:running;}
 @keyframes pinPulse{0%,100%{opacity:0.1;}50%{opacity:0.28;}}
 @media(max-width:600px){.map-wrap{aspect-ratio:4/3;}}
 
@@ -560,10 +563,32 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   html,body{max-width:100vw;overflow-x:hidden;}
   /* Nav */
   nav{padding:0.7rem 1rem;}
+  .logo>svg{width:44px;height:44px;}
   .logo-icon{font-size:1.3rem;}
   .logo-name{font-size:1rem;}
   .logo-tag{display:none;}
-  .nav-cta{padding:0.65rem 1.2rem;font-size:1rem;gap:0.3rem;font-weight:800;}
+  /* Battery-shape Call Now button on mobile */
+  .nav-cta{
+    padding:0.65rem 1.2rem 0.65rem 1rem;
+    font-size:1rem;gap:0.3rem;font-weight:800;
+    position:relative;
+    border-radius:5px 0 0 5px;
+    margin-right:8px;            /* room for terminal nub */
+    overflow:visible;
+  }
+  /* Terminal nub — small rectangle sticking out on the right */
+  .nav-cta::after{
+    content:'';
+    position:absolute;
+    right:-8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:8px;
+    height:40%;
+    background:var(--red);
+    border-radius:0 3px 3px 0;
+  }
+  .nav-cta:hover::after{background:#a93226;}
   /* Hero - fully constrained */
   .hero-img{height:auto;min-height:320px;}
   .hero-text{
@@ -610,10 +635,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .submit-row{grid-template-columns:1fr;}
   /* Reviews */
   .rating-summary{padding:1rem;gap:1rem;width:100%;}
-  /* Footer */
-  footer{padding:1.5rem 1rem;margin-bottom:0;}
-  body{padding-bottom:120px;}
-  footer{margin-bottom:0;}
+  /* Footer — bottom padding clears floating call/WA buttons (~88px); navy bg fills it, no white gap */
+  footer{padding:1.5rem 1rem 6.5rem;margin-bottom:0;}
+  body{padding-bottom:0;}
   .f-logo-name{font-size:1rem;}
   .f-seo-links{flex-direction:column;gap:0.5rem;align-items:center;}
   /* Float buttons: circles only, never overlapping */
@@ -635,6 +659,328 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   
   
 }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS — pure CSS + Intersection Observer
+   Zero layout shift · GPU-accelerated · ~4KB
+   ═══════════════════════════════════════════ */
+
+/* ── Scroll reveal base ── */
+.will-anim{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1),
+             transform .7s cubic-bezier(.22,1,.36,1);
+}
+.will-anim.from-left{ transform:translateX(-36px); }
+.will-anim.from-right{ transform:translateX(36px); }
+.will-anim.from-scale{ transform:scale(0.93); }
+.will-anim.visible{
+  opacity:1;
+  transform:translateY(0) translateX(0) scale(1);
+}
+.will-anim.d1{transition-delay:.08s;}
+.will-anim.d2{transition-delay:.17s;}
+.will-anim.d3{transition-delay:.26s;}
+.will-anim.d4{transition-delay:.35s;}
+.will-anim.d5{transition-delay:.44s;}
+.will-anim.d6{transition-delay:.53s;}
+
+/* ── Hero text entrance ── */
+.hero-text h1{
+  animation:heroSlideUp .85s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-delivery-strip{
+  animation:heroSlideUp .85s .12s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-slogan{
+  animation:heroSlideUp .85s .22s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-text p{
+  animation:heroSlideUp .85s .35s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-btns{
+  animation:heroSlideUp .85s .48s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes heroSlideUp{
+  from{opacity:0;transform:translateY(22px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* ── Section heading gold underline draw ── */
+.sec-title{position:relative;display:inline-block;}
+.sec-title::after{
+  content:'';
+  position:absolute;
+  bottom:-6px;left:0;
+  width:0;height:3px;
+  background:var(--amber-mid);
+  border-radius:2px;
+  transition:width .9s .35s cubic-bezier(.22,1,.36,1);
+}
+.sec-title.visible::after{ width:56px; }
+
+/* ── Service card gold shimmer on hover ── */
+.svc{position:relative;overflow:hidden;}
+.svc::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 35%,rgba(245,192,48,.07) 50%,transparent 65%);
+  transform:translateX(-100%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+.svc:hover::after{ transform:translateX(100%); }
+.svc:hover{ transform:translateY(-6px); box-shadow:0 14px 36px rgba(14,30,61,.13); }
+
+/* ── Review card hover ── */
+.review-card{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+.review-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 14px 36px rgba(14,30,61,.12);
+}
+
+/* ── FAQ smooth height ── */
+.faq-a{
+  display:block !important;
+  max-height:0;
+  overflow:hidden;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  transition:max-height .42s cubic-bezier(.22,1,.36,1),
+             padding .32s ease;
+}
+.faq-item.open .faq-a{
+  max-height:320px;
+  padding-bottom:1.1rem !important;
+}
+
+/* ── Float buttons enhanced pulse ── */
+@keyframes pulse{
+  0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.4);}
+  50%{box-shadow:0 4px 32px rgba(192,57,43,.72),0 0 0 9px rgba(192,57,43,.07);}
+}
+.float-wa{animation:pulseWa 3.2s ease infinite;}
+@keyframes pulseWa{
+  0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}
+  50%{box-shadow:0 4px 32px rgba(37,211,102,.72),0 0 0 9px rgba(37,211,102,.09);}
+}
+
+/* ── Hero star particles ── */
+.star-pt{
+  position:absolute;
+  border-radius:50%;
+  background:#f5c030;
+  pointer-events:none;
+  animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:var(--lo,.15);transform:scale(1);}
+  50%{opacity:var(--hi,.7);transform:scale(1.4);}
+}
+
+/* ── Nav scroll shadow ── */
+nav{transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
+
+/* ── Trust item hover ── */
+.trust{
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+  border-radius:8px;
+  padding:0.4rem;
+  margin:-0.4rem;
+}
+.trust:hover{ transform:translateX(5px); }
+
+/* ── Contact item already has hover, add transition ── */
+.c-item{
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+.c-item:hover{ transform:translateX(4px); }
+
+/* ── Stat number glow on reveal ── */
+.stat-num{transition:text-shadow .5s;}
+.stat.visible .stat-num{
+  text-shadow:0 0 24px rgba(245,192,48,.35);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION — redesigned
+   ═══════════════════════════════════════════ */
+#contact{
+  background:linear-gradient(135deg,#09162a 0%,#0e1e3d 55%,#091525 100%);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:480px;height:480px;
+  background:radial-gradient(circle,rgba(245,192,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact::after{
+  content:'';position:absolute;bottom:-80px;left:-80px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(245,192,48,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact .sec-label{color:var(--amber-mid);}
+#contact .sec-title{color:#fff;}
+#contact .sec-sub{color:rgba(255,255,255,.45);}
+#contact .sec-title::after{background:var(--amber-mid);}
+
+/* Layout */
+.contact-v2{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:3rem;
+  align-items:start;
+}
+
+/* Online badge */
+.online-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(37,211,102,.1);
+  border:1px solid rgba(37,211,102,.28);
+  color:#6effa0;
+  font-size:0.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:.35rem .9rem;
+  border-radius:30px;margin-bottom:1.5rem;
+}
+.online-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#25d366;
+  animation:onlinePulse 2s ease infinite;
+}
+@keyframes onlinePulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.5;transform:scale(1.5);}
+}
+.contact-tagline{
+  font-size:.92rem;color:rgba(255,255,255,.5);
+  font-weight:300;line-height:1.75;
+  margin-bottom:1.8rem;max-width:370px;
+}
+
+/* CTA buttons */
+.cta-btns{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:.75rem;margin-bottom:1.8rem;
+}
+.cta-call{
+  background:var(--red);color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(192,57,43,.4);
+}
+.cta-call:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(192,57,43,.6);}
+.cta-wa-big{
+  background:#25d366;color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(37,211,102,.4);
+}
+.cta-wa-big:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(37,211,102,.6);}
+
+/* Info rows */
+.ci-list{display:flex;flex-direction:column;gap:.6rem;}
+.ci{
+  display:flex;align-items:center;gap:.95rem;
+  padding:.85rem 1.1rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+  text-decoration:none;
+  transition:background .2s,border-color .2s,transform .22s;
+}
+a.ci:hover{
+  background:rgba(245,192,48,.07);
+  border-color:rgba(245,192,48,.22);
+  transform:translateX(5px);
+}
+.ci-icon{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.ci-ph{background:rgba(192,57,43,.18);color:#ff6b5b;}
+.ci-wa{background:rgba(37,211,102,.15);color:#25d366;}
+.ci-em{background:rgba(92,124,250,.15);color:#7c9fff;}
+.ci-loc{background:rgba(245,192,48,.15);color:var(--amber-mid);}
+.ci-clk{background:rgba(245,192,48,.1);color:rgba(245,192,48,.65);}
+.ci-lbl{font-size:.59rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:2px;}
+.ci-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:#fff;}
+
+/* Form card */
+.contact-form-card{
+  background:#fff;border-radius:14px;
+  padding:2.4rem 2.2rem;
+  box-shadow:0 28px 64px rgba(0,0,0,.38);
+  position:relative;z-index:1;
+}
+.form-card-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.65rem;font-weight:800;
+  text-transform:uppercase;color:var(--navy);
+  margin-bottom:.25rem;
+}
+.form-card-sub{
+  font-size:.82rem;color:var(--muted);
+  font-weight:300;margin-bottom:1.6rem;
+}
+.contact-form-card .fg input,
+.contact-form-card .fg select,
+.contact-form-card .fg textarea{
+  border-radius:7px;border:1.5px solid #e2e8f2;
+  background:#f8faff;font-size:.9rem;
+  padding:.82rem 1rem;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.contact-form-card .fg input:focus,
+.contact-form-card .fg select:focus,
+.contact-form-card .fg textarea:focus{
+  border-color:var(--amber-btn);
+  box-shadow:0 0 0 3px rgba(240,165,0,.12);
+  background:#fff;
+}
+.contact-form-card .fg textarea{height:90px;}
+.contact-form-card .fg label{color:var(--muted);font-size:.62rem;letter-spacing:.12em;font-weight:600;}
+.contact-form-card .submit{background:var(--navy);border-radius:7px;}
+.contact-form-card .submit:hover{background:var(--amber-btn);color:var(--navy);}
+.contact-form-card .submit-wa{border-radius:7px;}
+
+/* Mobile responsive */
+@media(max-width:900px){
+  .contact-v2{grid-template-columns:1fr;}
+  #contact{padding:3rem 1.2rem;}
+}
+@media(max-width:600px){
+  .cta-btns{grid-template-columns:1fr;}
+  .contact-form-card{padding:1.6rem 1.2rem;}
+  .contact-tagline{max-width:100%;}
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media(prefers-reduced-motion:reduce){
+  .will-anim,.will-anim.visible{
+    opacity:1!important;transform:none!important;transition:none!important;
+  }
+  .hero-text h1,.hero-delivery-strip,.hero-slogan,
+  .hero-text p,.hero-btns{animation:none!important;}
+  .star-pt,.float-wa,.float-call{animation:none!important;}
+  .sec-title::after{transition:none!important;width:56px!important;}
+}
+
 </style>
 </head>
 <body>
@@ -652,7 +998,25 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <!-- NAVIGATION -->
 <nav role="navigation" aria-label="Main navigation">
   <div class="logo">
-    <i class="ph ph-moon-stars" style="font-size:1.7rem;color:var(--amber);"></i>
+    <!-- Inline SVG logo — crescent moon + separated star dots -->
+    <svg width="38" height="38" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+      <defs>
+        <mask id="nav-moon-mask">
+          <circle cx="340" cy="340" r="145" fill="white"/>
+          <circle cx="412" cy="285" r="128" fill="black"/>
+        </mask>
+      </defs>
+      <!-- Crescent -->
+      <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#nav-moon-mask)"/>
+      <!-- Stars — all outside moon disc, clearly visible -->
+      <circle cx="185" cy="125" r="28" fill="#f5c030"/>
+      <circle cx="338" cy="108" r="22" fill="#f5c030"/>
+      <circle cx="490" cy="122" r="25" fill="#f5c030"/>
+      <circle cx="118" cy="275" r="19" fill="#f5c030" opacity="0.85"/>
+      <circle cx="562" cy="248" r="17" fill="#f5c030" opacity="0.85"/>
+      <circle cx="248" cy="100" r="13" fill="#f5c030" opacity="0.7"/>
+      <circle cx="428" cy="95"  r="12" fill="#f5c030" opacity="0.7"/>
+    </svg>
     <div>
       <div class="logo-name">MOON <em>LIGHT</em></div>
       <div class="logo-tag">Car Battery &amp; AC Gas Refilling — Abu Dhabi, UAE</div>
@@ -740,10 +1104,10 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 
 <!-- STATS -->
 <div class="stats-bar" aria-label="Key highlights">
-  <div class="stat"><div class="stat-num"><i class="ph ph-lightning" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Fast Response Time</div></div>
-  <div class="stat"><div class="stat-num">4.9★</div><div class="stat-lbl">Customer Rating</div></div>
-  <div class="stat"><div class="stat-num"><i class="ph ph-truck" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Delivery Available</div></div>
-  <div class="stat"><div class="stat-num"><i class="ph ph-map-pin" style="font-size:2rem;color:var(--amber-mid);vertical-align:middle;"></i></div><div class="stat-lbl">Abu Dhabi, UAE</div></div>
+  <div class="stat"><div class="stat-num" data-count="87" data-suffix="+" >87+</div><div class="stat-lbl">Happy Customers</div></div>
+  <div class="stat"><div class="stat-num" data-count="4.9" data-suffix="★" data-float="1">4.9★</div><div class="stat-lbl">Customer Rating</div></div>
+  <div class="stat"><div class="stat-num" data-count="8" data-suffix="+ Yrs">8+ Yrs</div><div class="stat-lbl">In Business</div></div>
+  <div class="stat"><div class="stat-num" data-count="30" data-suffix=" Min">30 Min</div><div class="stat-lbl">Avg Service Time</div></div>
 </div>
 
 <!-- MARQUEE -->
@@ -1059,13 +1423,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
           <text x="30" y="350" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic">Arabian Gulf</text>
           <text x="620" y="180" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic" transform="rotate(90,630,200)">Arabian Gulf</text>
 
-          <!-- Service radius pulse -->
-          <circle cx="340" cy="210" r="180" fill="none" stroke="rgba(245,192,48,0.06)" stroke-width="1" stroke-dasharray="6,4">
-            <animateTransform attributeName="transform" type="rotate" from="0 340 210" to="360 340 210" dur="30s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="340" cy="210" r="130" fill="none" stroke="rgba(245,192,48,0.08)" stroke-width="1" stroke-dasharray="4,6">
-            <animateTransform attributeName="transform" type="rotate" from="360 340 210" to="0 340 210" dur="20s" repeatCount="indefinite"/>
-          </circle>
+          <!-- Service radius rings (static dashes — no animateTransform to prevent scroll jank) -->
+          <circle cx="340" cy="210" r="180" fill="none" stroke="rgba(245,192,48,0.06)" stroke-width="1" stroke-dasharray="6,4"/>
+          <circle cx="340" cy="210" r="130" fill="none" stroke="rgba(245,192,48,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
 
           <!-- CENTER GLOW — business location -->
           <circle cx="340" cy="215" r="40" fill="url(#glowAmber)" opacity="0.7"/>
@@ -1074,105 +1434,105 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
           <!-- Al Markaziyah (City Centre) -->
           <g class="map-pin" data-area="Al Markaziyah" onclick="selectArea('Al Markaziyah')" style="cursor:pointer;">
             <circle cx="310" cy="195" r="18" fill="rgba(245,192,48,0.12)" class="pin-pulse"/>
-            <circle cx="310" cy="195" r="9" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="310" cy="195" r="9" fill="#f5c030"/>
             <circle cx="310" cy="195" r="4" fill="#fff"/>
           </g>
 
           <!-- Al Khalidiyah -->
           <g class="map-pin" data-area="Al Khalidiyah" onclick="selectArea('Al Khalidiyah')" style="cursor:pointer;">
             <circle cx="265" cy="200" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="265" cy="200" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="265" cy="200" r="8" fill="#f5c030"/>
             <circle cx="265" cy="200" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Corniche -->
           <g class="map-pin" data-area="Corniche Abu Dhabi" onclick="selectArea('Corniche Abu Dhabi')" style="cursor:pointer;">
             <circle cx="230" cy="178" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="230" cy="178" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="230" cy="178" r="8" fill="#f5c030"/>
             <circle cx="230" cy="178" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Al Reem Island -->
           <g class="map-pin" data-area="Al Reem Island" onclick="selectArea('Al Reem Island')" style="cursor:pointer;">
             <circle cx="370" cy="165" r="16" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
-            <circle cx="370" cy="165" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="370" cy="165" r="8" fill="#25d366"/>
             <circle cx="370" cy="165" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Tourist Club Area -->
           <g class="map-pin" data-area="Tourist Club Area" onclick="selectArea('Tourist Club Area')" style="cursor:pointer;">
             <circle cx="345" cy="185" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="345" cy="185" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="345" cy="185" r="7" fill="#f5c030"/>
             <circle cx="345" cy="185" r="3" fill="#fff"/>
           </g>
 
           <!-- Al Zahiyah -->
           <g class="map-pin" data-area="Al Zahiyah" onclick="selectArea('Al Zahiyah')" style="cursor:pointer;">
             <circle cx="360" cy="200" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="360" cy="200" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="360" cy="200" r="7" fill="#f5c030"/>
             <circle cx="360" cy="200" r="3" fill="#fff"/>
           </g>
 
           <!-- Al Karamah -->
           <g class="map-pin" data-area="Al Karamah" onclick="selectArea('Al Karamah')" style="cursor:pointer;">
             <circle cx="290" cy="215" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="290" cy="215" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="290" cy="215" r="7" fill="#f5c030"/>
             <circle cx="290" cy="215" r="3" fill="#fff"/>
           </g>
 
           <!-- Al Nahyan -->
           <g class="map-pin" data-area="Al Nahyan" onclick="selectArea('Al Nahyan')" style="cursor:pointer;">
             <circle cx="340" cy="235" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="340" cy="235" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="340" cy="235" r="7" fill="#f5c030"/>
             <circle cx="340" cy="235" r="3" fill="#fff"/>
           </g>
 
           <!-- Al Mushrif -->
           <g class="map-pin" data-area="Al Mushrif" onclick="selectArea('Al Mushrif')" style="cursor:pointer;">
             <circle cx="390" cy="240" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="390" cy="240" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="390" cy="240" r="7" fill="#f5c030"/>
             <circle cx="390" cy="240" r="3" fill="#fff"/>
           </g>
 
           <!-- Madinat Zayed -->
           <g class="map-pin" data-area="Madinat Zayed" onclick="selectArea('Madinat Zayed')" style="cursor:pointer;">
             <circle cx="200" cy="225" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="200" cy="225" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="200" cy="225" r="7" fill="#f5c030"/>
             <circle cx="200" cy="225" r="3" fill="#fff"/>
           </g>
 
           <!-- Saadiyat Island -->
           <g class="map-pin" data-area="Saadiyat Island" onclick="selectArea('Saadiyat Island')" style="cursor:pointer;">
             <circle cx="430" cy="158" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
-            <circle cx="430" cy="158" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="430" cy="158" r="8" fill="#25d366"/>
             <circle cx="430" cy="158" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Yas Island -->
           <g class="map-pin" data-area="Yas Island" onclick="selectArea('Yas Island')" style="cursor:pointer;">
             <circle cx="490" cy="175" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
-            <circle cx="490" cy="175" r="8" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="490" cy="175" r="8" fill="#25d366"/>
             <circle cx="490" cy="175" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Mohammed Bin Zayed City -->
           <g class="map-pin" data-area="Mohammed Bin Zayed City" onclick="selectArea('Mohammed Bin Zayed City')" style="cursor:pointer;">
             <circle cx="430" cy="280" r="15" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="430" cy="280" r="8" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="430" cy="280" r="8" fill="#f5c030"/>
             <circle cx="430" cy="280" r="3.5" fill="#fff"/>
           </g>
 
           <!-- Al Shamkha -->
           <g class="map-pin" data-area="Al Shamkha" onclick="selectArea('Al Shamkha')" style="cursor:pointer;">
             <circle cx="310" cy="310" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="310" cy="310" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="310" cy="310" r="7" fill="#f5c030"/>
             <circle cx="310" cy="310" r="3" fill="#fff"/>
           </g>
 
           <!-- Al Falah -->
           <g class="map-pin" data-area="Al Falah" onclick="selectArea('Al Falah')" style="cursor:pointer;">
             <circle cx="380" cy="330" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
-            <circle cx="380" cy="330" r="7" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="380" cy="330" r="7" fill="#f5c030"/>
             <circle cx="380" cy="330" r="3" fill="#fff"/>
           </g>
 
@@ -1204,14 +1564,14 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 
           <!-- LEGEND — bottom left -->
           <g transform="translate(16, 476)">
-            <circle cx="8" cy="6" r="6" fill="#f5c030" filter="url(#glow)"/>
+            <circle cx="8" cy="6" r="6" fill="#f5c030"/>
             <text x="19" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">City Area</text>
-            <circle cx="90" cy="6" r="6" fill="#25d366" filter="url(#glow)"/>
+            <circle cx="90" cy="6" r="6" fill="#25d366"/>
             <text x="101" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">Island Area</text>
           </g>
 
           <!-- BUSINESS MARKER -->
-          <g filter="url(#softglow)">
+          <g>
             <circle cx="310" cy="195" r="22" fill="none" stroke="#f5c030" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5">
               <animateTransform attributeName="transform" type="rotate" from="0 310 195" to="360 310 195" dur="8s" repeatCount="indefinite"/>
             </circle>
@@ -1241,35 +1601,56 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <!-- CONTACT -->
 <section class="section" id="contact" aria-labelledby="contact-heading">
   <div class="sec-label">Reach Us</div>
-  <h2 class="sec-title" id="contact-heading">Contact Moon Light Car Care</h2>
-  <div class="contact-grid">
+  <h2 class="sec-title" id="contact-heading">Get In Touch</h2>
+  <p class="sec-sub">Our team is available every day — call, WhatsApp or drop us a message and we'll respond within minutes.</p>
+
+  <div class="contact-v2">
+
+    <!-- Left: CTAs + info -->
     <div>
-      <p class="contact-intro">Need a car battery, AC gas refill or car repair in Abu Dhabi? Call, WhatsApp or send a message — our team responds fast every day.</p>
-      <div class="c-items">
-        <a href="tel:+971523408703" class="c-item" aria-label="Call Moon Light Car Care">
-          <div class="c-icon-svg icon-phone"><i class="ph ph-phone-call"></i></div>
-          <div><div class="c-lbl">Phone — Call Anytime</div><div class="c-val">+971 52 340 8703</div></div>
+      <div class="online-badge">
+        <span class="online-dot"></span>
+        Team Available Now — Open Daily
+      </div>
+      <p class="contact-tagline">Need a battery replaced, AC gas refilled or a car repair in Abu Dhabi? We're fast, honest and ready to help right now.</p>
+
+      <div class="cta-btns">
+        <a href="tel:+971523408703" class="cta-call" aria-label="Call Moon Light Car Care">
+          <i class="ph ph-phone-call"></i> Call Now
         </a>
-        <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light!%20I%20need%20help%20with%20my%20car." class="c-item" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Care">
-          <div class="c-icon-svg icon-wa"><i class="ph ph-whatsapp-logo"></i></div>
-          <div><div class="c-lbl">WhatsApp — Quick Reply</div><div class="c-val" style="color:#25d366;">+971 52 340 8703</div></div>
+        <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light!%20I%20need%20help%20with%20my%20car." target="_blank" rel="noopener" class="cta-wa-big" aria-label="WhatsApp Moon Light Car Care">
+          <i class="ph ph-whatsapp-logo"></i> WhatsApp
         </a>
-        <a href="mailto:info@moonlightautocare.com" class="c-item" aria-label="Email Moon Light">
-          <div class="c-icon-svg icon-email"><i class="ph ph-envelope-simple"></i></div>
-          <div><div class="c-lbl">Email</div><div class="c-val">info@moonlightautocare.com</div></div>
+      </div>
+
+      <div class="ci-list">
+        <a href="tel:+971523408703" class="ci">
+          <div class="ci-icon ci-ph"><i class="ph ph-phone-call"></i></div>
+          <div><div class="ci-lbl">Phone — Call Anytime</div><div class="ci-val">+971 52 340 8703</div></div>
         </a>
-        <a href="https://maps.google.com/?q=Moon+Light+Car+Care+Al+Funoud+St+Al+Danah+Abu+Dhabi" target="_blank" rel="noopener" class="c-item" aria-label="Find Moon Light Car Care on map">
-          <div class="c-icon-svg icon-location"><i class="ph ph-map-pin"></i></div>
-          <div><div class="c-lbl">Our Address</div><div class="c-val">Al Funoud St, Al Danah - Zone 1, Abu Dhabi, UAE</div></div>
+        <a href="https://wa.me/971523408703" target="_blank" rel="noopener" class="ci">
+          <div class="ci-icon ci-wa"><i class="ph ph-whatsapp-logo"></i></div>
+          <div><div class="ci-lbl">WhatsApp — Quick Reply</div><div class="ci-val" style="color:#25d366;">+971 52 340 8703</div></div>
         </a>
-        <div class="c-item">
-          <div class="c-icon-svg icon-clock"><i class="ph ph-clock"></i></div>
-          <div><div class="c-lbl">Working Hours — Every Day</div><div class="c-val">8:00 AM – 11:30 PM</div></div>
+        <a href="mailto:info@moonlightautocare.com" class="ci">
+          <div class="ci-icon ci-em"><i class="ph ph-envelope-simple"></i></div>
+          <div><div class="ci-lbl">Email</div><div class="ci-val">info@moonlightautocare.com</div></div>
+        </a>
+        <a href="https://maps.google.com/?q=Moon+Light+Car+Care+Al+Funoud+St+Al+Danah+Abu+Dhabi" target="_blank" rel="noopener" class="ci">
+          <div class="ci-icon ci-loc"><i class="ph ph-map-pin"></i></div>
+          <div><div class="ci-lbl">Our Location</div><div class="ci-val">Al Funoud St, Al Danah – Zone 1, Abu Dhabi</div></div>
+        </a>
+        <div class="ci">
+          <div class="ci-icon ci-clk"><i class="ph ph-clock"></i></div>
+          <div><div class="ci-lbl">Working Hours — Every Day</div><div class="ci-val">8:00 AM – 11:30 PM</div></div>
         </div>
       </div>
     </div>
-    <div class="form-box">
-      <div class="form-title">Send a Message</div>
+
+    <!-- Right: form card -->
+    <div class="contact-form-card">
+      <div class="form-card-title">Send a Message</div>
+      <p class="form-card-sub">We'll reply on WhatsApp or phone within minutes.</p>
       <div class="fg-row">
         <div class="fg"><label for="f-name">Your Name</label><input type="text" id="f-name" name="name" placeholder="Ahmed Al Mansouri" autocomplete="name"></div>
         <div class="fg"><label for="f-phone">Phone / WhatsApp</label><input type="tel" id="f-phone" name="phone" placeholder="+971 50 000 0000" autocomplete="tel"></div>
@@ -1278,19 +1659,20 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
         <label for="f-service">Service Needed</label>
         <select id="f-service" name="service">
           <option value="">Select a service...</option>
-          <option value="battery">Car Battery Replacement — Abu Dhabi</option>
-          <option value="ac-gas">Car AC Gas Refilling — UAE</option>
-          <option value="ac-repair">Car AC Fixing / Repair</option>
+          <option value="battery">Car Battery Replacement</option>
+          <option value="ac-gas">Car AC Gas Refilling</option>
+          <option value="ac-repair">Car AC Repair</option>
           <option value="car-repair">General Car Repair</option>
           <option value="other">Other</option>
         </select>
       </div>
-      <div class="fg"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Describe your car issue — e.g. car battery dead, AC not cooling..."></textarea></div>
+      <div class="fg"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Describe your issue — e.g. battery dead, AC not cooling..."></textarea></div>
       <div class="submit-row">
         <button type="button" class="submit" onclick="handleSubmit('email')"><i class="ph ph-paper-plane-tilt"></i> Send Message</button>
         <button type="button" class="submit-wa" onclick="handleSubmit('wa')"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</button>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1405,6 +1787,117 @@ function toggleFAQ(el){
   var item=el.parentElement;
   item.classList.toggle('open');
 }
+
+/* ═══════════════════════════════════════════
+   ANIMATION ENGINE
+   ═══════════════════════════════════════════ */
+(function(){
+
+  /* ── 1. Scroll reveal ── */
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.13,rootMargin:'0px 0px -30px 0px'});
+
+  /* Register elements for scroll reveal */
+  function reg(sel,extraClass,delay){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      el.classList.add('will-anim');
+      if(extraClass) el.classList.add(extraClass);
+      if(delay) el.classList.add('d'+Math.min(i%6+1,6));
+      revealObs.observe(el);
+    });
+  }
+
+  reg('.sec-label');
+  reg('.sec-title');
+  reg('.sec-sub');
+  reg('.svc','',true);
+  reg('.review-card','',true);
+  reg('.faq-item','',true);
+  reg('.trust','from-left',true);
+  reg('.c-item','',true);
+  reg('.stat','from-scale',true);
+  reg('.rating-summary','from-scale');
+  reg('.form-box','from-right');
+  reg('.contact-intro');
+  reg('.map-container');
+  reg('.area-card','',true);
+  reg('.why-slogan','from-left');
+  reg('.why-desc','from-left');
+
+  /* ── 2. Counter animation ── */
+  function countUp(el,target,duration,suffix,isFloat){
+    var start=performance.now();
+    function step(now){
+      var p=Math.min((now-start)/duration,1);
+      var ease=1-Math.pow(1-p,3);
+      var val=isFloat?(target*ease).toFixed(1):Math.floor(target*ease);
+      el.textContent=val+suffix;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var counterObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target;
+        var target=parseFloat(el.dataset.count);
+        var suffix=el.dataset.suffix||'';
+        var isFloat=el.dataset.float==='1';
+        countUp(el,target,1800,suffix,isFloat);
+        counterObs.unobserve(el);
+      }
+    });
+  },{threshold:0.6});
+
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    counterObs.observe(el);
+  });
+
+  /* ── 3. Nav scroll shadow ── */
+  var nav=document.querySelector('nav');
+  window.addEventListener('scroll',function(){
+    nav&&nav.classList.toggle('scrolled',window.scrollY>8);
+  },{passive:true});
+
+  /* ── 4. Hero star particles ── */
+  var hero=document.querySelector('.hero-img');
+  if(hero){
+    for(var i=0;i<20;i++){
+      var s=document.createElement('div');
+      s.className='star-pt';
+      var sz=Math.random()*2.5+1;
+      s.style.cssText=[
+        'width:'+sz+'px','height:'+sz+'px',
+        'left:'+(Math.random()*98)+'%',
+        'top:'+(Math.random()*98)+'%',
+        '--d:'+(Math.random()*3+2)+'s',
+        '--dl:'+(Math.random()*5)+'s',
+        '--lo:'+(Math.random()*.2+.08),
+        '--hi:'+(Math.random()*.5+.35)
+      ].join(';');
+      hero.appendChild(s);
+    }
+  }
+
+  /* ── 5. Map — start pin animations only when visible, pause when off-screen ── */
+  var mapSvg=document.getElementById('abuDhabiMap');
+  if(mapSvg&&'IntersectionObserver' in window){
+    var mapObs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        mapSvg.classList.toggle('map-active',e.isIntersecting);
+      });
+    },{threshold:0.1});
+    mapObs.observe(mapSvg);
+  }
+
+})();
 function handleSubmit(mode){
   var name=document.getElementById('f-name').value.trim();
   var phone=document.getElementById('f-phone').value.trim();
