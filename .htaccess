@@ -9,11 +9,21 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.moonlightautocare\.com$ [NC]
 RewriteRule ^ https://moonlightautocare.com%{REQUEST_URI} [R=301,L]
 
-# ── 3. Remove index.php and index.html from URL ─────────────────────────────
+# ── 3. Old PHP pages → 301 to relevant section (fixes Google 404s & not-indexed) ──
+RewriteRule ^Index\.php$           https://moonlightautocare.com/ [R=301,L,NC]
+RewriteRule ^Getting.Ready\.php$   https://moonlightautocare.com/ [R=301,L,NC]
+RewriteRule ^Login\.php$           https://moonlightautocare.com/ [R=301,L,NC]
+RewriteRule ^Contact/?$            https://moonlightautocare.com/#contact [R=301,L,NC]
+RewriteRule ^Products\.php$        https://moonlightautocare.com/#services [R=301,L,NC]
+RewriteRule ^About\.php$           https://moonlightautocare.com/#why [R=301,L,NC]
+# Catch-all for any remaining old .php pages
+RewriteRule ^[^/]+\.php$           https://moonlightautocare.com/ [R=301,L,NC]
+
+# ── 5. Remove index.php and index.html from URL ─────────────────────────────
 RewriteCond %{THE_REQUEST} /index\.(php|html)[\s?] [NC]
 RewriteRule ^(.*)index\.(php|html)$ /$1 [R=301,L]
 
-# ── 4. Trailing slash normalisation (no slash on files, slash on dirs) ───────
+# ── 6. Trailing slash normalisation (no slash on files, slash on dirs) ───────
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
