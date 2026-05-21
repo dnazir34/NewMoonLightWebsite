@@ -326,11 +326,11 @@ nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;j
 }
 .mob-nav-link{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
 .mob-drawer.open .mob-nav-link{will-change:opacity,transform;}
-.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .5s .10s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .5s .20s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .5s .30s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .5s .40s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .5s .50s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .65s .12s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .65s .24s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .65s .36s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .65s .48s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .65s .60s cubic-bezier(.22,1,.36,1) forwards;}
 .mob-nav-ico{
   width:32px;height:32px;border-radius:7px;flex-shrink:0;
   background:rgba(255,255,255,0.06);
@@ -884,10 +884,14 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   transform:translateY(-5px);
   box-shadow:0 14px 36px rgba(14,30,61,.12);
 }
-/* Scroll-reveal must override hover transition so FAQ-style smooth entrance plays */
-.review-card.will-anim:not(.visible){
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.review-card.will-anim{
   transition:opacity .65s cubic-bezier(.22,1,.36,1),
              transform .65s cubic-bezier(.22,1,.36,1);
+}
+.review-card.will-anim.visible:hover{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
 }
 
 /* ── FAQ smooth height ── */
@@ -941,11 +945,12 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
   margin:-0.4rem;
 }
 .trust:hover{ transform:translateX(5px); }
-/* Scroll-reveal smooth entrance — overrides hover transition before visible */
-.trust.will-anim:not(.visible){
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.trust.will-anim{
   transition:opacity .65s cubic-bezier(.22,1,.36,1),
              transform .65s cubic-bezier(.22,1,.36,1);
 }
+.trust.will-anim.visible:hover{ transition:transform .25s cubic-bezier(.22,1,.36,1); }
 
 /* ── Contact item already has hover, add transition ── */
 .c-item{
