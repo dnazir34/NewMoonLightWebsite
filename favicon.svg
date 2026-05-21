@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Navy circle background -->
+  <circle cx="256" cy="256" r="256" fill="#0c1b36"/>
+  <defs>
+    <mask id="crescent">
+      <circle cx="256" cy="256" r="145" fill="white"/>
+      <circle cx="318" cy="210" r="128" fill="black"/>
+    </mask>
+  </defs>
+  <!-- Gold crescent moon -->
+  <circle cx="256" cy="256" r="145" fill="#f5c030" mask="url(#crescent)"/>
+  <!-- Stars -->
+  <circle cx="118" cy="108" r="20" fill="#f5c030"/>
+  <circle cx="258" cy="88"  r="16" fill="#f5c030"/>
+  <circle cx="390" cy="100" r="18" fill="#f5c030"/>
+  <circle cx="68"  cy="230" r="14" fill="#f5c030" opacity="0.85"/>
+  <circle cx="440" cy="198" r="13" fill="#f5c030" opacity="0.85"/>
+  <circle cx="178" cy="80"  r="10" fill="#f5c030" opacity="0.7"/>
+  <circle cx="330" cy="74"  r="9"  fill="#f5c030" opacity="0.7"/>
+</svg>

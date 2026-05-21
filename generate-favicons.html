@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Generate Favicons</title>
+<style>
+  body{font-family:sans-serif;background:#0c1b36;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;gap:1.5rem;}
+  h2{color:#f5c030;margin:0;}
+  p{color:rgba(255,255,255,0.6);margin:0;font-size:0.9rem;text-align:center;}
+  .btn{background:#f5c030;color:#0c1b36;font-weight:800;padding:0.9rem 2.5rem;border:none;border-radius:6px;font-size:1rem;cursor:pointer;letter-spacing:0.05em;}
+  .btn:hover{background:#e6b020;}
+  #status{color:#4caf50;font-weight:700;font-size:1rem;min-height:1.5rem;}
+  .previews{display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;justify-content:center;}
+  canvas{border-radius:50%;display:block;}
+</style>
+</head>
+<body>
+<h2>Moon Light Favicon Generator</h2>
+<p>Click the button — all favicon files will download automatically.<br>Then move them into your website folder.</p>
+<div class="previews" id="previews"></div>
+<button class="btn" onclick="generate()">Generate &amp; Download All Favicons</button>
+<div id="status"></div>
+
+<script>
+function drawLogo(ctx, size) {
+  const cx = size / 2, cy = size / 2, r = size / 2;
+  // Navy background circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = '#0c1b36';
+  ctx.fill();
+
+  // Crescent moon using clipping
+  const moonR = size * 0.283;
+  const offsetX = size * 0.121;
+  const offsetY = size * -0.09;
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, moonR, 0, Math.PI * 2);
+  ctx.clip();
+  // Fill full circle gold
+  ctx.fillStyle = '#f5c030';
+  ctx.beginPath();
+  ctx.arc(cx, cy, moonR, 0, Math.PI * 2);
+  ctx.fill();
+  // Cut out offset circle (creates crescent)
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(cx + offsetX, cy + offsetY, moonR * 0.883, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Stars
+  const stars = [
+    [0.23, 0.21, 0.039],
+    [0.50, 0.172, 0.031],
+    [0.763, 0.195, 0.035],
+    [0.133, 0.449, 0.027],
+    [0.86, 0.387, 0.025],
+    [0.348, 0.156, 0.020],
+    [0.645, 0.145, 0.018],
+  ];
+  stars.forEach(([sx, sy, sr], i) => {
+    ctx.beginPath();
+    ctx.arc(sx * size, sy * size, sr * size, 0, Math.PI * 2);
+    ctx.fillStyle = i < 3 ? '#f5c030' : (i < 5 ? 'rgba(245,192,48,0.85)' : 'rgba(245,192,48,0.7)');
+    ctx.fill();
+  });
+}
+
+function generate() {
+  const status = document.getElementById('status');
+  status.textContent = 'Generating...';
+
+  const files = [
+    { name: 'favicon-16x16.png',          size: 16 },
+    { name: 'favicon-32x32.png',          size: 32 },
+    { name: 'favicon-48x48.png',          size: 48 },
+    { name: 'apple-touch-icon.png',       size: 180 },
+    { name: 'android-chrome-192x192.png', size: 192 },
+    { name: 'android-chrome-512x512.png', size: 512 },
+  ];
+
+  let delay = 0;
+  files.forEach(({ name, size }) => {
+    setTimeout(() => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      drawLogo(ctx, size);
+      const link = document.createElement('a');
+      link.download = name;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }, delay);
+    delay += 300;
+  });
+
+  setTimeout(() => {
+    status.textContent = '✓ All 6 files downloaded! Move them into your website folder.';
+  }, delay);
+
+  // Show previews
+  const previews = document.getElementById('previews');
+  previews.innerHTML = '';
+  [32, 64, 128, 192].forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    canvas.title = size + 'x' + size;
+    const ctx = canvas.getContext('2d');
+    drawLogo(ctx, size);
+    previews.appendChild(canvas);
+  });
+}
+
+// Auto-preview on load
+window.onload = () => {
+  const previews = document.getElementById('previews');
+  [32, 64, 128, 192].forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    drawLogo(ctx, size);
+    previews.appendChild(canvas);
+  });
+};
+</script>
+</body>
+</html>
