@@ -212,7 +212,7 @@ h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-ser
 /* NAV */
 nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
 .logo{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
-.logo>svg{width:54px;height:54px;flex-shrink:0;}
+.logo>svg{width:68px;height:68px;flex-shrink:0;}
 .logo-icon{font-size:1.7rem;line-height:1;}
 .logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
@@ -319,13 +319,18 @@ nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;j
   border-left-color:var(--amber-mid);
   padding-left:1.55rem;
 }
-/* Slide-in animation — forwards only (links are visible by default, just get a slide-in polish on open) */
-@keyframes mobLinkIn{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}
-.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .32s .06s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .32s .12s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .32s .18s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .32s .24s cubic-bezier(.22,1,.36,1) forwards;}
-.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .32s .30s cubic-bezier(.22,1,.36,1) forwards;}
+/* Slide-in animation — smooth fade+slide, GPU-composited via translate3d */
+@keyframes mobLinkIn{
+  from{opacity:0;transform:translate3d(-18px,0,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+.mob-nav-link{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.mob-drawer.open .mob-nav-link{will-change:opacity,transform;}
+.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .3s .05s ease-out forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .3s .11s ease-out forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .3s .17s ease-out forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .3s .23s ease-out forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .3s .29s ease-out forwards;}
 .mob-nav-ico{
   width:32px;height:32px;border-radius:7px;flex-shrink:0;
   background:rgba(255,255,255,0.06);
@@ -647,9 +652,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   html,body{max-width:100vw;overflow-x:hidden;}
   /* Nav */
   nav{padding:0.7rem 1rem;}
-  .logo>svg{width:44px;height:44px;}
+  .logo>svg{width:56px;height:56px;}
   .logo-icon{font-size:1.3rem;}
-  .logo-name{font-size:1rem;}
+  .logo-name{font-size:1.2rem;}
   .logo-tag{display:none;}
   /* Hide phone icon — no icon needed, button IS the battery */
   .nav-cta-phone{display:none;}
@@ -1167,7 +1172,6 @@ a.ci:hover{
     <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
   </ul>
   <div class="nav-actions">
-    <span class="nav-delivery"><i class="ph ph-truck"></i> Delivery Available</span>
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
     <!-- bat-wrap creates the two terminal posts on mobile via ::before/::after -->
     <span class="bat-wrap">
