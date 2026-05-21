@@ -257,13 +257,13 @@ nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;j
   background:linear-gradient(160deg,#0e1e3d 0%,#091628 100%);
   border-right:1px solid rgba(245,192,48,0.12);
   z-index:500;
-  transform:translateX(-100%);
-  transition:transform .38s cubic-bezier(.4,0,.2,1);
+  transform:translateX(-110%);           /* -110% fully hides shadow off-screen */
+  transition:transform .38s cubic-bezier(.4,0,.2,1),box-shadow .38s;
   display:flex;flex-direction:column;
   overflow-y:auto;
-  box-shadow:12px 0 48px rgba(0,0,0,0.55);
+  box-shadow:none;                        /* no shadow while off-screen */
 }
-.mob-drawer.open{transform:translateX(0);}
+.mob-drawer.open{transform:translateX(0);box-shadow:12px 0 48px rgba(0,0,0,0.55);}
 
 /* Drawer top — logo + close */
 .mob-drawer-head{
