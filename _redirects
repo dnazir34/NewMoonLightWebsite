@@ -1,0 +1,12 @@
+# Old PHP pages → 301 redirects
+/Index.php                  https://moonlightautocare.com/          301
+/Getting.Ready.php          https://moonlightautocare.com/          301
+/Getting%20Ready.php        https://moonlightautocare.com/          301
+/Login.php                  https://moonlightautocare.com/          301
+/Contact                    https://moonlightautocare.com/#contact  301
+/Contact/                   https://moonlightautocare.com/#contact  301
+/Products.php               https://moonlightautocare.com/#services 301
+/About.php                  https://moonlightautocare.com/#why      301
+
+# Remove index.html from URL
+/index.html                 https://moonlightautocare.com/          301
