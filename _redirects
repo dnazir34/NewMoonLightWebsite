@@ -7,6 +7,20 @@
 /Contact/                   https://moonlightautocare.com/#contact  301
 /Products.php               https://moonlightautocare.com/#services 301
 /About.php                  https://moonlightautocare.com/#why      301
+/bin.php                    https://moonlightautocare.com/          301
+/Bin.php                    https://moonlightautocare.com/          301
+/admin.php                  https://moonlightautocare.com/          301
+/Admin.php                  https://moonlightautocare.com/          301
+/config.php                 https://moonlightautocare.com/          301
+/wp-login.php               https://moonlightautocare.com/          301
+/wp-admin.php               https://moonlightautocare.com/          301
+/checkout.php               https://moonlightautocare.com/          301
+/cart.php                   https://moonlightautocare.com/          301
+/page.php                   https://moonlightautocare.com/          301
+/home.php                   https://moonlightautocare.com/          301
 
 # Remove index.html from URL
 /index.html                 https://moonlightautocare.com/          301
+
+# Catch-all: any remaining .php files
+/*.php                      https://moonlightautocare.com/          301
