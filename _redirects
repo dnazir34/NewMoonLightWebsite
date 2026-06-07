@@ -19,6 +19,12 @@
 /page.php                   https://moonlightautocare.com/          301
 /home.php                   https://moonlightautocare.com/          301
 
+# Service page redirects (with and without .html extension)
+/car-battery-abu-dhabi.html https://moonlightautocare.com/car-battery-abu-dhabi 301
+/ac-gas-refilling-abu-dhabi.html https://moonlightautocare.com/ac-gas-refilling-abu-dhabi 301
+/car-repair-abu-dhabi.html  https://moonlightautocare.com/car-repair-abu-dhabi  301
+/car-scanning-abu-dhabi.html https://moonlightautocare.com/car-scanning-abu-dhabi 301
+
 # Remove index.html from URL
 /index.html                 https://moonlightautocare.com/          301
 
