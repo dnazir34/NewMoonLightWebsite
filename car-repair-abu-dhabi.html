@@ -258,11 +258,13 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 
 /* ── BATTERY BRANDS — AI illustration style ── */
 .brands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:0.5rem;}
-.brand-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:0;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;}
+.brand-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:0;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;display:flex;flex-direction:column;}
+.brand-info{flex:1;}
 .brand-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--amber-mid);transform:scaleX(0);transition:transform .3s;transform-origin:left;z-index:1;}
 .brand-card:hover::before{transform:scaleX(1);}
 .brand-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(14,30,61,0.13);border-color:var(--amber-mid);}
-.brand-img{width:100%;height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.brand-img{width:100%;height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.brand-img svg{display:block;margin:auto;}
 .brand-info{padding:1rem 1.2rem 1.2rem;}
 .brand-name{font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:800;color:var(--navy);text-transform:uppercase;margin-bottom:0.2rem;}
 .brand-origin{font-size:0.72rem;color:var(--muted);font-weight:300;margin-bottom:0.5rem;}
@@ -601,7 +603,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <!-- AC Compressor -->
     <div class="brand-card will-anim d1">
       <div class="brand-img" style="background:linear-gradient(135deg,#001a33,#002244);">
-        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
           <rect x="20" y="25" width="160" height="90" rx="10" fill="#001133" stroke="#4fc3f7" stroke-width="2"/>
           <circle cx="100" cy="68" r="28" fill="none" stroke="#4fc3f7" stroke-width="2" opacity="0.5"/>
           <circle cx="100" cy="68" r="18" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity="0.35"/>
@@ -624,7 +626,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <!-- Mechanical Repair -->
     <div class="brand-card will-anim d2">
       <div class="brand-img" style="background:linear-gradient(135deg,#1a1000,#2a1a00);">
-        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
           <rect x="20" y="25" width="160" height="90" rx="10" fill="#1a0f00" stroke="#f5c030" stroke-width="2"/>
           <!-- Wrench body -->
           <g transform="translate(100,68) rotate(-30)">
@@ -655,7 +657,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <!-- Brake Repair -->
     <div class="brand-card will-anim d3">
       <div class="brand-img" style="background:linear-gradient(135deg,#1a0000,#2d0000);">
-        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
           <rect x="20" y="25" width="160" height="90" rx="10" fill="#1a0000" stroke="#ef5350" stroke-width="2"/>
           <!-- Brake disc -->
           <circle cx="100" cy="68" r="32" fill="none" stroke="#ef5350" stroke-width="2" opacity="0.5"/>
@@ -681,7 +683,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <!-- Electrical Repair -->
     <div class="brand-card will-anim d4">
       <div class="brand-img" style="background:linear-gradient(135deg,#0d1a00,#162600);">
-        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:90%;height:90%;">
+        <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
           <rect x="20" y="25" width="160" height="90" rx="10" fill="#0a1800" stroke="#76ff03" stroke-width="2"/>
           <!-- Lightning bolt -->
           <polygon points="115,32 88,72 105,72 85,108 125,60 108,60" fill="#76ff03" opacity="0.55"/>
