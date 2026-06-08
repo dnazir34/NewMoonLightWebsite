@@ -158,9 +158,13 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 .logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
 .logo-tag{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-.nav-links{display:flex;gap:1rem;list-style:none;}
-.nav-links a{color:var(--muted);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;white-space:nowrap;}
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
+.nav-links li{display:flex;align-items:center;}
+.nav-links li+li::before{content:'·';color:var(--border);font-size:1.2rem;margin:0 0.75rem;line-height:1;}
+.nav-links a{color:var(--muted);font-size:0.82rem;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);border-radius:2px;transition:width .25s ease;}
 .nav-links a:hover{color:var(--amber);}
+.nav-links a:hover::after{width:100%;}
 .nav-actions{display:flex;gap:0.6rem;align-items:center;flex-shrink:0;}
 .nav-cta{background:var(--red);color:#fff;padding:0.75rem 1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);flex-shrink:0;}
 .nav-cta:hover{background:#a93226;transform:translateY(-1px);}
