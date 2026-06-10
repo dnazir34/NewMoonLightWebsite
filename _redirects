@@ -1,12 +1,22 @@
-# Old PHP pages → 301 redirects
+# Force HTTPS + non-www (catch http and www variants)
+http://moonlightautocare.com/*          https://moonlightautocare.com/:splat    301
+http://www.moonlightautocare.com/*      https://moonlightautocare.com/:splat    301
+https://www.moonlightautocare.com/*     https://moonlightautocare.com/:splat    301
+
+# Old PHP pages
+/index.php                  https://moonlightautocare.com/          301
 /Index.php                  https://moonlightautocare.com/          301
+/GettingReady.php           https://moonlightautocare.com/          301
 /Getting.Ready.php          https://moonlightautocare.com/          301
 /Getting%20Ready.php        https://moonlightautocare.com/          301
 /Login.php                  https://moonlightautocare.com/          301
+/login.php                  https://moonlightautocare.com/          301
 /Contact                    https://moonlightautocare.com/#contact  301
 /Contact/                   https://moonlightautocare.com/#contact  301
 /Products.php               https://moonlightautocare.com/#services 301
+/products.php               https://moonlightautocare.com/#services 301
 /About.php                  https://moonlightautocare.com/#why      301
+/about.php                  https://moonlightautocare.com/#why      301
 /bin.php                    https://moonlightautocare.com/          301
 /Bin.php                    https://moonlightautocare.com/          301
 /admin.php                  https://moonlightautocare.com/          301
@@ -14,19 +24,16 @@
 /config.php                 https://moonlightautocare.com/          301
 /wp-login.php               https://moonlightautocare.com/          301
 /wp-admin.php               https://moonlightautocare.com/          301
-/checkout.php               https://moonlightautocare.com/          301
-/cart.php                   https://moonlightautocare.com/          301
-/page.php                   https://moonlightautocare.com/          301
 /home.php                   https://moonlightautocare.com/          301
 
-# Service page redirects (with and without .html extension)
-/car-battery-abu-dhabi.html https://moonlightautocare.com/car-battery-abu-dhabi 301
-/ac-gas-refilling-abu-dhabi.html https://moonlightautocare.com/ac-gas-refilling-abu-dhabi 301
-/car-repair-abu-dhabi.html  https://moonlightautocare.com/car-repair-abu-dhabi  301
-/car-scanning-abu-dhabi.html https://moonlightautocare.com/car-scanning-abu-dhabi 301
+# Service page .html extensions
+/car-battery-abu-dhabi.html         https://moonlightautocare.com/car-battery-abu-dhabi         301
+/ac-gas-refilling-abu-dhabi.html    https://moonlightautocare.com/ac-gas-refilling-abu-dhabi    301
+/car-repair-abu-dhabi.html          https://moonlightautocare.com/car-repair-abu-dhabi          301
+/car-scanning-abu-dhabi.html        https://moonlightautocare.com/car-scanning-abu-dhabi        301
 
 # Remove index.html from URL
 /index.html                 https://moonlightautocare.com/          301
 
-# Catch-all: any remaining .php files
+# Catch-all for any remaining .php files
 /*.php                      https://moonlightautocare.com/          301
