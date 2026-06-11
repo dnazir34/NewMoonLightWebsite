@@ -1,0 +1,7 @@
+name = "moonlight"
+main = "index.html"
+compatibility_date = "2026-06-11"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "."
