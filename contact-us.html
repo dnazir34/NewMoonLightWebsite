@@ -209,6 +209,29 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .float-wa{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:1rem;right:0.8rem;font-size:0!important;}
   footer{padding:1.5rem 1rem 4rem;}
 }
+
+/* NAV DROPDOWN */
+.nav-dropdown{position:relative;}
+.nav-dropdown-toggle{display:flex;align-items:center;gap:0.3rem;}
+.nav-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 12px);left:50%;
+  transform:translateX(-50%);
+  background:var(--white);border:1px solid var(--border);
+  border-radius:8px;padding:0.5rem 0;
+  min-width:200px;z-index:300;
+  box-shadow:0 8px 30px rgba(14,30,61,0.12);
+  list-style:none;
+}
+.nav-dropdown:hover .nav-dropdown-menu{display:block;}
+.nav-dropdown-menu li a{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.6rem 1.1rem;
+  color:var(--muted);font-size:0.8rem;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:background .15s,color .15s;white-space:nowrap;
+}
+.nav-dropdown-menu li a:hover{background:var(--amber-light);color:var(--amber);}
+.nav-dropdown-menu li a i{font-size:1rem;color:var(--amber);}
 </style>
 </head>
 <body>
@@ -237,13 +260,20 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <div class="logo-tag">Car Battery &amp; AC Gas Refilling — Abu Dhabi</div>
     </div>
   </div>
-  <ul class="nav-links" role="menubar">
+    <ul class="nav-links" role="menubar">
     <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
+    <li class="nav-dropdown">
+      <a href="/#services" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
+        <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
+        <li><a href="/car-repair-abu-dhabi"><i class="ph ph-wrench"></i> Car Repair</a></li>
+        <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
+      </ul>
+    </li>
     <li><a href="/#areas">Areas</a></li>
-    <li><a href="/#reviews">Reviews</a></li>
-    <li><a href="/about-us">About Us</a></li>
-    <li><a href="/contact-us" class="active">Contact</a></li>
+    <li><a href="/about-us" >About Us</a></li>
+    <li><a href="/contact-us" class="active">Contact Us</a></li>
   </ul>
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
