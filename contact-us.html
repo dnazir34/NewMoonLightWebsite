@@ -308,7 +308,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
     <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
-  <div class="mob-open-badge"><span class="mob-open-dot"></span>Open Now · 8am – 11:30pm Daily</div>
+  <div class="mob-open-badge" id="mobOpenBadge"><span class="mob-open-dot" id="mobOpenDot"></span><span id="mobOpenText">Open Now &nbsp;·&nbsp; 8am – 11:30pm Daily</span></div>
   <div class="mob-nav" role="menubar">
     <a href="/" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home</a>
     <a href="/#services" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Services</a>
@@ -498,6 +498,40 @@ function handleSubmit(mode){
   var text='Hello Moon Light Car Care!%0A%0AName: '+encodeURIComponent(name)+'%0APhone: '+encodeURIComponent(phone)+'%0ACar: '+encodeURIComponent(car||'Not specified')+'%0AService: '+encodeURIComponent(service||'Not specified')+'%0AMessage: '+encodeURIComponent(msg||'No message');
   window.open('https://wa.me/971523408703?text='+text,'_blank');
 }
+
+// ── Open/Closed status badge ──
+(function(){
+  function updateOpenStatus(){
+    var now = new Date();
+    var uaeOffset = 4 * 60;
+    var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    var uae = new Date(utc + (uaeOffset * 60000));
+    var h = uae.getHours();
+    var m = uae.getMinutes();
+    var mins = h * 60 + m;
+    var isOpen = mins >= 480 && mins < 1410;
+    var badge = document.getElementById('mobOpenBadge');
+    var dot = document.getElementById('mobOpenDot');
+    var text = document.getElementById('mobOpenText');
+    if(!badge) return;
+    if(isOpen){
+      badge.style.background = 'rgba(37,211,102,0.07)';
+      badge.style.borderBottom = '1px solid rgba(37,211,102,0.12)';
+      dot.style.background = '#25d366';
+      dot.style.boxShadow = '0 0 7px rgba(37,211,102,0.8)';
+      text.innerHTML = 'Open Now &nbsp;&middot;&nbsp; Until 11:30pm';
+    } else {
+      badge.style.background = 'rgba(192,57,43,0.07)';
+      badge.style.borderBottom = '1px solid rgba(192,57,43,0.12)';
+      dot.style.background = '#e74c3c';
+      dot.style.boxShadow = '0 0 7px rgba(192,57,43,0.8)';
+      dot.style.animation = 'none';
+      text.innerHTML = 'Closed &nbsp;&middot;&nbsp; Opens 8am Daily';
+    }
+  }
+  updateOpenStatus();
+  setInterval(updateOpenStatus, 60000);
+})();
 </script>
 </body>
 </html>
