@@ -54,10 +54,24 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 .logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
 .logo-tag{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-.nav-links{display:flex;gap:1.8rem;list-style:none;}
-.nav-links a{color:var(--muted);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;white-space:nowrap;}
-.nav-links a:hover,.nav-links a.active{color:var(--amber);}
-.nav-links a.active{border-bottom:2px solid var(--amber-mid);padding-bottom:2px;}
+/* NAV DOTS + DROPDOWN */
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
+.nav-links li{display:flex;align-items:center;}
+.nav-links>li+li::before{content:'·';color:#b0bcd4;font-size:1.4rem;margin:0 0.75rem;line-height:1;font-weight:700;}
+.nav-links a{color:var(--muted);font-size:0.82rem;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);border-radius:2px;transition:width .25s ease;}
+.nav-links a:hover{color:var(--amber);}
+.nav-links a:hover::after{width:100%;}
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-toggle{display:flex;align-items:center;gap:0.3rem;cursor:pointer;}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;padding-top:8px;background:transparent;list-style:none;z-index:300;min-width:210px;}
+.nav-dropdown-menu::before{content:'';display:block;background:var(--white);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 30px rgba(14,30,61,0.12);position:absolute;top:8px;left:0;right:0;bottom:0;z-index:-1;}
+.nav-dropdown:hover .nav-dropdown-menu{display:block;}
+.nav-dropdown-menu-inner{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0;box-shadow:0 8px 30px rgba(14,30,61,0.12);}
+.nav-dropdown-menu li{list-style:none;}
+.nav-dropdown-menu li a{display:flex;align-items:center;gap:0.6rem;padding:0.6rem 1.1rem;color:var(--muted);font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;transition:background .15s,color .15s;white-space:nowrap;}
+.nav-dropdown-menu li a:hover{background:var(--amber-light);color:var(--amber);}
+.nav-dropdown-menu li a i{font-size:1rem;color:var(--amber);width:1rem;text-align:center;}
 .nav-actions{display:flex;gap:0.6rem;align-items:center;flex-shrink:0;}
 .nav-cta{background:var(--red);color:#fff;padding:0.75rem 1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);}
 .nav-cta:hover{background:#a93226;transform:translateY(-1px);}
@@ -252,11 +266,21 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
   </div>
   <ul class="nav-links" role="menubar">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#areas">Areas</a></li>
-    <li><a href="/about-us">About Us</a></li>
-    <li><a href="/contact-us" class="active">Contact</a></li>
+    <li role="none"><a href="/" role="menuitem">Home</a></li>
+    <li role="none" class="nav-dropdown">
+      <a href="/#services" role="menuitem" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
+      <ul class="nav-dropdown-menu">
+        <div class="nav-dropdown-menu-inner">
+        <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
+        <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
+        <li><a href="/car-repair-abu-dhabi"><i class="ph ph-wrench"></i> Car Repair</a></li>
+        <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
+        </div>
+      </ul>
+    </li>
+    <li role="none"><a href="/#areas" role="menuitem">Areas</a></li>
+    <li role="none"><a href="/about-us" role="menuitem">About Us</a></li>
+    <li role="none"><a href="/contact-us" role="menuitem" class="active">Contact Us</a></li>
   </ul>
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
