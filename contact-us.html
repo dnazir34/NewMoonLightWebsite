@@ -48,25 +48,48 @@ a{text-decoration:none;}
 h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;}
 
 /* NAV */
-nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
+nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 .logo{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
-.logo>svg{width:58px;height:58px;flex-shrink:0;}
-.logo-icon{font-size:1.7rem;line-height:1;}
-.logo-name{font-size:1.25rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
+.logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
 .logo-tag{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
-.nav-links li{display:flex;align-items:center;}
-.nav-links>li+li::before{content:'·';color:#b0bcd4;font-size:1.4rem;margin:0 0.75rem;line-height:1;font-weight:700;}
-.nav-links a{color:var(--muted);font-size:0.82rem;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;position:relative;padding-bottom:2px;transition:color .2s;}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);border-radius:2px;transition:width .25s ease;}
-.nav-links a:hover{color:var(--amber);}
-.nav-links a:hover::after{width:100%;}
-.nav-actions{display:flex;gap:0.5rem;align-items:center;flex-shrink:0;}
-.nav-cta{background:var(--red);color:#fff;padding:0.6rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.88rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);flex-shrink:0;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{color:var(--muted);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--amber);}
+.nav-links a.active{border-bottom:2px solid var(--amber-mid);padding-bottom:2px;}
+.nav-actions{display:flex;gap:0.6rem;align-items:center;flex-shrink:0;}
+.nav-cta{background:var(--red);color:#fff;padding:0.75rem 1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);}
 .nav-cta:hover{background:#a93226;transform:translateY(-1px);}
-.nav-wa{background:#25d366;color:#fff;padding:0.6rem 0.9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 3px 10px rgba(37,211,102,0.3);}
+.nav-wa{background:#25d366;color:#fff;padding:0.7rem 1.1rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.06em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;}
 .nav-wa:hover{background:#1ebe5d;transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5.5px;cursor:pointer;padding:6px;z-index:310;background:none;border:none;flex-shrink:0;min-width:36px;min-height:36px;align-items:center;justify-content:center;}
+.hamburger span{display:block;width:24px;height:2.5px;background:var(--navy);border-radius:2px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s ease,width .3s ease;}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;width:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+.mob-overlay{position:fixed;inset:0;background:rgba(9,16,35,0.75);backdrop-filter:blur(3px);z-index:400;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;}
+.mob-overlay.open{opacity:1;visibility:visible;}
+.mob-drawer{position:fixed;top:0;left:0;bottom:0;width:min(82vw,310px);background:linear-gradient(160deg,#0e1e3d 0%,#091628 100%);border-right:1px solid rgba(245,192,48,0.12);z-index:500;transform:translateX(-110%);transition:transform .38s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto;}
+.mob-drawer.open{transform:translateX(0);box-shadow:12px 0 48px rgba(0,0,0,0.55);}
+.mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.2rem;border-bottom:1px solid rgba(245,192,48,0.15);flex-shrink:0;}
+.mob-draw-logo{display:flex;align-items:center;gap:0.55rem;}
+.mob-draw-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;line-height:1.1;}
+.mob-draw-logo-txt em{color:var(--amber-mid);font-style:normal;}
+.mob-draw-logo-sub{font-size:0.55rem;letter-spacing:0.13em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:2px;}
+.mob-close-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.mob-open-badge{display:flex;align-items:center;gap:0.5rem;padding:0.55rem 1.2rem;background:rgba(37,211,102,0.07);border-bottom:1px solid rgba(37,211,102,0.12);font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+.mob-open-dot{width:7px;height:7px;border-radius:50%;background:#25d366;animation:onlinePulse 2s ease-in-out infinite;}
+@keyframes onlinePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+.mob-nav{padding:0.5rem 0;}
+.mob-nav-link{display:flex;align-items:center;gap:0.8rem;padding:0.78rem 1.2rem;color:rgba(255,255,255,0.75);font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;border-left:3px solid transparent;transition:background .2s,color .2s,border-color .2s,padding-left .2s;}
+.mob-nav-link:hover{background:rgba(245,192,48,0.07);color:var(--amber-mid);border-left-color:var(--amber-mid);padding-left:1.55rem;}
+.mob-nav-ico{width:32px;height:32px;border-radius:7px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.mob-ctas{padding:0.8rem 1.2rem 1rem;display:flex;flex-direction:column;gap:0.55rem;}
+.mob-cta-call,.mob-cta-wa{display:flex;align-items:center;justify-content:center;gap:0.45rem;padding:0.88rem;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;transition:background .2s;}
+.mob-cta-call{background:#e74c3c;color:#fff;border:2px solid rgba(255,255,255,0.25);}
+.mob-cta-wa{background:#25d366;color:#fff;border:2px solid rgba(255,255,255,0.2);}
+.mob-drawer-foot{padding:0.65rem 1.2rem;border-top:1px solid rgba(255,255,255,0.05);text-align:center;font-size:0.68rem;letter-spacing:0.06em;color:rgba(255,255,255,0.28);text-transform:uppercase;}
 .bat-wrap{display:contents;}
 
 /* PAGE HERO */
@@ -162,7 +185,8 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
 .f-copy{font-size:0.7rem;color:rgba(255,255,255,0.25);}
 
-
+@media(max-width:900px){
+  nav{padding:0.8rem 1.2rem;}
   .nav-links,.nav-wa{display:none;}
   .hamburger{display:flex;}
   .page-hero{padding:3rem 1.5rem;}
@@ -171,7 +195,8 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .map-section{padding:0 1.5rem 3rem;}
   footer{padding:2rem 1.5rem;}
 }
-
+@media(max-width:600px){
+  .bat-wrap{display:inline-block;position:relative;padding-top:13px;flex-shrink:0;}
   .bat-wrap::before{content:'';position:absolute;top:0;left:18%;width:22%;height:13px;background:linear-gradient(to bottom,#ef5350,#b71c1c);border:1.5px solid #7f0000;border-bottom:none;border-radius:4px 4px 0 0;}
   .bat-wrap::after{content:'';position:absolute;top:0;right:18%;width:22%;height:13px;background:linear-gradient(to bottom,#616161,#212121);border:1.5px solid #000;border-bottom:none;border-radius:4px 4px 0 0;}
   .nav-cta{display:flex;align-items:center;justify-content:center;padding:0.6rem 0.75rem;font-size:0.8rem;background:linear-gradient(to bottom,#c62828 0%,#c62828 22%,#1a1a1a 22%,#1a1a1a 78%,#c62828 78%,#c62828 100%);color:#fff;border:2px solid #000;border-radius:0 0 4px 4px;}
@@ -184,28 +209,6 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   .float-wa{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:1rem;right:0.8rem;font-size:0!important;}
   footer{padding:1.5rem 1rem 4rem;}
 }
-@media(max-width:900px){
-  nav{padding:0.8rem 1.2rem;}
-  .nav-links{display:none;}
-  .hamburger{display:flex;}
-  .nav-wa{display:none;}
-}
-@media(max-width:600px){
-  html,body{max-width:100vw;overflow-x:hidden;}
-  nav{padding:0.7rem 1rem;}
-  .logo>svg{width:46px;height:46px;}
-  .logo-name{font-size:1.1rem;}
-  .logo-tag{display:none;}
-  .bat-wrap{display:contents;}
-  .nav-cta{background:var(--red);color:#fff;padding:0.6rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.88rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;display:inline-flex;align-items:center;gap:0.3rem;box-shadow:0 4px 14px rgba(192,57,43,0.35);}
-  .nav-cta:hover{background:#a93226;}
-  .hamburger{display:flex;flex-shrink:0;}
-  .float-call{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:5.5rem;right:0.8rem;}.float-call span{display:none;}.float-call .ph{font-size:1.5rem!important;}
-  .float-wa{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:1rem;right:0.8rem;}.float-wa span{display:none;}.float-wa .ph{font-size:1.5rem!important;}
-  footer{padding:1.5rem 1rem 4rem;}
-}
-.mob-overlay{position:fixed;inset:0;background:rgba(9,16,35,0.75);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:400;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;}
-.mob-overlay.open{opacity:1;visibility:visible;}
 </style>
 </head>
 <body>
@@ -223,7 +226,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <!-- NAV -->
 <nav role="navigation" aria-label="Main navigation">
   <div class="logo">
-    <svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+    <svg width="38" height="38" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
       <defs><mask id="nav-moon-mask"><circle cx="340" cy="340" r="145" fill="white"/><circle cx="412" cy="285" r="128" fill="black"/></mask></defs>
       <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#nav-moon-mask)"/>
       <circle cx="185" cy="125" r="28" fill="#f5c030"/><circle cx="338" cy="108" r="22" fill="#f5c030"/><circle cx="490" cy="122" r="25" fill="#f5c030"/>
@@ -235,21 +238,12 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
   </div>
   <ul class="nav-links" role="menubar">
-    <li role="none"><a href="/" role="menuitem">Home</a></li>
-    <li role="none" class="nav-dropdown">
-      <a href="/#services" role="menuitem" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
-      <ul class="nav-dropdown-menu">
-        <div class="nav-dropdown-menu-inner">
-        <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
-        <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
-        <li><a href="/car-repair-abu-dhabi"><i class="ph ph-wrench"></i> Car Repair</a></li>
-        <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
-        </div>
-      </ul>
-    </li>
-    <li role="none"><a href="/#areas" role="menuitem">Areas</a></li>
-    <li role="none"><a href="/about-us" role="menuitem">About Us</a></li>
-    <li role="none"><a href="/contact-us" class="active" role="menuitem">Contact Us</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#areas">Areas</a></li>
+    <li><a href="/#reviews">Reviews</a></li>
+    <li><a href="/about-us">About Us</a></li>
+    <li><a href="/contact-us" class="active">Contact</a></li>
   </ul>
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
@@ -285,16 +279,14 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
   <div class="mob-open-badge"><span class="mob-open-dot"></span>Open Now · 8am – 11:30pm Daily</div>
-    <div class="mob-nav" role="menubar">
+  <div class="mob-nav" role="menubar">
     <a href="/" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home</a>
-    <a href="/car-battery-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Car Battery</a>
-    <a href="/ac-gas-refilling-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-snowflake"></i></span>AC Gas Refilling</a>
-    <a href="/car-repair-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-wrench"></i></span>Car Repair</a>
-    <a href="/car-scanning-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-cpu"></i></span>Car Scanning</a>
+    <a href="/#services" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Services</a>
+    <a href="/#areas" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-map-pin"></i></span>Areas</a>
     <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us</a>
-    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us</a>
+    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact</a>
   </div>
-<div class="mob-ctas">
+  <div class="mob-ctas">
     <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call +971 52 340 8703</a>
     <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
   </div>
