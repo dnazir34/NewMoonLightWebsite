@@ -2,10 +2,10 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<!-- Google tag (gtag.js) — blocked on preview/staging domains -->
+<!-- Google tag (gtag.js) — only fires on production domain -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11173017967"></script>
 <script>
-  if (window.location.hostname === 'moonlightautocare.com') {
+  if (!window.location.hostname.includes('pages.dev')) {
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
