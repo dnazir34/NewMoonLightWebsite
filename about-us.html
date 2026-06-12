@@ -251,12 +251,21 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
   </div>
   <ul class="nav-links" role="menubar">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#areas">Areas</a></li>
-    <li><a href="/#reviews">Reviews</a></li>
-    <li><a href="/about-us" class="active">About Us</a></li>
-    <li><a href="/contact-us">Contact</a></li>
+    <li role="none"><a href="/" role="menuitem">Home</a></li>
+    <li role="none" class="nav-dropdown">
+      <a href="/#services" role="menuitem" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
+      <ul class="nav-dropdown-menu">
+        <div class="nav-dropdown-menu-inner">
+        <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
+        <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
+        <li><a href="/car-repair-abu-dhabi"><i class="ph ph-wrench"></i> Car Repair</a></li>
+        <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
+        </div>
+      </ul>
+    </li>
+    <li role="none"><a href="/#areas" role="menuitem">Areas</a></li>
+    <li role="none"><a href="/about-us" class="active" role="menuitem">About Us</a></li>
+    <li role="none"><a href="/contact-us" role="menuitem">Contact Us</a></li>
   </ul>
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
@@ -292,14 +301,16 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
   <div class="mob-open-badge"><span class="mob-open-dot"></span>Open Now · 8am – 11:30pm Daily</div>
-  <div class="mob-nav" role="menubar">
+    <div class="mob-nav" role="menubar">
     <a href="/" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home</a>
-    <a href="/#services" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Services</a>
-    <a href="/#areas" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-map-pin"></i></span>Areas</a>
+    <a href="/car-battery-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Car Battery</a>
+    <a href="/ac-gas-refilling-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-snowflake"></i></span>AC Gas Refilling</a>
+    <a href="/car-repair-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-wrench"></i></span>Car Repair</a>
+    <a href="/car-scanning-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-cpu"></i></span>Car Scanning</a>
     <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us</a>
-    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact</a>
+    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us</a>
   </div>
-  <div class="mob-ctas">
+<div class="mob-ctas">
     <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call +971 52 340 8703</a>
     <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
   </div>
