@@ -38,153 +38,963 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#f5f7fa;--white:#ffffff;--panel:#edf0f6;--border:#dde3ef;
-  --navy:#0e1e3d;--amber:#c98b00;--amber-btn:#f0a500;--amber-light:#fff9e6;
-  --amber-mid:#f5c030;--text:#181e2e;--muted:#5e6e90;--red:#c0392b;
+  --bg:#f5f7fa;
+  --white:#ffffff;
+  --panel:#edf0f6;
+  --border:#dde3ef;
+  --navy:#0e1e3d;
+  --amber:#c98b00;
+  --amber-btn:#f0a500;
+  --amber-light:#fff9e6;
+  --amber-mid:#f5c030;
+  --text:#181e2e;
+  --muted:#5e6e90;
+  --red:#c0392b;
+  --green:#1a7a3c;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',system-ui,sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6;}
+img{max-width:100%;display:block;}
 a{text-decoration:none;}
 h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;}
 
 /* NAV */
-nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;transition:box-shadow .3s;}
-nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
+nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
 .logo{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
-.logo-name{font-size:1.45rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
+.logo>svg{width:58px;height:58px;flex-shrink:0;}
+.logo-icon{font-size:1.7rem;line-height:1;}
+.logo-name{font-size:1.25rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
 .logo-name em{color:var(--amber);font-style:normal;}
 .logo-tag{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
-.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center;}
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
 .nav-links li{display:flex;align-items:center;}
-.nav-links a{color:var(--muted);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;transition:color .2s;white-space:nowrap;display:flex;align-items:center;gap:0.3rem;}
-.nav-links a:hover,.nav-links a.active{color:var(--amber);}
-.nav-links a.active{border-bottom:2px solid var(--amber-mid);padding-bottom:2px;}
-.nav-actions{display:flex;gap:0.6rem;align-items:center;flex-shrink:0;}
-.nav-cta{background:var(--red);color:#fff;padding:0.75rem 1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);}
+.nav-links li+li::before{content:'·';color:#b0bcd4;font-size:1.4rem;margin:0 0.75rem;line-height:1;font-weight:700;}
+.nav-links a{color:var(--muted);font-size:0.82rem;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);border-radius:2px;transition:width .25s ease;}
+.nav-links a:hover{color:var(--amber);}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;gap:0.5rem;align-items:center;flex-shrink:0;}
+.nav-cta{background:var(--red);color:#fff;padding:0.6rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.88rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);flex-shrink:0;}
 .nav-cta:hover{background:#a93226;transform:translateY(-1px);}
-.nav-wa{background:#25d366;color:#fff;padding:0.7rem 1.1rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.06em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;}
+.nav-wa{background:#25d366;color:#fff;padding:0.6rem 0.9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 3px 10px rgba(37,211,102,0.3);}
 .nav-wa:hover{background:#1ebe5d;transform:translateY(-1px);}
-/* PAGE HERO */
-.page-hero{background:linear-gradient(135deg,#0c1b36 0%,#0e1e3d 60%,#091525 100%);padding:5rem 4rem 4rem;position:relative;overflow:hidden;}
-.page-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(245,192,48,0.1) 0%,transparent 70%);pointer-events:none;}
-.page-hero-label{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-mid);font-weight:700;margin-bottom:0.6rem;}
-.page-hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;text-transform:uppercase;color:#fff;line-height:0.95;margin-bottom:1rem;}
-.page-hero h1 em{color:var(--amber-mid);font-style:normal;}
-.page-hero p{font-size:1rem;color:rgba(255,255,255,0.55);font-weight:300;max-width:520px;line-height:1.75;}
-.breadcrumb{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.75rem;color:rgba(255,255,255,0.35);}
-.breadcrumb a{color:rgba(255,255,255,0.45);transition:color .2s;}
-.breadcrumb a:hover{color:var(--amber-mid);}
-.breadcrumb span{color:rgba(255,255,255,0.2);}
+/* Battery wrapper — invisible on desktop, styled as battery on mobile */
+.bat-wrap{display:contents;}
+.nav-cta-battery{display:none;}
+/* ═══════════════════════════════════════════
+   MOBILE SIDEBAR — premium dark navy drawer
+   ═══════════════════════════════════════════ */
 
-/* QUICK CONTACT CARDS */
-.quick-contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;padding:0 4rem;margin-top:-2rem;position:relative;z-index:10;}
-.qc-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.8rem 1.5rem;text-align:center;box-shadow:0 8px 30px rgba(14,30,61,0.1);transition:transform .2s,box-shadow .2s;}
-.qc-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(14,30,61,0.15);}
-.qc-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto 1rem;}
-.qc-icon.ph-icon{background:#fff0f0;color:var(--red);}
-.qc-icon.wa-icon{background:#e8f8ef;color:#25d366;}
-.qc-icon.em-icon{background:#eef3ff;color:#3b5bdb;}
-.qc-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
-.qc-val{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:0.8rem;}
-.qc-btn{display:inline-flex;align-items:center;gap:0.35rem;padding:0.6rem 1.2rem;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;transition:transform .2s;}
-.qc-btn.red{background:var(--red);color:#fff;}
-.qc-btn.green{background:#25d366;color:#fff;}
-.qc-btn.blue{background:#3b5bdb;color:#fff;}
-.qc-btn:hover{transform:translateY(-1px);}
+/* Hamburger — morphs to × on open; flex-shrink:0 prevents it being squeezed in zoom mode */
+.hamburger{display:none;flex-direction:column;gap:5.5px;cursor:pointer;padding:6px;z-index:310;background:none;border:none;flex-shrink:0;min-width:36px;min-height:36px;align-items:center;justify-content:center;}
+.hamburger span{display:block;width:24px;height:2.5px;background:var(--navy);border-radius:2px;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s ease,width .3s ease;}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;width:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
 
-/* MAIN CONTACT SECTION */
-.contact-main{padding:5rem 4rem;display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:start;}
+/* Overlay backdrop */
+.mob-overlay{
+  position:fixed;inset:0;
+  background:rgba(9,16,35,0.75);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  z-index:400;
+  opacity:0;visibility:hidden;
+  transition:opacity .35s ease,visibility .35s ease;
+}
+.mob-overlay.open{opacity:1;visibility:visible;}
 
-/* Info side */
-.online-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.28);color:#1a7a3c;font-size:0.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .9rem;border-radius:30px;margin-bottom:1.5rem;}
-.online-dot{width:7px;height:7px;border-radius:50%;background:#25d366;animation:onlinePulse 2s ease infinite;flex-shrink:0;}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:800;text-transform:uppercase;color:var(--navy);line-height:1;margin-bottom:0.5rem;position:relative;display:inline-block;}
-.sec-title::after{content:'';position:absolute;bottom:-6px;left:0;width:56px;height:3px;background:var(--amber-mid);border-radius:2px;}
-.contact-tagline{font-size:.92rem;color:var(--muted);font-weight:300;line-height:1.75;margin-bottom:1.8rem;margin-top:1rem;max-width:380px;}
-.cta-btns{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem;}
-.cta-call{background:var(--red);color:#fff;padding:1rem 1.2rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 18px rgba(192,57,43,.4);}
-.cta-call:hover{transform:translateY(-2px);}
-.cta-wa-big{background:#25d366;color:#fff;padding:1rem 1.2rem;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 18px rgba(37,211,102,.4);}
-.cta-wa-big:hover{transform:translateY(-2px);}
-.ci-list{display:flex;flex-direction:column;gap:.6rem;}
-.ci{display:flex;align-items:center;gap:.95rem;padding:.85rem 1.1rem;background:var(--white);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:background .2s,border-color .2s,transform .22s;}
-a.ci:hover{background:var(--amber-light);border-color:rgba(245,192,48,.5);transform:translateX(5px);}
-.ci-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
-.ci-ph{background:rgba(192,57,43,.1);color:var(--red);}
-.ci-wa{background:rgba(37,211,102,.12);color:#25d366;}
-.ci-em{background:rgba(59,91,219,.1);color:#3b5bdb;}
-.ci-loc{background:rgba(245,192,48,.15);color:var(--amber-mid);}
-.ci-clk{background:rgba(245,192,48,.1);color:var(--amber);}
-.ci-lbl{font-size:.59rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
-.ci-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);}
+/* Drawer panel */
+.mob-drawer{
+  position:fixed;
+  top:0;left:0;bottom:0;
+  width:min(82vw,310px);
+  background:linear-gradient(160deg,#0e1e3d 0%,#091628 100%);
+  border-right:1px solid rgba(245,192,48,0.12);
+  z-index:500;
+  transform:translateX(-110%);           /* -110% fully hides shadow off-screen */
+  transition:transform .38s cubic-bezier(.4,0,.2,1),box-shadow .38s;
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  box-shadow:none;                        /* no shadow while off-screen */
+}
+.mob-drawer.open{transform:translateX(0);box-shadow:12px 0 48px rgba(0,0,0,0.55);}
 
-/* FORM CARD */
-.contact-form-card{background:var(--white);border-radius:14px;padding:2.4rem 2.2rem;box-shadow:0 12px 40px rgba(14,30,61,0.1);border:1px solid var(--border);}
-.form-card-title{font-family:'Barlow Condensed',sans-serif;font-size:1.65rem;font-weight:800;text-transform:uppercase;color:var(--navy);margin-bottom:.25rem;}
-.form-card-sub{font-size:.82rem;color:var(--muted);font-weight:300;margin-bottom:1.6rem;}
+/* Drawer top — logo + close */
+.mob-drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.2rem;
+  border-bottom:1px solid rgba(245,192,48,0.15);
+  flex-shrink:0;
+}
+.mob-draw-logo{display:flex;align-items:center;gap:0.55rem;}
+.mob-draw-logo svg{width:42px;height:42px;flex-shrink:0;}
+.mob-draw-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;line-height:1.1;}
+.mob-draw-logo-txt em{color:var(--amber-mid);font-style:normal;}
+.mob-draw-logo-sub{font-size:0.55rem;letter-spacing:0.13em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:2px;}
+.mob-close-btn{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.6);font-size:0.9rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;
+}
+.mob-close-btn:hover{background:rgba(245,192,48,0.18);color:var(--amber-mid);}
+
+/* Open badge */
+.mob-open-badge{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.55rem 1.2rem;
+  background:rgba(37,211,102,0.07);
+  border-bottom:1px solid rgba(37,211,102,0.12);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);flex-shrink:0;
+}
+.mob-open-dot{width:7px;height:7px;border-radius:50%;background:#25d366;flex-shrink:0;
+  box-shadow:0 0 7px rgba(37,211,102,0.8);animation:onlinePulse 2s ease-in-out infinite;}
+
+/* Nav links */
+.mob-nav{padding:0.5rem 0;flex-shrink:0;}
+.mob-nav-link{
+  display:flex;align-items:center;gap:0.8rem;
+  padding:0.78rem 1.2rem;
+  color:rgba(255,255,255,0.75);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.1rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  border-left:3px solid transparent;
+  transition:background .2s,color .2s,border-color .2s,padding-left .2s;
+}
+.mob-nav-link:hover,.mob-nav-link:focus{
+  background:rgba(245,192,48,0.07);
+  color:var(--amber-mid);
+  border-left-color:var(--amber-mid);
+  padding-left:1.55rem;
+}
+/* Slide-in animation — smooth fade+slide, GPU-composited via translate3d */
+@keyframes mobLinkIn{
+  from{opacity:0;transform:translate3d(-18px,0,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+.mob-nav-link{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.mob-drawer.open .mob-nav-link{will-change:opacity,transform;}
+.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .65s .12s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .65s .24s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .65s .36s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .65s .48s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .65s .60s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-nav-ico{
+  width:32px;height:32px;border-radius:7px;flex-shrink:0;
+  background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  transition:background .2s,color .2s;
+}
+.mob-nav-link:hover .mob-nav-ico,.mob-nav-link:focus .mob-nav-ico{
+  background:rgba(245,192,48,0.14);color:var(--amber-mid);
+}
+.mob-nav-sep{height:1px;background:rgba(255,255,255,0.05);margin:0.3rem 1.2rem;}
+
+/* CTA buttons */
+.mob-ctas{padding:0.8rem 1.2rem 1rem;display:flex;flex-direction:column;gap:0.55rem;flex-shrink:0;}
+.mob-cta-call,.mob-cta-wa{
+  display:flex;align-items:center;justify-content:center;gap:0.45rem;
+  padding:0.88rem;border-radius:7px;
+  font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:background .2s,transform .15s;
+  opacity:1 !important;   /* always fully visible — no animation hiding */
+}
+.mob-cta-call{
+  background:#e74c3c;color:#fff;
+  border:2px solid rgba(255,255,255,0.25);
+  box-shadow:0 4px 20px rgba(231,76,60,0.55);
+}
+.mob-cta-call:hover{background:#c0392b;transform:translateY(-1px);}
+.mob-cta-wa{
+  background:#25d366;color:#fff;
+  border:2px solid rgba(255,255,255,0.2);
+  box-shadow:0 4px 16px rgba(37,211,102,0.45);
+}
+.mob-cta-wa:hover{background:#1ebe5d;transform:translateY(-1px);}
+
+/* Drawer footer line */
+.mob-drawer-foot{
+  padding:0.65rem 1.2rem;
+  border-top:1px solid rgba(255,255,255,0.05);
+  text-align:center;flex-shrink:0;
+  font-size:0.68rem;letter-spacing:0.06em;
+  color:rgba(255,255,255,0.28);text-transform:uppercase;
+}
+
+/* HERO */
+.hero-img{width:100%;height:420px;overflow:hidden;position:relative;background:var(--navy);}
+.hero-svg{width:100%;height:100%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(14,30,61,0.82) 0%,rgba(14,30,61,0.45) 55%,rgba(14,30,61,0.1) 100%);}
+.hero-text{position:absolute;top:50%;left:4rem;transform:translateY(-50%);z-index:2;}
+.hero-text h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:0.9rem;}
+.hero-text h1 em{color:var(--amber-mid);font-style:normal;}
+.hero-slogan{color:#fff;font-size:clamp(1.05rem,2.2vw,1.4rem);font-weight:700;letter-spacing:0.04em;background:rgba(240,165,0,0.18);border-left:4px solid var(--amber-mid);padding:0.5rem 1rem;margin-bottom:1.2rem;display:inline-block;border-radius:0 4px 4px 0;}
+.hero-text p{color:rgba(255,255,255,0.78);font-size:clamp(0.82rem,1.4vw,0.97rem);font-weight:300;max-width:400px;line-height:1.72;margin-bottom:1.4rem;}
+.hero-btns{display:flex;gap:0.7rem;flex-wrap:wrap;}
+.hero-btn{background:var(--amber-btn);color:var(--navy);padding:0.82rem 1.8rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border-radius:5px;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(245,192,48,0.4);}
+.hero-btn:hover{background:#d4920a;transform:translateY(-2px);}
+.hero-btn-wa{background:#25d366;color:#fff;padding:0.82rem 1.6rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border-radius:5px;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,211,102,0.35);}
+.hero-btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);}
+
+/* STATS */
+.stats-bar{background:var(--navy);display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{text-align:center;padding:1.4rem 1rem;border-right:1px solid rgba(255,255,255,0.08);}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:var(--amber-mid);}
+.stat-lbl{font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:2px;}
+
+/* MARQUEE */
+.mq{overflow:hidden;background:var(--amber-light);border-top:1px solid #f0dc90;border-bottom:1px solid #f0dc90;padding:0.7rem 0;}
+.mq-track{display:flex;gap:2rem;animation:mq 26s linear infinite;width:max-content;}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{font-family:'Barlow Condensed',sans-serif;font-size:0.92rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);white-space:nowrap;}
+.mq-dot{color:#b8860a;}
+
+/* SECTIONS */
+.section{padding:5rem 4rem;}
+.section-alt{background:var(--white);}
+.sec-label{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:0.5rem;}
+.sec-title{font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:800;text-transform:uppercase;color:var(--navy);line-height:1;margin-bottom:0.5rem;}
+.sec-sub{font-size:0.9rem;color:var(--muted);max-width:580px;line-height:1.72;margin-bottom:2.5rem;font-weight:300;}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;align-items:stretch;}@media(min-width:1200px){.services-grid{grid-template-columns:repeat(4,1fr);}}
+.svc{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:2rem 1.8rem;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;min-height:420px;}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--amber-mid);}
+.svc:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(14,30,61,0.1);}
+.svc-icon{font-size:2.2rem;margin-bottom:1rem;display:block;}
+.svc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.55rem;font-weight:800;text-transform:uppercase;color:var(--navy);margin-bottom:0.5rem;}
+.svc-desc{font-size:0.86rem;color:var(--muted);line-height:1.75;font-weight:300;}
+.svc-keywords{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.kw-tag{background:var(--amber-light);color:var(--amber);font-size:0.66rem;letter-spacing:0.07em;padding:0.22rem 0.55rem;border-radius:20px;font-weight:500;border:1px solid #f0dc90;}
+
+/* REVIEWS */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:0.5rem;}
+.review-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.6rem 1.5rem;position:relative;}
+.review-stars{color:#f5c030;font-size:1rem;letter-spacing:2px;margin-bottom:0.7rem;}
+.review-text{font-size:0.87rem;color:var(--muted);line-height:1.72;font-weight:300;font-style:italic;margin-bottom:1rem;}
+.review-author{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);text-transform:uppercase;}
+.review-location{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+.review-badge{position:absolute;top:1rem;right:1rem;background:var(--amber-light);color:var(--amber);font-size:0.62rem;font-weight:700;letter-spacing:0.08em;padding:0.2rem 0.5rem;border-radius:20px;border:1px solid #f0dc90;text-transform:uppercase;}
+.rating-summary{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;background:var(--white);border:1px solid var(--border);padding:1.2rem 1.8rem;border-radius:8px;width:fit-content;}
+.rating-big{font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:800;color:var(--navy);line-height:1;}
+.rating-stars-big{color:#f5c030;font-size:1.3rem;letter-spacing:3px;display:block;margin-bottom:2px;}
+.rating-count{font-size:0.78rem;color:var(--muted);}
+
+/* FAQ */
+.faq-list{max-width:800px;display:flex;flex-direction:column;gap:0.8rem;}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.faq-q{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:var(--navy);padding:1.1rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase;letter-spacing:0.02em;user-select:none;}
+.faq-q:hover{background:var(--amber-light);}
+.faq-arrow{font-size:1.1rem;color:var(--amber);flex-shrink:0;margin-left:1rem;display:flex;align-items:center;}
+.faq-a{font-size:0.88rem;color:var(--muted);line-height:1.75;padding:0 1.5rem 1.1rem;font-weight:300;display:none;}
+.faq-item.open .faq-a{display:block;}
+.faq-arrow i{transition:transform .3s;}.faq-item.open .faq-arrow i{transform:rotate(180deg);}
+
+/* WHY */
+.why-inner{display:grid;grid-template-columns:1fr 1fr;}
+.why-left{background:var(--navy);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:space-between;min-height:400px;}
+.why-big{font-size:clamp(2.8rem,5vw,4.2rem);font-weight:800;text-transform:uppercase;color:#fff;line-height:0.9;margin-bottom:1.5rem;}
+.why-big em{color:var(--amber-mid);font-style:normal;}
+.why-slogan{font-size:1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0.04em;color:var(--amber-mid);background:rgba(245,192,48,0.1);border-left:4px solid var(--amber-mid);padding:0.6rem 1rem;margin-bottom:1rem;border-radius:0 4px 4px 0;text-transform:uppercase;}
+.why-desc{font-size:0.88rem;color:rgba(255,255,255,0.5);font-weight:300;line-height:1.78;max-width:320px;}
+.why-right{padding:4rem;display:flex;flex-direction:column;justify-content:center;gap:2rem;background:var(--panel);}
+.trust{display:flex;gap:1.2rem;align-items:flex-start;}
+.t-icon{font-size:1.4rem;flex-shrink:0;margin-top:3px;}
+.t-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:0.2rem;}
+.t-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;font-weight:300;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-intro{font-size:0.9rem;color:var(--muted);line-height:1.78;font-weight:300;max-width:380px;margin-bottom:1.8rem;}
+.c-items{display:flex;flex-direction:column;gap:0.85rem;}
+.c-item{display:flex;align-items:center;gap:1rem;background:var(--white);border:1px solid var(--border);padding:1rem 1.3rem;border-radius:6px;transition:border-color .2s,box-shadow .2s;}
+.c-item:hover{border-color:var(--amber-btn);box-shadow:0 4px 12px rgba(240,165,0,0.12);}
+.c-icon{font-size:1.3rem;width:26px;text-align:center;}
+.c-lbl{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.c-val{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:var(--navy);}
+.form-box{background:var(--white);border:1px solid var(--border);padding:2.2rem;border-radius:8px;}
+.form-title{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;text-transform:uppercase;color:var(--navy);margin-bottom:1.4rem;}
 .fg{margin-bottom:1rem;}
-.fg label{display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;font-weight:600;}
-.fg input,.fg select,.fg textarea{width:100%;background:#f8faff;border:1.5px solid #e2e8f2;color:var(--text);padding:.82rem 1rem;font-family:'Barlow',sans-serif;font-size:.9rem;border-radius:7px;outline:none;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none;appearance:none;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--amber-btn);box-shadow:0 0 0 3px rgba(240,165,0,.12);background:#fff;}
-.fg textarea{resize:none;height:100px;}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
-.submit-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.3rem;}
-.submit{background:var(--navy);color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;border-radius:7px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.fg label{display:block;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.75rem 1rem;font-family:'Barlow',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--amber-btn);box-shadow:0 0 0 3px rgba(240,165,0,0.12);}
+.fg textarea{resize:none;height:80px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+.submit-row{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.3rem;}
+.submit{background:var(--navy);color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;border-radius:4px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
 .submit:hover{background:var(--amber-btn);color:var(--navy);}
-.submit-wa{background:#25d366;color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;border-radius:7px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.submit-wa{background:#25d366;color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;border-radius:4px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
 .submit-wa:hover{background:#1ebe5d;}
-
-/* MAP */
-.map-section{padding:0 4rem 5rem;}
-.map-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;}
-.map-embed{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.12);border:1px solid var(--border);height:380px;}
-.map-embed iframe{width:100%;height:100%;border:0;display:block;}
-
-/* FLOAT */
-.float-call{position:fixed;bottom:5.5rem;right:1rem;background:var(--red);color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(192,57,43,0.45);transition:transform .2s;animation:pulse 2.5s ease infinite;white-space:nowrap;}
-.float-wa{position:fixed;bottom:1rem;right:1rem;background:#25d366;color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform .2s;white-space:nowrap;}
-.float-call:hover,.float-wa:hover{transform:scale(1.05);}
-@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,0.4);}50%{box-shadow:0 4px 32px rgba(192,57,43,0.72),0 0 0 9px rgba(192,57,43,0.07);}}
 
 /* FOOTER */
 footer{background:var(--navy);padding:2.5rem 3rem;}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08);}
+.f-logo{display:flex;align-items:center;gap:0.6rem;}
+.f-logo-icon{font-size:1.3rem;}
 .f-logo-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:#fff;}
 .f-logo-name em{color:var(--amber-mid);font-style:normal;}
-.f-col h3{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:0.8rem;}
+.f-logo-arabic{font-size:0.85rem;color:rgba(255,255,255,0.35);margin-top:3px;direction:rtl;}
+.f-col h4{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:0.8rem;}
 .f-col a,.f-col p{font-size:0.8rem;color:rgba(255,255,255,0.35);display:block;margin-bottom:0.4rem;transition:color .2s;line-height:1.6;}
 .f-col a:hover{color:var(--amber-mid);}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
 .f-copy{font-size:0.7rem;color:rgba(255,255,255,0.25);}
+.f-seo-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.f-seo-links a{font-size:0.7rem;color:rgba(255,255,255,0.25);transition:color .2s;}
+.f-seo-links a:hover{color:var(--amber-mid);}
 
+/* FLOAT */
+.float-call{position:fixed;bottom:5.5rem;right:1rem;background:var(--red);color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(192,57,43,0.45);transition:transform .2s;animation:pulse 2.5s ease infinite;white-space:nowrap;}
+.float-call:hover{transform:scale(1.05);}
+.float-wa{position:fixed;bottom:1rem;right:1rem;background:#25d366;color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform .2s;white-space:nowrap;}
+.float-wa:hover{transform:scale(1.05);}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,0.4);}50%{box-shadow:0 4px 28px rgba(192,57,43,0.65);}}
+/* ICONS — Modern 2026 coloured style */
+.ph{display:inline-flex;align-items:center;vertical-align:middle;flex-shrink:0;}
+.nav-cta .ph,.nav-wa .ph{font-size:1.15rem;}
+.hero-btn .ph,.hero-btn-wa .ph{font-size:1.25rem;}
+.float-call .ph,.float-wa .ph{font-size:1.4rem;}
+
+/* Contact card icons — coloured circles */
+.c-icon-svg{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;
+}
+.c-icon-svg.icon-phone{background:#fff0f0;color:#c0392b;}
+.c-icon-svg.icon-wa{background:#e8f8ef;color:#25d366;}
+.c-icon-svg.icon-email{background:#eef3ff;color:#3b5bdb;}
+.c-icon-svg.icon-location{background:#fff8e6;color:var(--amber);}
+.c-icon-svg.icon-clock{background:#f0f4ff;color:#5c7cfa;}
+
+/* Service card icons — large coloured icons */
+.svc-icon-box{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;font-size:1.9rem;
+}
+.svc-icon-box.icon-battery{background:#fff8e6;color:#d4900a;}
+.svc-icon-box.icon-ac{background:#e8f4ff;color:#1c7ed6;}
+.svc-icon-box.icon-repair{background:#f0fff4;color:#2f9e44;}
+
+/* Why Us trust icons — coloured circles */
+.t-icon-circle{
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;margin-top:2px;
+}
+.t-icon-circle.icon-lightning{background:rgba(245,192,48,0.15);color:var(--amber-mid);}
+.t-icon-circle.icon-shield{background:rgba(37,211,102,0.12);color:#2f9e44;}
+.t-icon-circle.icon-wrench{background:rgba(92,124,250,0.12);color:#5c7cfa;}
+.t-icon-circle.icon-clock{background:rgba(245,192,48,0.18);color:var(--amber-mid);}
+
+/* Area card icons */
+.area-icon-svg{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--amber-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--amber);
+  margin-bottom:0.6rem;
+}
+
+/* Stat icons */
+.stat-icon-wrap{display:flex;align-items:center;justify-content:center;font-size:1.9rem;color:var(--amber-mid);}
+
+@media(max-width:600px){
+  .float-call .ph,.float-wa .ph{font-size:1.5rem;}
+  .svc-icon-box{width:52px;height:52px;font-size:1.5rem;border-radius:12px;}
+  .c-icon-svg{width:38px;height:38px;font-size:1.1rem;}
+}
+
+/* MAP LAYOUT — full width, no sidebar */
+.map-layout{display:block;margin-top:0.5rem;}
+.map-container{position:relative;max-width:900px;margin:0 auto;}
+.map-label-top{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:0.7rem;display:flex;align-items:center;}
+/* content-visibility defers paint of the complex SVG until near viewport — big first-load win */
+.map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.18);border:1px solid var(--border);background:#0a1628;aspect-ratio:7/4;will-change:transform;transform:translateZ(0);isolation:isolate;content-visibility:auto;contain-intrinsic-size:0 350px;}
+.map-hint{font-size:0.78rem;color:var(--muted);text-align:center;margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+/* Pin pulse — paused until map enters viewport (saves CPU on page load) */
+.pin-pulse{animation:pinPulse 2s ease-in-out infinite;animation-play-state:paused;}
+#abuDhabiMap.map-active .pin-pulse{animation-play-state:running;}
+@keyframes pinPulse{0%,100%{opacity:0.1;}50%{opacity:0.28;}}
+@media(max-width:600px){.map-wrap{aspect-ratio:4/3;}}
+
+/* DELIVERY BADGE */
+.delivery-badge{
+  display:inline-flex;align-items:center;gap:0.35rem;
+  background:#e8f5e9;color:#1a7a3c;
+  border:1.5px solid #a5d6a7;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.28rem 0.75rem;border-radius:30px;
+  white-space:nowrap;
+}
+.delivery-badge::before{content:'🚗';font-size:0.85rem;}
+/* Nav delivery tag */
+.nav-delivery{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  background:#e8f5e9;color:#1a7a3c;
+  border:1.5px solid #a5d6a7;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.3rem 0.7rem;
+  border-radius:30px;white-space:nowrap;flex-shrink:0;
+}
+/* Hero delivery strip */
+.hero-delivery-strip{
+  display:flex;align-items:center;gap:0.8rem;
+  margin-bottom:1rem;flex-wrap:wrap;
+}
+.hero-delivery-pill{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(37,211,102,0.18);
+  border:1.5px solid rgba(37,211,102,0.55);
+  color:#6effa0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.35rem 0.9rem;
+  border-radius:30px;white-space:nowrap;
+}
+@media(max-width:900px){.nav-delivery{display:none;}}
+@media(max-width:600px){
+  .hero-delivery-strip{gap:0.5rem;}
+  .hero-delivery-pill{font-size:0.78rem;padding:0.3rem 0.7rem;}
+}
 @media(max-width:900px){
   nav{padding:0.8rem 1.2rem;}
-  .nav-links,.nav-wa{display:none;}
+  .nav-links{display:none;}
   .hamburger{display:flex;}
-  .page-hero{padding:3rem 1.5rem;}
-  .quick-contacts{grid-template-columns:1fr;padding:0 1.5rem;margin-top:1.5rem;}
-  .contact-main{grid-template-columns:1fr;padding:3rem 1.5rem;gap:2.5rem;}
-  .map-section{padding:0 1.5rem 3rem;}
-  footer{padding:2rem 1.5rem;}
-}
-@media(max-width:600px){
-  .bat-wrap{display:inline-block;position:relative;padding-top:13px;flex-shrink:0;}
-  .bat-wrap::before{content:'';position:absolute;top:0;left:18%;width:22%;height:13px;background:linear-gradient(to bottom,#ef5350,#b71c1c);border:1.5px solid #7f0000;border-bottom:none;border-radius:4px 4px 0 0;}
-  .bat-wrap::after{content:'';position:absolute;top:0;right:18%;width:22%;height:13px;background:linear-gradient(to bottom,#616161,#212121);border:1.5px solid #000;border-bottom:none;border-radius:4px 4px 0 0;}
-  .nav-cta{display:flex;align-items:center;justify-content:center;padding:0.6rem 0.75rem;font-size:0.8rem;background:linear-gradient(to bottom,#c62828 0%,#c62828 22%,#1a1a1a 22%,#1a1a1a 78%,#c62828 78%,#c62828 100%);color:#fff;border:2px solid #000;border-radius:0 0 4px 4px;}
-  .cta-btns{grid-template-columns:1fr;}
-  .fg-row{grid-template-columns:1fr;}
-  .submit-row{grid-template-columns:1fr;}
-  .contact-form-card{padding:1.6rem 1.2rem;}
-  .map-embed{height:280px;}
-  .float-call{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:5.5rem;right:0.8rem;font-size:0!important;}
-  .float-wa{width:52px;height:52px;border-radius:50%;padding:0;justify-content:center;bottom:1rem;right:0.8rem;font-size:0!important;}
-  footer{padding:1.5rem 1rem 4rem;}
+  .nav-wa{display:none;}
+  .hero-img{height:320px;overflow:hidden;}
+  .hero-text{left:1.2rem;right:1.2rem;max-width:calc(100vw - 2.4rem);box-sizing:border-box;}
+  .hero-text h1{font-size:clamp(1.8rem,6vw,3rem);}
+  .hero-slogan{font-size:clamp(0.85rem,3vw,1.1rem);white-space:normal;max-width:100%;}
+  .hero-text p{font-size:0.82rem;max-width:100%;}
+  .hero-btn,.hero-btn-wa{font-size:0.85rem;padding:0.65rem 1rem;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .stat{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .section{padding:3rem 1.2rem;}
+  .section-alt .why-inner{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+  .reviews-grid{grid-template-columns:1fr;}
+  .why-inner{grid-template-columns:1fr;}
+  .why-left{padding:2.5rem 1.5rem;min-height:auto;}
+  .why-right{padding:2.5rem 1.5rem;}
+  .contact-grid{grid-template-columns:1fr;gap:2rem;}
+  .form-box{padding:1.5rem 1.2rem;}
+  footer{padding:2rem 1.2rem;}
+  .footer-top{flex-direction:column;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .f-seo-links{justify-content:center;}
+  /* Float buttons: icon circles only on tablet */
+  .float-call{bottom:5rem;right:0.8rem;padding:0.7rem 1rem;font-size:0.82rem;}
+  .float-wa{bottom:1rem;right:0.8rem;padding:0.7rem 1rem;font-size:0.82rem;}
 }
 
+/* ===== MOBILE: max 600px ===== */
+@media(max-width:600px){
+  /* Prevent ALL overflow */
+  html,body{max-width:100vw;overflow-x:hidden;}
+  /* Nav */
+  nav{padding:0.7rem 1rem;}
+  .logo>svg{width:56px;height:56px;}
+  .logo-icon{font-size:1.3rem;}
+  .logo-name{font-size:1.2rem;}
+  .logo-tag{display:none;}
+  /* Hide phone icon — no icon needed, button IS the battery */
+  .nav-cta-phone{display:none;}
+
+  /* ── Battery button wrapper — creates the two terminal posts ── */
+  .bat-wrap{
+    display:inline-block;
+    position:relative;
+    padding-top:13px;   /* room for terminal posts above body */
+    flex-shrink:0;
+  }
+  /* Left terminal post — red (positive) */
+  .bat-wrap::before{
+    content:'';
+    position:absolute;
+    top:0; left:18%;
+    width:22%; height:13px;
+    background:linear-gradient(to bottom,#ef5350,#b71c1c);
+    border:1.5px solid #7f0000;
+    border-bottom:none;
+    border-radius:4px 4px 0 0;
+  }
+  /* Right terminal post — black (negative) */
+  .bat-wrap::after{
+    content:'';
+    position:absolute;
+    top:0; right:18%;
+    width:22%; height:13px;
+    background:linear-gradient(to bottom,#616161,#212121);
+    border:1.5px solid #000;
+    border-bottom:none;
+    border-radius:4px 4px 0 0;
+  }
+
+  /* ── Battery body — the actual button ── */
+  .nav-cta{
+    display:flex;align-items:center;justify-content:center;
+    padding:0.6rem 0.75rem;
+    font-size:0.8rem;font-weight:900;letter-spacing:0.07em;
+    gap:0;clip-path:none;
+    /* Red stripe top, dark body, red stripe bottom */
+    background:linear-gradient(
+      to bottom,
+      #c62828 0%,  #c62828 22%,
+      #1a1a1a 22%, #1a1a1a 78%,
+      #c62828 78%, #c62828 100%
+    );
+    color:#ffffff;
+    border:2px solid #000;
+    border-radius:0 0 4px 4px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    white-space:nowrap;
+    text-shadow:0 1px 3px rgba(0,0,0,0.6);
+  }
+  .nav-cta:hover{
+    background:linear-gradient(
+      to bottom,
+      #e53935 0%,  #e53935 22%,
+      #2c2c2c 22%, #2c2c2c 78%,
+      #e53935 78%, #e53935 100%
+    );
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.55);
+  }
+
+  /* Zoom mode — hide text, just show compact button */
+  @media(max-width:380px){
+    .cta-txt{display:none;}
+    .nav-cta{padding:0.6rem 0.55rem;}
+    .bat-wrap::before,.bat-wrap::after{width:26%;}
+  }
+
+  /* Hamburger always visible and not squeezed in zoom mode */
+  .hamburger{display:flex;flex-shrink:0;}
+  /* Hero - fully constrained */
+  .hero-img{height:auto;min-height:320px;}
+  .hero-text{
+    position:relative;
+    top:auto;left:0;right:0;
+    transform:none;
+    padding:2rem 1.2rem 1.5rem;
+    max-width:100%;
+    box-sizing:border-box;
+    background:linear-gradient(to bottom,rgba(14,30,61,0.88),rgba(14,30,61,0.75));
+  }
+  .hero-overlay{display:none;}
+  .hero-img{position:relative;display:flex;flex-direction:column;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero-text{position:relative;z-index:1;margin-top:0;}
+  .hero-text h1{font-size:clamp(1.8rem,8vw,2.5rem);line-height:1;}
+  .hero-slogan{font-size:0.85rem;padding:0.4rem 0.7rem;white-space:normal;max-width:100%;display:block;}
+  .hero-text p{font-size:0.8rem;max-width:100%;}
+  .hero-btns{flex-direction:column;gap:0.6rem;}
+  .hero-btn,.hero-btn-wa{width:100%;justify-content:center;font-size:0.9rem;padding:0.8rem 1rem;}
+  /* Stats */
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .stat{padding:1rem 0.5rem;}
+  .stat-num{font-size:1.3rem;}
+  .stat-lbl{font-size:0.55rem;}
+  /* Sections */
+  .section{padding:2.5rem 1rem;}
+  .sec-title{font-size:1.7rem;}
+  /* Services */
+  .svc{padding:1.5rem 1.2rem;}
+  /* FAQ */
+  .faq-q{font-size:0.92rem;padding:0.9rem 1rem;}
+  .faq-a{padding:0 1rem 0.9rem;font-size:0.82rem;}
+  /* Why */
+  .why-left{padding:2rem 1.2rem;}
+  .why-right{padding:2rem 1.2rem;}
+  .why-big{font-size:2.5rem;}
+  .why-slogan{font-size:1rem;}
+  /* Contact */
+  .section.contact-section,.section#contact{padding:2.5rem 1rem;}
+  .c-val{font-size:0.9rem;}
+  .form-box{padding:1.2rem 1rem;}
+  .fg-row{grid-template-columns:1fr;}
+  .submit-row{grid-template-columns:1fr;}
+  /* Reviews */
+  .rating-summary{padding:1rem;gap:1rem;width:100%;}
+  /* Footer — bottom padding clears floating call/WA buttons; navy bg fills it, no white gap */
+  footer{padding:1.5rem 1rem 4rem;margin-bottom:0;}
+  body{padding-bottom:0;}
+  .f-logo-name{font-size:1rem;}
+  .f-seo-links{flex-direction:column;gap:0.5rem;align-items:center;}
+  /* Float buttons: circles only, never overlapping */
+  .float-call{
+    width:52px;height:52px;border-radius:50%;
+    padding:0;justify-content:center;
+    bottom:5.5rem;right:0.8rem;
+    font-size:0 !important;
+    overflow:hidden;
+  }
+  
+  .float-wa{
+    width:52px;height:52px;border-radius:50%;
+    padding:0;justify-content:center;
+    bottom:1rem;right:0.8rem;
+    font-size:0 !important;
+    overflow:hidden;
+  }
+  
+  
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS — pure CSS + Intersection Observer
+   Zero layout shift · GPU-accelerated · ~4KB
+   ═══════════════════════════════════════════ */
+
+/* ── Scroll reveal base ── */
+.will-anim{
+  opacity:0;
+  transform:translateY(28px);
+  will-change:opacity,transform;          /* pre-promote to compositor — prevents on-fire layer creation stutter */
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.will-anim.from-left{ transform:translateX(-28px); }
+.will-anim.from-right{ transform:translateX(28px); }
+.will-anim.from-scale{ transform:scale(0.94); }
+.will-anim.visible{
+  opacity:1;
+  transform:translateY(0) translateX(0) scale(1);
+  will-change:auto;                       /* release layer after animation completes */
+}
+.will-anim.d1{transition-delay:.08s;}
+.will-anim.d2{transition-delay:.17s;}
+.will-anim.d3{transition-delay:.26s;}
+.will-anim.d4{transition-delay:.35s;}
+.will-anim.d5{transition-delay:.44s;}
+.will-anim.d6{transition-delay:.53s;}
+
+/* ── Hero text entrance ── */
+.hero-text h1{
+  animation:heroSlideUp .85s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-delivery-strip{
+  animation:heroSlideUp .85s .12s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-slogan{
+  animation:heroSlideUp .85s .22s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-text p{
+  animation:heroSlideUp .85s .35s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-btns{
+  animation:heroSlideUp .85s .48s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes heroSlideUp{
+  from{opacity:0;transform:translateY(22px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* ── Section heading gold underline draw ── */
+.sec-title{position:relative;display:inline-block;}
+.sec-title::after{
+  content:'';
+  position:absolute;
+  bottom:-6px;left:0;
+  width:0;height:3px;
+  background:var(--amber-mid);
+  border-radius:2px;
+  transition:width .9s .35s cubic-bezier(.22,1,.36,1);
+}
+.sec-title.visible::after{ width:56px; }
+
+/* ── Service card gold shimmer on hover ── */
+.svc{position:relative;overflow:hidden;}
+.svc::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 35%,rgba(245,192,48,.07) 50%,transparent 65%);
+  transform:translateX(-100%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+.svc:hover::after{ transform:translateX(100%); }
+.svc:hover{ transform:translateY(-6px); box-shadow:0 14px 36px rgba(14,30,61,.13); }
+
+/* ── Review card hover ── */
+.review-card{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+.review-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 14px 36px rgba(14,30,61,.12);
+}
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.review-card.will-anim{
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.review-card.will-anim.visible:hover{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── FAQ smooth height ── */
+.faq-a{
+  display:block !important;
+  max-height:0;
+  overflow:hidden;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  transition:max-height .42s cubic-bezier(.22,1,.36,1),
+             padding .32s ease;
+}
+.faq-item.open .faq-a{
+  max-height:320px;
+  padding-bottom:1.1rem !important;
+}
+
+/* ── Float buttons enhanced pulse ── */
+@keyframes pulse{
+  0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.4);}
+  50%{box-shadow:0 4px 32px rgba(192,57,43,.72),0 0 0 9px rgba(192,57,43,.07);}
+}
+.float-wa{animation:pulseWa 3.2s ease infinite;}
+@keyframes pulseWa{
+  0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}
+  50%{box-shadow:0 4px 32px rgba(37,211,102,.72),0 0 0 9px rgba(37,211,102,.09);}
+}
+
+/* ── Hero star particles ── */
+.star-pt{
+  position:absolute;
+  border-radius:50%;
+  background:#f5c030;
+  pointer-events:none;
+  animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:var(--lo,.15);transform:scale(1);}
+  50%{opacity:var(--hi,.7);transform:scale(1.4);}
+}
+
+/* ── Nav scroll shadow ── */
+nav{transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
+
+/* ── Trust item hover ── */
+.trust{
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+  border-radius:8px;
+  padding:0.4rem;
+  margin:-0.4rem;
+}
+.trust:hover{ transform:translateX(5px); }
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.trust.will-anim{
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.trust.will-anim.visible:hover{ transition:transform .25s cubic-bezier(.22,1,.36,1); }
+
+/* ── Contact item already has hover, add transition ── */
+.c-item{
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+.c-item:hover{ transform:translateX(4px); }
+
+/* ── Stat number glow on reveal ── */
+.stat-num{transition:text-shadow .5s;}
+.stat.visible .stat-num{
+  text-shadow:0 0 24px rgba(245,192,48,.35);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION — redesigned
+   ═══════════════════════════════════════════ */
+#contact{
+  background:linear-gradient(135deg,#09162a 0%,#0e1e3d 55%,#091525 100%);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:480px;height:480px;
+  background:radial-gradient(circle,rgba(245,192,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact::after{
+  content:'';position:absolute;bottom:-80px;left:-80px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(245,192,48,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact .sec-label{color:var(--amber-mid);}
+#contact .sec-title{color:#fff;}
+#contact .sec-sub{color:rgba(255,255,255,.45);}
+#contact .sec-title::after{background:var(--amber-mid);}
+
+/* Layout */
+.contact-v2{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:3rem;
+  align-items:start;
+}
+
+/* Online badge */
+.online-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(37,211,102,.1);
+  border:1px solid rgba(37,211,102,.28);
+  color:#6effa0;
+  font-size:0.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:.35rem .9rem;
+  border-radius:30px;margin-bottom:1.5rem;
+}
+.online-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#25d366;
+  animation:onlinePulse 2s ease infinite;
+}
+@keyframes onlinePulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.5;transform:scale(1.5);}
+}
+.contact-tagline{
+  font-size:.92rem;color:rgba(255,255,255,.5);
+  font-weight:300;line-height:1.75;
+  margin-bottom:1.8rem;max-width:370px;
+}
+
+/* CTA buttons */
+.cta-btns{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:.75rem;margin-bottom:1.8rem;
+}
+.cta-call{
+  background:var(--red);color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(192,57,43,.4);
+}
+.cta-call:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(192,57,43,.6);}
+.cta-wa-big{
+  background:#25d366;color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(37,211,102,.4);
+}
+.cta-wa-big:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(37,211,102,.6);}
+
+/* Info rows */
+.ci-list{display:flex;flex-direction:column;gap:.6rem;}
+.ci{
+  display:flex;align-items:center;gap:.95rem;
+  padding:.85rem 1.1rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+  text-decoration:none;
+  transition:background .2s,border-color .2s,transform .22s;
+}
+a.ci:hover{
+  background:rgba(245,192,48,.07);
+  border-color:rgba(245,192,48,.22);
+  transform:translateX(5px);
+}
+.ci-icon{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.ci-ph{background:rgba(192,57,43,.18);color:#ff6b5b;}
+.ci-wa{background:rgba(37,211,102,.15);color:#25d366;}
+.ci-em{background:rgba(92,124,250,.15);color:#7c9fff;}
+.ci-loc{background:rgba(245,192,48,.15);color:var(--amber-mid);}
+.ci-clk{background:rgba(245,192,48,.1);color:rgba(245,192,48,.65);}
+.ci-lbl{font-size:.59rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:2px;}
+.ci-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:#fff;}
+
+/* Form card */
+.contact-form-card{
+  background:#fff;border-radius:14px;
+  padding:2.4rem 2.2rem;
+  box-shadow:0 28px 64px rgba(0,0,0,.38);
+  position:relative;z-index:1;
+}
+.form-card-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.65rem;font-weight:800;
+  text-transform:uppercase;color:var(--navy);
+  margin-bottom:.25rem;
+}
+.form-card-sub{
+  font-size:.82rem;color:var(--muted);
+  font-weight:300;margin-bottom:1.6rem;
+}
+.contact-form-card .fg input,
+.contact-form-card .fg select,
+.contact-form-card .fg textarea{
+  border-radius:7px;border:1.5px solid #e2e8f2;
+  background:#f8faff;font-size:.9rem;
+  padding:.82rem 1rem;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.contact-form-card .fg input:focus,
+.contact-form-card .fg select:focus,
+.contact-form-card .fg textarea:focus{
+  border-color:var(--amber-btn);
+  box-shadow:0 0 0 3px rgba(240,165,0,.12);
+  background:#fff;
+}
+.contact-form-card .fg textarea{height:90px;}
+.contact-form-card .fg label{color:var(--muted);font-size:.62rem;letter-spacing:.12em;font-weight:600;}
+.contact-form-card .submit{background:var(--navy);border-radius:7px;}
+.contact-form-card .submit:hover{background:var(--amber-btn);color:var(--navy);}
+.contact-form-card .submit-wa{border-radius:7px;}
+
+/* Mobile responsive */
+@media(max-width:900px){
+  .contact-v2{grid-template-columns:1fr;}
+  #contact{padding:3rem 1.2rem;}
+}
+@media(max-width:600px){
+  .cta-btns{grid-template-columns:1fr;}
+  .contact-form-card{padding:1.6rem 1.2rem;}
+  .contact-tagline{max-width:100%;}
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media(prefers-reduced-motion:reduce){
+  .will-anim,.will-anim.visible{
+    opacity:1!important;transform:none!important;transition:none!important;
+  }
+  .hero-text h1,.hero-delivery-strip,.hero-slogan,
+  .hero-text p,.hero-btns{animation:none!important;}
+  .star-pt,.float-wa,.float-call{animation:none!important;}
+  .sec-title::after{transition:none!important;width:56px!important;}
+}
+
+
 /* NAV DROPDOWN */
-.nav-dropdown{position:relative;}
-.nav-dropdown-toggle{display:flex;align-items:center;gap:0.3rem;}
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-toggle{display:flex;align-items:center;gap:0.3rem;cursor:pointer;}
 .nav-dropdown-menu{
   display:none;position:absolute;top:calc(100% + 12px);left:50%;
   transform:translateX(-50%);
@@ -218,9 +1028,10 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <span>WhatsApp</span>
 </a>
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <nav role="navigation" aria-label="Main navigation">
-    <div class="logo">
+  <div class="logo">
+    <!-- Inline SVG logo — crescent moon + separated star dots -->
     <svg width="38" height="38" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
       <defs>
         <mask id="nav-moon-mask">
@@ -228,7 +1039,9 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
           <circle cx="412" cy="285" r="128" fill="black"/>
         </mask>
       </defs>
+      <!-- Crescent -->
       <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#nav-moon-mask)"/>
+      <!-- Stars — all outside moon disc, clearly visible -->
       <circle cx="185" cy="125" r="28" fill="#f5c030"/>
       <circle cx="338" cy="108" r="22" fill="#f5c030"/>
       <circle cx="490" cy="122" r="25" fill="#f5c030"/>
@@ -239,13 +1052,13 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </svg>
     <div>
       <div class="logo-name">MOON <em>LIGHT</em></div>
-      <div class="logo-tag">Car Battery &amp; AC Gas Refilling — Abu Dhabi</div>
+      <div class="logo-tag">Car Battery &amp; AC Gas Refilling</div>
     </div>
   </div>
   <ul class="nav-links" role="menubar">
-    <li><a href="/">Home</a></li>
-    <li class="nav-dropdown">
-      <a href="/#services" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
+    <li role="none"><a href="/" role="menuitem">Home</a></li>
+    <li role="none" class="nav-dropdown">
+      <a href="/#services" role="menuitem" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
       <ul class="nav-dropdown-menu">
         <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
         <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
@@ -253,19 +1066,21 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
         <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
       </ul>
     </li>
-    <li><a href="/#areas">Areas</a></li>
-    <li><a href="/about-us" >About Us</a></li>
-    <li><a href="/contact-us" class="active">Contact Us</a></li>
+    <li role="none"><a href="/#areas" role="menuitem">Areas</a></li>
+    <li role="none"><a href="/about-us" role="menuitem">About Us</a></li>
+    <li role="none"><a href="/contact-us" role="menuitem" class="active">Contact Us</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+    <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+    <!-- bat-wrap creates the two terminal posts on mobile via ::before/::after -->
     <span class="bat-wrap">
-      <a href="tel:+971523408703" class="nav-cta" aria-label="Call Now">
-        <i class="ph ph-phone-call"></i>
+      <a href="tel:+971523408703" class="nav-cta" aria-label="Call Moon Light Car Care now">
+        <i class="ph ph-phone-call nav-cta-phone"></i>
         <span class="cta-txt">Call Now</span>
       </a>
     </span>
   </div>
+  <!-- Hamburger: inline style only sets flex props; display toggled purely by CSS -->
   <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
     <span></span><span></span><span></span>
   </div>
@@ -274,35 +1089,89 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <!-- MOBILE OVERLAY -->
 <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
 
-<!-- MOBILE DRAWER -->
+<!-- MOBILE SIDEBAR DRAWER -->
 <aside class="mob-drawer" id="mobDrawer" role="dialog" aria-label="Navigation menu" aria-modal="true">
+
+  <!-- Header: logo + close -->
   <div class="mob-drawer-head">
     <div class="mob-draw-logo">
       <svg width="42" height="42" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs><mask id="sb-moon-mask"><circle cx="340" cy="340" r="145" fill="white"/><circle cx="412" cy="285" r="128" fill="black"/></mask></defs>
+        <defs>
+          <mask id="sb-moon-mask">
+            <circle cx="340" cy="340" r="145" fill="white"/>
+            <circle cx="412" cy="285" r="128" fill="black"/>
+          </mask>
+        </defs>
         <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#sb-moon-mask)"/>
-        <circle cx="185" cy="125" r="28" fill="#f5c030"/><circle cx="338" cy="108" r="22" fill="#f5c030"/><circle cx="490" cy="122" r="25" fill="#f5c030"/>
+        <circle cx="185" cy="125" r="28" fill="#f5c030"/>
+        <circle cx="338" cy="108" r="22" fill="#f5c030"/>
+        <circle cx="490" cy="122" r="25" fill="#f5c030"/>
+        <circle cx="118" cy="275" r="19" fill="#f5c030" opacity="0.85"/>
+        <circle cx="562" cy="248" r="17" fill="#f5c030" opacity="0.85"/>
+        <circle cx="248" cy="100" r="13" fill="#f5c030" opacity="0.7"/>
+        <circle cx="428" cy="95"  r="12" fill="#f5c030" opacity="0.7"/>
       </svg>
       <div>
         <div class="mob-draw-logo-txt">MOON <em>LIGHT</em></div>
-        <div class="mob-draw-logo-sub">Car Battery &amp; AC Gas — Abu Dhabi</div>
+        <div class="mob-draw-logo-sub">Car Battery &amp; AC Gas Refilling</div>
       </div>
     </div>
     <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
-  <div class="mob-open-badge" id="mobOpenBadge"><span class="mob-open-dot" id="mobOpenDot"></span><span id="mobOpenText">Open Now &nbsp;·&nbsp; 8am – 11:30pm Daily</span></div>
+
+  <!-- Open now badge -->
+  <div class="mob-open-badge" id="mobOpenBadge">
+    <span class="mob-open-dot" id="mobOpenDot"></span>
+    <span id="mobOpenText">Open Now &nbsp;·&nbsp; 8am – 11:30pm Daily</span>
+  </div>
+
+  <!-- Navigation links — div, NOT nav, to avoid inheriting global nav{background:white} -->
   <div class="mob-nav" role="menubar">
-    <a href="/" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home</a>
-    <a href="/#services" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Services</a>
-    <a href="/#areas" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-map-pin"></i></span>Areas</a>
-    <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us</a>
-    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact</a>
+    <a href="/" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home
+    </a>
+    <a href="/car-battery-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Car Battery
+    </a>
+    <a href="/ac-gas-refilling-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-snowflake"></i></span>AC Gas Refilling
+    </a>
+    <a href="/car-repair-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-wrench"></i></span>Car Repair
+    </a>
+    <a href="/car-scanning-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-cpu"></i></span>Car Scanning
+    </a>
+    <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us
+    </a>
+    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us
+    </a>
   </div>
+
+  <!-- Call / WhatsApp CTAs -->
   <div class="mob-ctas">
-    <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call +971 52 340 8703</a>
-    <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
+    <a href="tel:+971523408703" class="mob-cta-call">
+      <i class="ph ph-phone-call"></i> Call +971 52 340 8703
+    </a>
+    <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener">
+      <i class="ph ph-whatsapp-logo"></i> WhatsApp Us
+    </a>
   </div>
-  <div class="mob-drawer-foot">Moon Light Car Care · Al Danah, Abu Dhabi</div>
+
+  <div class="mob-drawer-foot" itemscope itemtype="https://schema.org/AutoRepair">
+    <span itemprop="name">Moon Light Car Care</span> &nbsp;·&nbsp;
+    <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="streetAddress">Al Funoud St, Al Danah – Zone 1</span>,
+      <span itemprop="addressLocality">Abu Dhabi</span>,
+      <span itemprop="addressCountry">UAE</span>
+    </span>
+    <br>
+    <a href="tel:+971523408703" itemprop="telephone" style="color:inherit;text-decoration:none;">+971 52 340 8703</a>
+    &nbsp;·&nbsp;
+    <a href="https://moonlightautocare.com" itemprop="url" style="color:inherit;text-decoration:none;">moonlightautocare.com</a>
+  </div>
 </aside>
 
 <!-- PAGE HERO -->
@@ -465,19 +1334,2233 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 </footer>
 
 <script>
-function openSidebar(){document.getElementById('mobDrawer').classList.add('open');document.getElementById('mobOverlay').classList.add('open');document.getElementById('hamburger').classList.add('active');document.body.style.overflow='hidden';}
-function closeSidebar(){document.getElementById('mobDrawer').classList.remove('open');document.getElementById('mobOverlay').classList.remove('open');document.getElementById('hamburger').classList.remove('active');document.body.style.overflow='';}
-document.getElementById('hamburger').addEventListener('click',openSidebar);
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSidebar();});
-window.addEventListener('scroll',function(){document.querySelector('nav').classList.toggle('scrolled',window.scrollY>8);},{passive:true});
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-11173017967');
+  gtag('config', 'GT-K5M9D6GB');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Favicons — Moon Light crescent logo -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="shortcut icon" href="favicon-32x32.png">
+<meta name="msapplication-TileImage" content="android-chrome-192x192.png">
+<meta name="msapplication-TileColor" content="#0c1b36">
+<meta name="theme-color" content="#0c1b36">
+
+<!-- PERFORMANCE: preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<!-- PRIMARY SEO -->
+<title>Car Battery & AC Gas Refilling Abu Dhabi | Moon Light Car Care</title>
+<meta name="description" content="Moon Light Car Care — car battery, AC gas refilling & car repair in Abu Dhabi. All makes & models. Fast, honest service. Call +971 52 340 8703.">
+<meta name="keywords" content="car battery Abu Dhabi, car battery UAE, car battery near me, car battery replacement Abu Dhabi, buy car battery Abu Dhabi, cheap car battery UAE, dead car battery UAE, emergency car battery service UAE, car battery shop Abu Dhabi, battery delivery Abu Dhabi, car battery home delivery UAE, battery delivery near me, 24 hour car battery UAE, car battery jump start Abu Dhabi, jump start service UAE, Amaron battery Abu Dhabi, Bosch battery Abu Dhabi, Yuasa battery Abu Dhabi, Varta battery UAE, car battery price UAE, car battery Al Danah Abu Dhabi, car battery Khalidiyah, car battery Al Reem Island, car battery Al Khalidiyah, car battery Al Nahyan, car battery Al Mushrif, car battery Al Karamah, car battery Al Markaziyah, car battery Corniche Abu Dhabi, car battery Tourist Club Area, car battery Al Zahiyah, car battery Madinat Zayed, car battery Mohammed Bin Zayed City, car battery Yas Island, car battery Saadiyat Island, car battery Al Shamkha, car battery Al Falah, car AC gas refilling Abu Dhabi, car AC regas Abu Dhabi, aircon regas Abu Dhabi, AC gas refill near me Abu Dhabi, car AC gas recharge UAE, car AC not cooling UAE, car AC repair Abu Dhabi, car AC fixing Abu Dhabi, car AC service UAE, AC compressor repair Abu Dhabi, R134a refill Abu Dhabi, R1234yf recharge UAE, car repair Abu Dhabi, auto repair Abu Dhabi, car service Abu Dhabi, Moon Light Car Care, Moon Light Car Care Abu Dhabi, moon light car care Al Danah, battery shop near me, refrigerant recharge UAE, delivery available Abu Dhabi, Al Funoud Street Abu Dhabi, Al Danah Abu Dhabi car battery, car computer scanning Abu Dhabi, car diagnostics Abu Dhabi, OBD scan Abu Dhabi, engine fault code reading Abu Dhabi, check engine light Abu Dhabi, car ECU scanning Abu Dhabi, car scanning service Abu Dhabi, car diagnostic center Abu Dhabi">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="Moon Light Car Care">
+<meta name="geo.region" content="AE-AZ">
+<meta name="geo.placename" content="Abu Dhabi, United Arab Emirates">
+<meta name="language" content="English">
+<meta name="revisit-after" content="7 days">
+<meta name="rating" content="general">
+<link rel="canonical" href="https://moonlightautocare.com">
+<link rel="alternate" hreflang="en-ae" href="https://moonlightautocare.com">
+<link rel="alternate" hreflang="x-default" href="https://moonlightautocare.com">
+
+<!-- OPEN GRAPH -->
+<meta property="og:title" content="Car Battery & AC Gas Abu Dhabi | Moon Light Car Care">
+<meta property="og:description" content="Car battery & AC gas refilling specialist in Abu Dhabi, Al Danah Zone 1. All makes & models. Fast, honest service. Call +971 52 340 8703 now.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonlightautocare.com">
+<meta property="og:locale" content="en_AE">
+<meta property="og:site_name" content="Moon Light Car Care">
+<meta property="og:image" content="https://moonlightautocare.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Moon Light Car Care — Car Battery & AC Gas Refilling, Al Danah Abu Dhabi">
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Car Battery & AC Gas Abu Dhabi | Moon Light Car Care">
+<meta name="twitter:description" content="Car battery & AC gas refilling specialist in Abu Dhabi, Al Danah Zone 1. All makes & models. Fast, honest service. Call +971 52 340 8703 now.">
+<meta name="twitter:image" content="https://moonlightautocare.com/og-image.jpg">
+<meta name="twitter:image:alt" content="Moon Light Car Care — Car Battery & AC Gas Refilling Abu Dhabi">
+
+<!-- STRUCTURED DATA: LocalBusiness / AutoRepair -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "@id": "https://moonlightautocare.com/#business",
+  "name": "Moon Light Car Care",
+  "alternateName": ["Moon Light Car Care Abu Dhabi", "Moon Light Car Care Al Danah", "Moon Light Car Batteries Abu Dhabi"],
+  "description": "Trusted car battery replacement and AC gas refilling specialist in Abu Dhabi. Located at Al Funoud St, Al Danah - Zone 1, Abu Dhabi. Car repair also available. Fast, honest service for all makes and models.",
+  "url": "https://moonlightautocare.com",
+  "telephone": "+971523408703",
+  "email": "info@moonlightautocare.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Al Funoud St, Al Danah - Zone 1",
+    "addressLocality": "Abu Dhabi",
+    "addressRegion": "Abu Dhabi",
+    "addressCountry": "AE"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "08:00",
+      "closes": "23:30"
+    }
+  ],
+  "priceRange": "$$",
+  "currenciesAccepted": "AED",
+  "paymentAccepted": "Cash, Credit Card, Debit Card",
+  "areaServed": [
+    {"@type": "City", "name": "Abu Dhabi"},
+    {"@type": "State", "name": "United Arab Emirates"},
+    {"@type": "Place", "name": "Al Khalidiyah"},
+    {"@type": "Place", "name": "Al Reem Island"},
+    {"@type": "Place", "name": "Al Nahyan"},
+    {"@type": "Place", "name": "Al Mushrif"},
+    {"@type": "Place", "name": "Al Karamah"},
+    {"@type": "Place", "name": "Al Markaziyah"},
+    {"@type": "Place", "name": "Corniche Abu Dhabi"},
+    {"@type": "Place", "name": "Tourist Club Area"},
+    {"@type": "Place", "name": "Al Zahiyah"},
+    {"@type": "Place", "name": "Madinat Zayed"},
+    {"@type": "Place", "name": "Mohammed Bin Zayed City"},
+    {"@type": "Place", "name": "Yas Island"},
+    {"@type": "Place", "name": "Saadiyat Island"},
+    {"@type": "Place", "name": "Al Shamkha"},
+    {"@type": "Place", "name": "Al Falah"}
+  ],
+  "sameAs": [
+    "https://wa.me/971523408703",
+    "https://www.google.com/maps/search/Moon+Light+Car+Care+Al+Danah+Abu+Dhabi"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Car Battery, AC Gas and Car Repair Services - Abu Dhabi",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Battery Replacement Abu Dhabi", "description": "Supply and fit car batteries for all makes and models in Abu Dhabi UAE. Amaron, Bosch, Yuasa, Varta batteries available."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Battery Delivery Abu Dhabi", "description": "Same-day car battery home delivery across Abu Dhabi UAE. Call +971 52 340 8703."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Jump Start Service Abu Dhabi", "description": "24-hour car battery jump start service in Abu Dhabi UAE."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car AC Gas Refilling Abu Dhabi", "description": "Professional car AC gas refilling, aircon regas and refrigerant recharge service in Abu Dhabi UAE. R134a and R1234yf."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car AC Repair Abu Dhabi", "description": "Full car AC fixing, compressor repair and AC system servicing in Abu Dhabi UAE."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Repair Abu Dhabi", "description": "General car repair, engine diagnostics and mechanical services in Abu Dhabi UAE."}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Car Computer Scanning Abu Dhabi", "description": "Professional car computer scanning, OBD diagnostics, engine fault code reading and ECU scanning for all car makes and models in Abu Dhabi UAE."}}
+    ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "4000",
+    "bestRating": "5"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Ahmed Al Mansoori"},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
+      "reviewBody": "Excellent and fast service. My car battery was replaced within 30 minutes. Very honest pricing, no hidden charges. Highly recommend Moon Light Car Care in Abu Dhabi."
+    },
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Sara K."},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
+      "reviewBody": "Got my car AC gas refilled here. The AC is now blowing ice cold air. Great technicians, fast work and very reasonable price. Best car AC service in Abu Dhabi!"
+    },
+    {
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Mohammed R."},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5", "worstRating": "1"},
+      "reviewBody": "My car AC was not cooling at all in the Abu Dhabi heat. Moon Light fixed it same day. Very professional and trustworthy team. Will come back for all my car needs."
+    }
+  ]
+}
+</script>
+
+<!-- FAQPage schema moved to visible HTML microdata below (avoids duplicate detection) -->
+
+<!-- STRUCTURED DATA: WebSite with Sitelinks Searchbox -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://moonlightautocare.com/#website",
+  "url": "https://moonlightautocare.com",
+  "name": "Moon Light Car Care",
+  "description": "Car battery replacement, AC gas refilling, car AC repair and car repair services — Al Funoud St, Al Danah - Zone 1, Abu Dhabi UAE",
+  "inLanguage": "en-AE"
+}
+</script>
+
+<!-- STRUCTURED DATA: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://moonlightautocare.com"},
+    {"@type": "ListItem", "position": 2, "name": "Services", "item": "https://moonlightautocare.com/#services"},
+    {"@type": "ListItem", "position": 3, "name": "Contact", "item": "https://moonlightautocare.com/#contact"}
+  ]
+}
+</script>
+
+<!-- Fonts: synchronous to prevent CLS (already has display=swap) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@300;400;500&display=swap">
+<!-- Icons: async load — does not block render, icons pop in after paint -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"></noscript>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f5f7fa;
+  --white:#ffffff;
+  --panel:#edf0f6;
+  --border:#dde3ef;
+  --navy:#0e1e3d;
+  --amber:#c98b00;
+  --amber-btn:#f0a500;
+  --amber-light:#fff9e6;
+  --amber-mid:#f5c030;
+  --text:#181e2e;
+  --muted:#5e6e90;
+  --red:#c0392b;
+  --green:#1a7a3c;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.6;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;}
+h1,h2,h3,.logo-name{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;}
+
+/* NAV */
+nav{background:var(--white);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0.85rem 3rem;position:sticky;top:0;z-index:200;gap:1rem;}
+.logo{display:flex;align-items:center;gap:0.7rem;flex-shrink:0;}
+.logo>svg{width:58px;height:58px;flex-shrink:0;}
+.logo-icon{font-size:1.7rem;line-height:1;}
+.logo-name{font-size:1.25rem;font-weight:800;letter-spacing:0.03em;color:var(--navy);line-height:1;}
+.logo-name em{color:var(--amber);font-style:normal;}
+.logo-tag{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+.nav-links{display:flex;gap:0;list-style:none;align-items:center;}
+.nav-links li{display:flex;align-items:center;}
+.nav-links li+li::before{content:'·';color:#b0bcd4;font-size:1.4rem;margin:0 0.75rem;line-height:1;font-weight:700;}
+.nav-links a{color:var(--muted);font-size:0.82rem;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;position:relative;padding-bottom:2px;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--amber);border-radius:2px;transition:width .25s ease;}
+.nav-links a:hover{color:var(--amber);}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;gap:0.5rem;align-items:center;flex-shrink:0;}
+.nav-cta{background:var(--red);color:#fff;padding:0.6rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.88rem;letter-spacing:0.04em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(192,57,43,0.35);flex-shrink:0;}
+.nav-cta:hover{background:#a93226;transform:translateY(-1px);}
+.nav-wa{background:#25d366;color:#fff;padding:0.6rem 0.9rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:5px;white-space:nowrap;display:inline-flex;align-items:center;gap:0.3rem;transition:background .2s,transform .15s;box-shadow:0 3px 10px rgba(37,211,102,0.3);}
+.nav-wa:hover{background:#1ebe5d;transform:translateY(-1px);}
+/* Battery wrapper — invisible on desktop, styled as battery on mobile */
+.bat-wrap{display:contents;}
+.nav-cta-battery{display:none;}
+/* ═══════════════════════════════════════════
+   MOBILE SIDEBAR — premium dark navy drawer
+   ═══════════════════════════════════════════ */
+
+/* Hamburger — morphs to × on open; flex-shrink:0 prevents it being squeezed in zoom mode */
+.hamburger{display:none;flex-direction:column;gap:5.5px;cursor:pointer;padding:6px;z-index:310;background:none;border:none;flex-shrink:0;min-width:36px;min-height:36px;align-items:center;justify-content:center;}
+.hamburger span{display:block;width:24px;height:2.5px;background:var(--navy);border-radius:2px;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s ease,width .3s ease;}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;width:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+/* Overlay backdrop */
+.mob-overlay{
+  position:fixed;inset:0;
+  background:rgba(9,16,35,0.75);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  z-index:400;
+  opacity:0;visibility:hidden;
+  transition:opacity .35s ease,visibility .35s ease;
+}
+.mob-overlay.open{opacity:1;visibility:visible;}
+
+/* Drawer panel */
+.mob-drawer{
+  position:fixed;
+  top:0;left:0;bottom:0;
+  width:min(82vw,310px);
+  background:linear-gradient(160deg,#0e1e3d 0%,#091628 100%);
+  border-right:1px solid rgba(245,192,48,0.12);
+  z-index:500;
+  transform:translateX(-110%);           /* -110% fully hides shadow off-screen */
+  transition:transform .38s cubic-bezier(.4,0,.2,1),box-shadow .38s;
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  box-shadow:none;                        /* no shadow while off-screen */
+}
+.mob-drawer.open{transform:translateX(0);box-shadow:12px 0 48px rgba(0,0,0,0.55);}
+
+/* Drawer top — logo + close */
+.mob-drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.2rem;
+  border-bottom:1px solid rgba(245,192,48,0.15);
+  flex-shrink:0;
+}
+.mob-draw-logo{display:flex;align-items:center;gap:0.55rem;}
+.mob-draw-logo svg{width:42px;height:42px;flex-shrink:0;}
+.mob-draw-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;line-height:1.1;}
+.mob-draw-logo-txt em{color:var(--amber-mid);font-style:normal;}
+.mob-draw-logo-sub{font-size:0.55rem;letter-spacing:0.13em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:2px;}
+.mob-close-btn{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.6);font-size:0.9rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;
+}
+.mob-close-btn:hover{background:rgba(245,192,48,0.18);color:var(--amber-mid);}
+
+/* Open badge */
+.mob-open-badge{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.55rem 1.2rem;
+  background:rgba(37,211,102,0.07);
+  border-bottom:1px solid rgba(37,211,102,0.12);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);flex-shrink:0;
+}
+.mob-open-dot{width:7px;height:7px;border-radius:50%;background:#25d366;flex-shrink:0;
+  box-shadow:0 0 7px rgba(37,211,102,0.8);animation:onlinePulse 2s ease-in-out infinite;}
+
+/* Nav links */
+.mob-nav{padding:0.5rem 0;flex-shrink:0;}
+.mob-nav-link{
+  display:flex;align-items:center;gap:0.8rem;
+  padding:0.78rem 1.2rem;
+  color:rgba(255,255,255,0.75);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.1rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  border-left:3px solid transparent;
+  transition:background .2s,color .2s,border-color .2s,padding-left .2s;
+}
+.mob-nav-link:hover,.mob-nav-link:focus{
+  background:rgba(245,192,48,0.07);
+  color:var(--amber-mid);
+  border-left-color:var(--amber-mid);
+  padding-left:1.55rem;
+}
+/* Slide-in animation — smooth fade+slide, GPU-composited via translate3d */
+@keyframes mobLinkIn{
+  from{opacity:0;transform:translate3d(-18px,0,0);}
+  to{opacity:1;transform:translate3d(0,0,0);}
+}
+.mob-nav-link{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.mob-drawer.open .mob-nav-link{will-change:opacity,transform;}
+.mob-drawer.open .mob-nav-link:nth-child(1){animation:mobLinkIn .65s .12s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(2){animation:mobLinkIn .65s .24s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(3){animation:mobLinkIn .65s .36s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(4){animation:mobLinkIn .65s .48s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-drawer.open .mob-nav-link:nth-child(5){animation:mobLinkIn .65s .60s cubic-bezier(.22,1,.36,1) forwards;}
+.mob-nav-ico{
+  width:32px;height:32px;border-radius:7px;flex-shrink:0;
+  background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  transition:background .2s,color .2s;
+}
+.mob-nav-link:hover .mob-nav-ico,.mob-nav-link:focus .mob-nav-ico{
+  background:rgba(245,192,48,0.14);color:var(--amber-mid);
+}
+.mob-nav-sep{height:1px;background:rgba(255,255,255,0.05);margin:0.3rem 1.2rem;}
+
+/* CTA buttons */
+.mob-ctas{padding:0.8rem 1.2rem 1rem;display:flex;flex-direction:column;gap:0.55rem;flex-shrink:0;}
+.mob-cta-call,.mob-cta-wa{
+  display:flex;align-items:center;justify-content:center;gap:0.45rem;
+  padding:0.88rem;border-radius:7px;
+  font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:background .2s,transform .15s;
+  opacity:1 !important;   /* always fully visible — no animation hiding */
+}
+.mob-cta-call{
+  background:#e74c3c;color:#fff;
+  border:2px solid rgba(255,255,255,0.25);
+  box-shadow:0 4px 20px rgba(231,76,60,0.55);
+}
+.mob-cta-call:hover{background:#c0392b;transform:translateY(-1px);}
+.mob-cta-wa{
+  background:#25d366;color:#fff;
+  border:2px solid rgba(255,255,255,0.2);
+  box-shadow:0 4px 16px rgba(37,211,102,0.45);
+}
+.mob-cta-wa:hover{background:#1ebe5d;transform:translateY(-1px);}
+
+/* Drawer footer line */
+.mob-drawer-foot{
+  padding:0.65rem 1.2rem;
+  border-top:1px solid rgba(255,255,255,0.05);
+  text-align:center;flex-shrink:0;
+  font-size:0.68rem;letter-spacing:0.06em;
+  color:rgba(255,255,255,0.28);text-transform:uppercase;
+}
+
+/* HERO */
+.hero-img{width:100%;height:420px;overflow:hidden;position:relative;background:var(--navy);}
+.hero-svg{width:100%;height:100%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(14,30,61,0.82) 0%,rgba(14,30,61,0.45) 55%,rgba(14,30,61,0.1) 100%);}
+.hero-text{position:absolute;top:50%;left:4rem;transform:translateY(-50%);z-index:2;}
+.hero-text h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;text-transform:uppercase;color:#fff;line-height:0.92;margin-bottom:0.9rem;}
+.hero-text h1 em{color:var(--amber-mid);font-style:normal;}
+.hero-slogan{color:#fff;font-size:clamp(1.05rem,2.2vw,1.4rem);font-weight:700;letter-spacing:0.04em;background:rgba(240,165,0,0.18);border-left:4px solid var(--amber-mid);padding:0.5rem 1rem;margin-bottom:1.2rem;display:inline-block;border-radius:0 4px 4px 0;}
+.hero-text p{color:rgba(255,255,255,0.78);font-size:clamp(0.82rem,1.4vw,0.97rem);font-weight:300;max-width:400px;line-height:1.72;margin-bottom:1.4rem;}
+.hero-btns{display:flex;gap:0.7rem;flex-wrap:wrap;}
+.hero-btn{background:var(--amber-btn);color:var(--navy);padding:0.82rem 1.8rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border-radius:5px;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(245,192,48,0.4);}
+.hero-btn:hover{background:#d4920a;transform:translateY(-2px);}
+.hero-btn-wa{background:#25d366;color:#fff;padding:0.82rem 1.6rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border-radius:5px;display:inline-flex;align-items:center;gap:0.35rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,211,102,0.35);}
+.hero-btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);}
+
+/* STATS */
+.stats-bar{background:var(--navy);display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{text-align:center;padding:1.4rem 1rem;border-right:1px solid rgba(255,255,255,0.08);}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:var(--amber-mid);}
+.stat-lbl{font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:2px;}
+
+/* MARQUEE */
+.mq{overflow:hidden;background:var(--amber-light);border-top:1px solid #f0dc90;border-bottom:1px solid #f0dc90;padding:0.7rem 0;}
+.mq-track{display:flex;gap:2rem;animation:mq 26s linear infinite;width:max-content;}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{font-family:'Barlow Condensed',sans-serif;font-size:0.92rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);white-space:nowrap;}
+.mq-dot{color:#b8860a;}
+
+/* SECTIONS */
+.section{padding:5rem 4rem;}
+.section-alt{background:var(--white);}
+.sec-label{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:0.5rem;}
+.sec-title{font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:800;text-transform:uppercase;color:var(--navy);line-height:1;margin-bottom:0.5rem;}
+.sec-sub{font-size:0.9rem;color:var(--muted);max-width:580px;line-height:1.72;margin-bottom:2.5rem;font-weight:300;}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;align-items:stretch;}@media(min-width:1200px){.services-grid{grid-template-columns:repeat(4,1fr);}}
+.svc{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:2rem 1.8rem;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;min-height:420px;}
+.svc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--amber-mid);}
+.svc:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(14,30,61,0.1);}
+.svc-icon{font-size:2.2rem;margin-bottom:1rem;display:block;}
+.svc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.55rem;font-weight:800;text-transform:uppercase;color:var(--navy);margin-bottom:0.5rem;}
+.svc-desc{font-size:0.86rem;color:var(--muted);line-height:1.75;font-weight:300;}
+.svc-keywords{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.kw-tag{background:var(--amber-light);color:var(--amber);font-size:0.66rem;letter-spacing:0.07em;padding:0.22rem 0.55rem;border-radius:20px;font-weight:500;border:1px solid #f0dc90;}
+
+/* REVIEWS */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:0.5rem;}
+.review-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.6rem 1.5rem;position:relative;}
+.review-stars{color:#f5c030;font-size:1rem;letter-spacing:2px;margin-bottom:0.7rem;}
+.review-text{font-size:0.87rem;color:var(--muted);line-height:1.72;font-weight:300;font-style:italic;margin-bottom:1rem;}
+.review-author{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);text-transform:uppercase;}
+.review-location{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+.review-badge{position:absolute;top:1rem;right:1rem;background:var(--amber-light);color:var(--amber);font-size:0.62rem;font-weight:700;letter-spacing:0.08em;padding:0.2rem 0.5rem;border-radius:20px;border:1px solid #f0dc90;text-transform:uppercase;}
+.rating-summary{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;background:var(--white);border:1px solid var(--border);padding:1.2rem 1.8rem;border-radius:8px;width:fit-content;}
+.rating-big{font-family:'Barlow Condensed',sans-serif;font-size:3.5rem;font-weight:800;color:var(--navy);line-height:1;}
+.rating-stars-big{color:#f5c030;font-size:1.3rem;letter-spacing:3px;display:block;margin-bottom:2px;}
+.rating-count{font-size:0.78rem;color:var(--muted);}
+
+/* FAQ */
+.faq-list{max-width:800px;display:flex;flex-direction:column;gap:0.8rem;}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.faq-q{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:var(--navy);padding:1.1rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase;letter-spacing:0.02em;user-select:none;}
+.faq-q:hover{background:var(--amber-light);}
+.faq-arrow{font-size:1.1rem;color:var(--amber);flex-shrink:0;margin-left:1rem;display:flex;align-items:center;}
+.faq-a{font-size:0.88rem;color:var(--muted);line-height:1.75;padding:0 1.5rem 1.1rem;font-weight:300;display:none;}
+.faq-item.open .faq-a{display:block;}
+.faq-arrow i{transition:transform .3s;}.faq-item.open .faq-arrow i{transform:rotate(180deg);}
+
+/* WHY */
+.why-inner{display:grid;grid-template-columns:1fr 1fr;}
+.why-left{background:var(--navy);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:space-between;min-height:400px;}
+.why-big{font-size:clamp(2.8rem,5vw,4.2rem);font-weight:800;text-transform:uppercase;color:#fff;line-height:0.9;margin-bottom:1.5rem;}
+.why-big em{color:var(--amber-mid);font-style:normal;}
+.why-slogan{font-size:1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0.04em;color:var(--amber-mid);background:rgba(245,192,48,0.1);border-left:4px solid var(--amber-mid);padding:0.6rem 1rem;margin-bottom:1rem;border-radius:0 4px 4px 0;text-transform:uppercase;}
+.why-desc{font-size:0.88rem;color:rgba(255,255,255,0.5);font-weight:300;line-height:1.78;max-width:320px;}
+.why-right{padding:4rem;display:flex;flex-direction:column;justify-content:center;gap:2rem;background:var(--panel);}
+.trust{display:flex;gap:1.2rem;align-items:flex-start;}
+.t-icon{font-size:1.4rem;flex-shrink:0;margin-top:3px;}
+.t-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:0.2rem;}
+.t-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;font-weight:300;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-intro{font-size:0.9rem;color:var(--muted);line-height:1.78;font-weight:300;max-width:380px;margin-bottom:1.8rem;}
+.c-items{display:flex;flex-direction:column;gap:0.85rem;}
+.c-item{display:flex;align-items:center;gap:1rem;background:var(--white);border:1px solid var(--border);padding:1rem 1.3rem;border-radius:6px;transition:border-color .2s,box-shadow .2s;}
+.c-item:hover{border-color:var(--amber-btn);box-shadow:0 4px 12px rgba(240,165,0,0.12);}
+.c-icon{font-size:1.3rem;width:26px;text-align:center;}
+.c-lbl{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.c-val{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:var(--navy);}
+.form-box{background:var(--white);border:1px solid var(--border);padding:2.2rem;border-radius:8px;}
+.form-title{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;text-transform:uppercase;color:var(--navy);margin-bottom:1.4rem;}
+.fg{margin-bottom:1rem;}
+.fg label{display:block;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.75rem 1rem;font-family:'Barlow',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--amber-btn);box-shadow:0 0 0 3px rgba(240,165,0,0.12);}
+.fg textarea{resize:none;height:80px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+.submit-row{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.3rem;}
+.submit{background:var(--navy);color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;border-radius:4px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+.submit:hover{background:var(--amber-btn);color:var(--navy);}
+.submit-wa{background:#25d366;color:#fff;padding:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;border-radius:4px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+.submit-wa:hover{background:#1ebe5d;}
+
+/* FOOTER */
+footer{background:var(--navy);padding:2.5rem 3rem;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08);}
+.f-logo{display:flex;align-items:center;gap:0.6rem;}
+.f-logo-icon{font-size:1.3rem;}
+.f-logo-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;color:#fff;}
+.f-logo-name em{color:var(--amber-mid);font-style:normal;}
+.f-logo-arabic{font-size:0.85rem;color:rgba(255,255,255,0.35);margin-top:3px;direction:rtl;}
+.f-col h4{font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-bottom:0.8rem;}
+.f-col a,.f-col p{font-size:0.8rem;color:rgba(255,255,255,0.35);display:block;margin-bottom:0.4rem;transition:color .2s;line-height:1.6;}
+.f-col a:hover{color:var(--amber-mid);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-copy{font-size:0.7rem;color:rgba(255,255,255,0.25);}
+.f-seo-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.f-seo-links a{font-size:0.7rem;color:rgba(255,255,255,0.25);transition:color .2s;}
+.f-seo-links a:hover{color:var(--amber-mid);}
+
+/* FLOAT */
+.float-call{position:fixed;bottom:5.5rem;right:1rem;background:var(--red);color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(192,57,43,0.45);transition:transform .2s;animation:pulse 2.5s ease infinite;white-space:nowrap;}
+.float-call:hover{transform:scale(1.05);}
+.float-wa{position:fixed;bottom:1rem;right:1rem;background:#25d366;color:#fff;padding:0.75rem 1.2rem;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.05em;text-transform:uppercase;display:flex;align-items:center;gap:0.35rem;z-index:400;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform .2s;white-space:nowrap;}
+.float-wa:hover{transform:scale(1.05);}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,0.4);}50%{box-shadow:0 4px 28px rgba(192,57,43,0.65);}}
+/* ICONS — Modern 2026 coloured style */
+.ph{display:inline-flex;align-items:center;vertical-align:middle;flex-shrink:0;}
+.nav-cta .ph,.nav-wa .ph{font-size:1.15rem;}
+.hero-btn .ph,.hero-btn-wa .ph{font-size:1.25rem;}
+.float-call .ph,.float-wa .ph{font-size:1.4rem;}
+
+/* Contact card icons — coloured circles */
+.c-icon-svg{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;
+}
+.c-icon-svg.icon-phone{background:#fff0f0;color:#c0392b;}
+.c-icon-svg.icon-wa{background:#e8f8ef;color:#25d366;}
+.c-icon-svg.icon-email{background:#eef3ff;color:#3b5bdb;}
+.c-icon-svg.icon-location{background:#fff8e6;color:var(--amber);}
+.c-icon-svg.icon-clock{background:#f0f4ff;color:#5c7cfa;}
+
+/* Service card icons — large coloured icons */
+.svc-icon-box{
+  width:64px;height:64px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;font-size:1.9rem;
+}
+.svc-icon-box.icon-battery{background:#fff8e6;color:#d4900a;}
+.svc-icon-box.icon-ac{background:#e8f4ff;color:#1c7ed6;}
+.svc-icon-box.icon-repair{background:#f0fff4;color:#2f9e44;}
+
+/* Why Us trust icons — coloured circles */
+.t-icon-circle{
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.3rem;margin-top:2px;
+}
+.t-icon-circle.icon-lightning{background:rgba(245,192,48,0.15);color:var(--amber-mid);}
+.t-icon-circle.icon-shield{background:rgba(37,211,102,0.12);color:#2f9e44;}
+.t-icon-circle.icon-wrench{background:rgba(92,124,250,0.12);color:#5c7cfa;}
+.t-icon-circle.icon-clock{background:rgba(245,192,48,0.18);color:var(--amber-mid);}
+
+/* Area card icons */
+.area-icon-svg{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--amber-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--amber);
+  margin-bottom:0.6rem;
+}
+
+/* Stat icons */
+.stat-icon-wrap{display:flex;align-items:center;justify-content:center;font-size:1.9rem;color:var(--amber-mid);}
+
+@media(max-width:600px){
+  .float-call .ph,.float-wa .ph{font-size:1.5rem;}
+  .svc-icon-box{width:52px;height:52px;font-size:1.5rem;border-radius:12px;}
+  .c-icon-svg{width:38px;height:38px;font-size:1.1rem;}
+}
+
+/* MAP LAYOUT — full width, no sidebar */
+.map-layout{display:block;margin-top:0.5rem;}
+.map-container{position:relative;max-width:900px;margin:0 auto;}
+.map-label-top{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);margin-bottom:0.7rem;display:flex;align-items:center;}
+/* content-visibility defers paint of the complex SVG until near viewport — big first-load win */
+.map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(14,30,61,0.18);border:1px solid var(--border);background:#0a1628;aspect-ratio:7/4;will-change:transform;transform:translateZ(0);isolation:isolate;content-visibility:auto;contain-intrinsic-size:0 350px;}
+.map-hint{font-size:0.78rem;color:var(--muted);text-align:center;margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+/* Pin pulse — paused until map enters viewport (saves CPU on page load) */
+.pin-pulse{animation:pinPulse 2s ease-in-out infinite;animation-play-state:paused;}
+#abuDhabiMap.map-active .pin-pulse{animation-play-state:running;}
+@keyframes pinPulse{0%,100%{opacity:0.1;}50%{opacity:0.28;}}
+@media(max-width:600px){.map-wrap{aspect-ratio:4/3;}}
+
+/* DELIVERY BADGE */
+.delivery-badge{
+  display:inline-flex;align-items:center;gap:0.35rem;
+  background:#e8f5e9;color:#1a7a3c;
+  border:1.5px solid #a5d6a7;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.28rem 0.75rem;border-radius:30px;
+  white-space:nowrap;
+}
+.delivery-badge::before{content:'🚗';font-size:0.85rem;}
+/* Nav delivery tag */
+.nav-delivery{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  background:#e8f5e9;color:#1a7a3c;
+  border:1.5px solid #a5d6a7;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.3rem 0.7rem;
+  border-radius:30px;white-space:nowrap;flex-shrink:0;
+}
+/* Hero delivery strip */
+.hero-delivery-strip{
+  display:flex;align-items:center;gap:0.8rem;
+  margin-bottom:1rem;flex-wrap:wrap;
+}
+.hero-delivery-pill{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(37,211,102,0.18);
+  border:1.5px solid rgba(37,211,102,0.55);
+  color:#6effa0;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.35rem 0.9rem;
+  border-radius:30px;white-space:nowrap;
+}
+@media(max-width:900px){.nav-delivery{display:none;}}
+@media(max-width:600px){
+  .hero-delivery-strip{gap:0.5rem;}
+  .hero-delivery-pill{font-size:0.78rem;padding:0.3rem 0.7rem;}
+}
+@media(max-width:900px){
+  nav{padding:0.8rem 1.2rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .nav-wa{display:none;}
+  .hero-img{height:320px;overflow:hidden;}
+  .hero-text{left:1.2rem;right:1.2rem;max-width:calc(100vw - 2.4rem);box-sizing:border-box;}
+  .hero-text h1{font-size:clamp(1.8rem,6vw,3rem);}
+  .hero-slogan{font-size:clamp(0.85rem,3vw,1.1rem);white-space:normal;max-width:100%;}
+  .hero-text p{font-size:0.82rem;max-width:100%;}
+  .hero-btn,.hero-btn-wa{font-size:0.85rem;padding:0.65rem 1rem;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .stat{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .section{padding:3rem 1.2rem;}
+  .section-alt .why-inner{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+  .reviews-grid{grid-template-columns:1fr;}
+  .why-inner{grid-template-columns:1fr;}
+  .why-left{padding:2.5rem 1.5rem;min-height:auto;}
+  .why-right{padding:2.5rem 1.5rem;}
+  .contact-grid{grid-template-columns:1fr;gap:2rem;}
+  .form-box{padding:1.5rem 1.2rem;}
+  footer{padding:2rem 1.2rem;}
+  .footer-top{flex-direction:column;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .f-seo-links{justify-content:center;}
+  /* Float buttons: icon circles only on tablet */
+  .float-call{bottom:5rem;right:0.8rem;padding:0.7rem 1rem;font-size:0.82rem;}
+  .float-wa{bottom:1rem;right:0.8rem;padding:0.7rem 1rem;font-size:0.82rem;}
+}
+
+/* ===== MOBILE: max 600px ===== */
+@media(max-width:600px){
+  /* Prevent ALL overflow */
+  html,body{max-width:100vw;overflow-x:hidden;}
+  /* Nav */
+  nav{padding:0.7rem 1rem;}
+  .logo>svg{width:56px;height:56px;}
+  .logo-icon{font-size:1.3rem;}
+  .logo-name{font-size:1.2rem;}
+  .logo-tag{display:none;}
+  /* Hide phone icon — no icon needed, button IS the battery */
+  .nav-cta-phone{display:none;}
+
+  /* ── Battery button wrapper — creates the two terminal posts ── */
+  .bat-wrap{
+    display:inline-block;
+    position:relative;
+    padding-top:13px;   /* room for terminal posts above body */
+    flex-shrink:0;
+  }
+  /* Left terminal post — red (positive) */
+  .bat-wrap::before{
+    content:'';
+    position:absolute;
+    top:0; left:18%;
+    width:22%; height:13px;
+    background:linear-gradient(to bottom,#ef5350,#b71c1c);
+    border:1.5px solid #7f0000;
+    border-bottom:none;
+    border-radius:4px 4px 0 0;
+  }
+  /* Right terminal post — black (negative) */
+  .bat-wrap::after{
+    content:'';
+    position:absolute;
+    top:0; right:18%;
+    width:22%; height:13px;
+    background:linear-gradient(to bottom,#616161,#212121);
+    border:1.5px solid #000;
+    border-bottom:none;
+    border-radius:4px 4px 0 0;
+  }
+
+  /* ── Battery body — the actual button ── */
+  .nav-cta{
+    display:flex;align-items:center;justify-content:center;
+    padding:0.6rem 0.75rem;
+    font-size:0.8rem;font-weight:900;letter-spacing:0.07em;
+    gap:0;clip-path:none;
+    /* Red stripe top, dark body, red stripe bottom */
+    background:linear-gradient(
+      to bottom,
+      #c62828 0%,  #c62828 22%,
+      #1a1a1a 22%, #1a1a1a 78%,
+      #c62828 78%, #c62828 100%
+    );
+    color:#ffffff;
+    border:2px solid #000;
+    border-radius:0 0 4px 4px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    white-space:nowrap;
+    text-shadow:0 1px 3px rgba(0,0,0,0.6);
+  }
+  .nav-cta:hover{
+    background:linear-gradient(
+      to bottom,
+      #e53935 0%,  #e53935 22%,
+      #2c2c2c 22%, #2c2c2c 78%,
+      #e53935 78%, #e53935 100%
+    );
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.55);
+  }
+
+  /* Zoom mode — hide text, just show compact button */
+  @media(max-width:380px){
+    .cta-txt{display:none;}
+    .nav-cta{padding:0.6rem 0.55rem;}
+    .bat-wrap::before,.bat-wrap::after{width:26%;}
+  }
+
+  /* Hamburger always visible and not squeezed in zoom mode */
+  .hamburger{display:flex;flex-shrink:0;}
+  /* Hero - fully constrained */
+  .hero-img{height:auto;min-height:320px;}
+  .hero-text{
+    position:relative;
+    top:auto;left:0;right:0;
+    transform:none;
+    padding:2rem 1.2rem 1.5rem;
+    max-width:100%;
+    box-sizing:border-box;
+    background:linear-gradient(to bottom,rgba(14,30,61,0.88),rgba(14,30,61,0.75));
+  }
+  .hero-overlay{display:none;}
+  .hero-img{position:relative;display:flex;flex-direction:column;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero-text{position:relative;z-index:1;margin-top:0;}
+  .hero-text h1{font-size:clamp(1.8rem,8vw,2.5rem);line-height:1;}
+  .hero-slogan{font-size:0.85rem;padding:0.4rem 0.7rem;white-space:normal;max-width:100%;display:block;}
+  .hero-text p{font-size:0.8rem;max-width:100%;}
+  .hero-btns{flex-direction:column;gap:0.6rem;}
+  .hero-btn,.hero-btn-wa{width:100%;justify-content:center;font-size:0.9rem;padding:0.8rem 1rem;}
+  /* Stats */
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .stat{padding:1rem 0.5rem;}
+  .stat-num{font-size:1.3rem;}
+  .stat-lbl{font-size:0.55rem;}
+  /* Sections */
+  .section{padding:2.5rem 1rem;}
+  .sec-title{font-size:1.7rem;}
+  /* Services */
+  .svc{padding:1.5rem 1.2rem;}
+  /* FAQ */
+  .faq-q{font-size:0.92rem;padding:0.9rem 1rem;}
+  .faq-a{padding:0 1rem 0.9rem;font-size:0.82rem;}
+  /* Why */
+  .why-left{padding:2rem 1.2rem;}
+  .why-right{padding:2rem 1.2rem;}
+  .why-big{font-size:2.5rem;}
+  .why-slogan{font-size:1rem;}
+  /* Contact */
+  .section.contact-section,.section#contact{padding:2.5rem 1rem;}
+  .c-val{font-size:0.9rem;}
+  .form-box{padding:1.2rem 1rem;}
+  .fg-row{grid-template-columns:1fr;}
+  .submit-row{grid-template-columns:1fr;}
+  /* Reviews */
+  .rating-summary{padding:1rem;gap:1rem;width:100%;}
+  /* Footer — bottom padding clears floating call/WA buttons; navy bg fills it, no white gap */
+  footer{padding:1.5rem 1rem 4rem;margin-bottom:0;}
+  body{padding-bottom:0;}
+  .f-logo-name{font-size:1rem;}
+  .f-seo-links{flex-direction:column;gap:0.5rem;align-items:center;}
+  /* Float buttons: circles only, never overlapping */
+  .float-call{
+    width:52px;height:52px;border-radius:50%;
+    padding:0;justify-content:center;
+    bottom:5.5rem;right:0.8rem;
+    font-size:0 !important;
+    overflow:hidden;
+  }
+  
+  .float-wa{
+    width:52px;height:52px;border-radius:50%;
+    padding:0;justify-content:center;
+    bottom:1rem;right:0.8rem;
+    font-size:0 !important;
+    overflow:hidden;
+  }
+  
+  
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS — pure CSS + Intersection Observer
+   Zero layout shift · GPU-accelerated · ~4KB
+   ═══════════════════════════════════════════ */
+
+/* ── Scroll reveal base ── */
+.will-anim{
+  opacity:0;
+  transform:translateY(28px);
+  will-change:opacity,transform;          /* pre-promote to compositor — prevents on-fire layer creation stutter */
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.will-anim.from-left{ transform:translateX(-28px); }
+.will-anim.from-right{ transform:translateX(28px); }
+.will-anim.from-scale{ transform:scale(0.94); }
+.will-anim.visible{
+  opacity:1;
+  transform:translateY(0) translateX(0) scale(1);
+  will-change:auto;                       /* release layer after animation completes */
+}
+.will-anim.d1{transition-delay:.08s;}
+.will-anim.d2{transition-delay:.17s;}
+.will-anim.d3{transition-delay:.26s;}
+.will-anim.d4{transition-delay:.35s;}
+.will-anim.d5{transition-delay:.44s;}
+.will-anim.d6{transition-delay:.53s;}
+
+/* ── Hero text entrance ── */
+.hero-text h1{
+  animation:heroSlideUp .85s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-delivery-strip{
+  animation:heroSlideUp .85s .12s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-slogan{
+  animation:heroSlideUp .85s .22s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-text p{
+  animation:heroSlideUp .85s .35s cubic-bezier(.22,1,.36,1) both;
+}
+.hero-btns{
+  animation:heroSlideUp .85s .48s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes heroSlideUp{
+  from{opacity:0;transform:translateY(22px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* ── Section heading gold underline draw ── */
+.sec-title{position:relative;display:inline-block;}
+.sec-title::after{
+  content:'';
+  position:absolute;
+  bottom:-6px;left:0;
+  width:0;height:3px;
+  background:var(--amber-mid);
+  border-radius:2px;
+  transition:width .9s .35s cubic-bezier(.22,1,.36,1);
+}
+.sec-title.visible::after{ width:56px; }
+
+/* ── Service card gold shimmer on hover ── */
+.svc{position:relative;overflow:hidden;}
+.svc::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 35%,rgba(245,192,48,.07) 50%,transparent 65%);
+  transform:translateX(-100%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+.svc:hover::after{ transform:translateX(100%); }
+.svc:hover{ transform:translateY(-6px); box-shadow:0 14px 36px rgba(14,30,61,.13); }
+
+/* ── Review card hover ── */
+.review-card{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+.review-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 14px 36px rgba(14,30,61,.12);
+}
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.review-card.will-anim{
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.review-card.will-anim.visible:hover{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),
+             box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── FAQ smooth height ── */
+.faq-a{
+  display:block !important;
+  max-height:0;
+  overflow:hidden;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  transition:max-height .42s cubic-bezier(.22,1,.36,1),
+             padding .32s ease;
+}
+.faq-item.open .faq-a{
+  max-height:320px;
+  padding-bottom:1.1rem !important;
+}
+
+/* ── Float buttons enhanced pulse ── */
+@keyframes pulse{
+  0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.4);}
+  50%{box-shadow:0 4px 32px rgba(192,57,43,.72),0 0 0 9px rgba(192,57,43,.07);}
+}
+.float-wa{animation:pulseWa 3.2s ease infinite;}
+@keyframes pulseWa{
+  0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}
+  50%{box-shadow:0 4px 32px rgba(37,211,102,.72),0 0 0 9px rgba(37,211,102,.09);}
+}
+
+/* ── Hero star particles ── */
+.star-pt{
+  position:absolute;
+  border-radius:50%;
+  background:#f5c030;
+  pointer-events:none;
+  animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:var(--lo,.15);transform:scale(1);}
+  50%{opacity:var(--hi,.7);transform:scale(1.4);}
+}
+
+/* ── Nav scroll shadow ── */
+nav{transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
+
+/* ── Trust item hover ── */
+.trust{
+  transition:transform .25s cubic-bezier(.22,1,.36,1);
+  border-radius:8px;
+  padding:0.4rem;
+  margin:-0.4rem;
+}
+.trust:hover{ transform:translateX(5px); }
+/* Scroll-reveal — .will-anim stays on element permanently, so this always wins at reveal moment */
+.trust.will-anim{
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.trust.will-anim.visible:hover{ transition:transform .25s cubic-bezier(.22,1,.36,1); }
+
+/* ── Contact item already has hover, add transition ── */
+.c-item{
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+.c-item:hover{ transform:translateX(4px); }
+
+/* ── Stat number glow on reveal ── */
+.stat-num{transition:text-shadow .5s;}
+.stat.visible .stat-num{
+  text-shadow:0 0 24px rgba(245,192,48,.35);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT SECTION — redesigned
+   ═══════════════════════════════════════════ */
+#contact{
+  background:linear-gradient(135deg,#09162a 0%,#0e1e3d 55%,#091525 100%);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;top:-120px;right:-120px;
+  width:480px;height:480px;
+  background:radial-gradient(circle,rgba(245,192,48,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact::after{
+  content:'';position:absolute;bottom:-80px;left:-80px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(245,192,48,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+#contact .sec-label{color:var(--amber-mid);}
+#contact .sec-title{color:#fff;}
+#contact .sec-sub{color:rgba(255,255,255,.45);}
+#contact .sec-title::after{background:var(--amber-mid);}
+
+/* Layout */
+.contact-v2{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:3rem;
+  align-items:start;
+}
+
+/* Online badge */
+.online-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(37,211,102,.1);
+  border:1px solid rgba(37,211,102,.28);
+  color:#6effa0;
+  font-size:0.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:.35rem .9rem;
+  border-radius:30px;margin-bottom:1.5rem;
+}
+.online-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#25d366;
+  animation:onlinePulse 2s ease infinite;
+}
+@keyframes onlinePulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.5;transform:scale(1.5);}
+}
+.contact-tagline{
+  font-size:.92rem;color:rgba(255,255,255,.5);
+  font-weight:300;line-height:1.75;
+  margin-bottom:1.8rem;max-width:370px;
+}
+
+/* CTA buttons */
+.cta-btns{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:.75rem;margin-bottom:1.8rem;
+}
+.cta-call{
+  background:var(--red);color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(192,57,43,.4);
+}
+.cta-call:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(192,57,43,.6);}
+.cta-wa-big{
+  background:#25d366;color:#fff;
+  padding:1rem 1.2rem;border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.05rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 18px rgba(37,211,102,.4);
+}
+.cta-wa-big:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(37,211,102,.6);}
+
+/* Info rows */
+.ci-list{display:flex;flex-direction:column;gap:.6rem;}
+.ci{
+  display:flex;align-items:center;gap:.95rem;
+  padding:.85rem 1.1rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+  text-decoration:none;
+  transition:background .2s,border-color .2s,transform .22s;
+}
+a.ci:hover{
+  background:rgba(245,192,48,.07);
+  border-color:rgba(245,192,48,.22);
+  transform:translateX(5px);
+}
+.ci-icon{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.ci-ph{background:rgba(192,57,43,.18);color:#ff6b5b;}
+.ci-wa{background:rgba(37,211,102,.15);color:#25d366;}
+.ci-em{background:rgba(92,124,250,.15);color:#7c9fff;}
+.ci-loc{background:rgba(245,192,48,.15);color:var(--amber-mid);}
+.ci-clk{background:rgba(245,192,48,.1);color:rgba(245,192,48,.65);}
+.ci-lbl{font-size:.59rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:2px;}
+.ci-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:#fff;}
+
+/* Form card */
+.contact-form-card{
+  background:#fff;border-radius:14px;
+  padding:2.4rem 2.2rem;
+  box-shadow:0 28px 64px rgba(0,0,0,.38);
+  position:relative;z-index:1;
+}
+.form-card-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.65rem;font-weight:800;
+  text-transform:uppercase;color:var(--navy);
+  margin-bottom:.25rem;
+}
+.form-card-sub{
+  font-size:.82rem;color:var(--muted);
+  font-weight:300;margin-bottom:1.6rem;
+}
+.contact-form-card .fg input,
+.contact-form-card .fg select,
+.contact-form-card .fg textarea{
+  border-radius:7px;border:1.5px solid #e2e8f2;
+  background:#f8faff;font-size:.9rem;
+  padding:.82rem 1rem;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.contact-form-card .fg input:focus,
+.contact-form-card .fg select:focus,
+.contact-form-card .fg textarea:focus{
+  border-color:var(--amber-btn);
+  box-shadow:0 0 0 3px rgba(240,165,0,.12);
+  background:#fff;
+}
+.contact-form-card .fg textarea{height:90px;}
+.contact-form-card .fg label{color:var(--muted);font-size:.62rem;letter-spacing:.12em;font-weight:600;}
+.contact-form-card .submit{background:var(--navy);border-radius:7px;}
+.contact-form-card .submit:hover{background:var(--amber-btn);color:var(--navy);}
+.contact-form-card .submit-wa{border-radius:7px;}
+
+/* Mobile responsive */
+@media(max-width:900px){
+  .contact-v2{grid-template-columns:1fr;}
+  #contact{padding:3rem 1.2rem;}
+}
+@media(max-width:600px){
+  .cta-btns{grid-template-columns:1fr;}
+  .contact-form-card{padding:1.6rem 1.2rem;}
+  .contact-tagline{max-width:100%;}
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media(prefers-reduced-motion:reduce){
+  .will-anim,.will-anim.visible{
+    opacity:1!important;transform:none!important;transition:none!important;
+  }
+  .hero-text h1,.hero-delivery-strip,.hero-slogan,
+  .hero-text p,.hero-btns{animation:none!important;}
+  .star-pt,.float-wa,.float-call{animation:none!important;}
+  .sec-title::after{transition:none!important;width:56px!important;}
+}
+
+
+/* NAV DROPDOWN */
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-toggle{display:flex;align-items:center;gap:0.3rem;cursor:pointer;}
+.nav-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 12px);left:50%;
+  transform:translateX(-50%);
+  background:var(--white);border:1px solid var(--border);
+  border-radius:8px;padding:0.5rem 0;
+  min-width:200px;z-index:300;
+  box-shadow:0 8px 30px rgba(14,30,61,0.12);
+  list-style:none;
+}
+.nav-dropdown:hover .nav-dropdown-menu{display:block;}
+.nav-dropdown-menu li a{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.6rem 1.1rem;
+  color:var(--muted);font-size:0.8rem;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:background .15s,color .15s;white-space:nowrap;
+}
+.nav-dropdown-menu li a:hover{background:var(--amber-light);color:var(--amber);}
+.nav-dropdown-menu li a i{font-size:1rem;color:var(--amber);}
+</style>
+</head>
+<body>
+
+<!-- FLOATING BUTTONS -->
+<a href="tel:+971523408703" class="float-call" aria-label="Call Moon Light Car Care — Al Danah, Abu Dhabi">
+  <i class="ph ph-phone-call"></i>
+  <span class="float-txt">Call Now</span>
+</a>
+<a href="https://wa.me/971523408703?text=Hello%20Moon%20Light%20Car%20Care!%20I%20need%20help%20with%20my%20car." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Care Abu Dhabi">
+  <i class="ph ph-whatsapp-logo"></i>
+  <span class="float-txt">WhatsApp</span>
+</a>
+
+<!-- NAVIGATION -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="logo">
+    <!-- Inline SVG logo — crescent moon + separated star dots -->
+    <svg width="38" height="38" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+      <defs>
+        <mask id="nav-moon-mask">
+          <circle cx="340" cy="340" r="145" fill="white"/>
+          <circle cx="412" cy="285" r="128" fill="black"/>
+        </mask>
+      </defs>
+      <!-- Crescent -->
+      <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#nav-moon-mask)"/>
+      <!-- Stars — all outside moon disc, clearly visible -->
+      <circle cx="185" cy="125" r="28" fill="#f5c030"/>
+      <circle cx="338" cy="108" r="22" fill="#f5c030"/>
+      <circle cx="490" cy="122" r="25" fill="#f5c030"/>
+      <circle cx="118" cy="275" r="19" fill="#f5c030" opacity="0.85"/>
+      <circle cx="562" cy="248" r="17" fill="#f5c030" opacity="0.85"/>
+      <circle cx="248" cy="100" r="13" fill="#f5c030" opacity="0.7"/>
+      <circle cx="428" cy="95"  r="12" fill="#f5c030" opacity="0.7"/>
+    </svg>
+    <div>
+      <div class="logo-name">MOON <em>LIGHT</em></div>
+      <div class="logo-tag">Car Battery &amp; AC Gas Refilling</div>
+    </div>
+  </div>
+  <ul class="nav-links" role="menubar">
+    <li role="none"><a href="/" role="menuitem">Home</a></li>
+    <li role="none" class="nav-dropdown">
+      <a href="/#services" role="menuitem" class="nav-dropdown-toggle">Services <i class="ph ph-caret-down" style="font-size:0.7rem;"></i></a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/car-battery-abu-dhabi"><i class="ph ph-battery-charging"></i> Car Battery</a></li>
+        <li><a href="/ac-gas-refilling-abu-dhabi"><i class="ph ph-snowflake"></i> AC Gas Refilling</a></li>
+        <li><a href="/car-repair-abu-dhabi"><i class="ph ph-wrench"></i> Car Repair</a></li>
+        <li><a href="/car-scanning-abu-dhabi"><i class="ph ph-cpu"></i> Car Scanning</a></li>
+      </ul>
+    </li>
+    <li role="none"><a href="/#areas" role="menuitem">Areas</a></li>
+    <li role="none"><a href="/about-us" role="menuitem">About Us</a></li>
+    <li role="none"><a href="/contact-us" role="menuitem">Contact Us</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener" aria-label="WhatsApp us"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+    <!-- bat-wrap creates the two terminal posts on mobile via ::before/::after -->
+    <span class="bat-wrap">
+      <a href="tel:+971523408703" class="nav-cta" aria-label="Call Moon Light Car Care now">
+        <i class="ph ph-phone-call nav-cta-phone"></i>
+        <span class="cta-txt">Call Now</span>
+      </a>
+    </span>
+  </div>
+  <!-- Hamburger: inline style only sets flex props; display toggled purely by CSS -->
+  <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE OVERLAY -->
+<div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+
+<!-- MOBILE SIDEBAR DRAWER -->
+<aside class="mob-drawer" id="mobDrawer" role="dialog" aria-label="Navigation menu" aria-modal="true">
+
+  <!-- Header: logo + close -->
+  <div class="mob-drawer-head">
+    <div class="mob-draw-logo">
+      <svg width="42" height="42" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <mask id="sb-moon-mask">
+            <circle cx="340" cy="340" r="145" fill="white"/>
+            <circle cx="412" cy="285" r="128" fill="black"/>
+          </mask>
+        </defs>
+        <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#sb-moon-mask)"/>
+        <circle cx="185" cy="125" r="28" fill="#f5c030"/>
+        <circle cx="338" cy="108" r="22" fill="#f5c030"/>
+        <circle cx="490" cy="122" r="25" fill="#f5c030"/>
+        <circle cx="118" cy="275" r="19" fill="#f5c030" opacity="0.85"/>
+        <circle cx="562" cy="248" r="17" fill="#f5c030" opacity="0.85"/>
+        <circle cx="248" cy="100" r="13" fill="#f5c030" opacity="0.7"/>
+        <circle cx="428" cy="95"  r="12" fill="#f5c030" opacity="0.7"/>
+      </svg>
+      <div>
+        <div class="mob-draw-logo-txt">MOON <em>LIGHT</em></div>
+        <div class="mob-draw-logo-sub">Car Battery &amp; AC Gas Refilling</div>
+      </div>
+    </div>
+    <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
+  </div>
+
+  <!-- Open now badge -->
+  <div class="mob-open-badge" id="mobOpenBadge">
+    <span class="mob-open-dot" id="mobOpenDot"></span>
+    <span id="mobOpenText">Open Now &nbsp;·&nbsp; 8am – 11:30pm Daily</span>
+  </div>
+
+  <!-- Navigation links — div, NOT nav, to avoid inheriting global nav{background:white} -->
+  <div class="mob-nav" role="menubar">
+    <a href="/" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home
+    </a>
+    <a href="/car-battery-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-battery-charging"></i></span>Car Battery
+    </a>
+    <a href="/ac-gas-refilling-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-snowflake"></i></span>AC Gas Refilling
+    </a>
+    <a href="/car-repair-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-wrench"></i></span>Car Repair
+    </a>
+    <a href="/car-scanning-abu-dhabi" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-cpu"></i></span>Car Scanning
+    </a>
+    <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us
+    </a>
+    <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()" role="menuitem">
+      <span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us
+    </a>
+  </div>
+
+  <!-- Call / WhatsApp CTAs -->
+  <div class="mob-ctas">
+    <a href="tel:+971523408703" class="mob-cta-call">
+      <i class="ph ph-phone-call"></i> Call +971 52 340 8703
+    </a>
+    <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener">
+      <i class="ph ph-whatsapp-logo"></i> WhatsApp Us
+    </a>
+  </div>
+
+  <div class="mob-drawer-foot" itemscope itemtype="https://schema.org/AutoRepair">
+    <span itemprop="name">Moon Light Car Care</span> &nbsp;·&nbsp;
+    <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="streetAddress">Al Funoud St, Al Danah – Zone 1</span>,
+      <span itemprop="addressLocality">Abu Dhabi</span>,
+      <span itemprop="addressCountry">UAE</span>
+    </span>
+    <br>
+    <a href="tel:+971523408703" itemprop="telephone" style="color:inherit;text-decoration:none;">+971 52 340 8703</a>
+    &nbsp;·&nbsp;
+    <a href="https://moonlightautocare.com" itemprop="url" style="color:inherit;text-decoration:none;">moonlightautocare.com</a>
+  </div>
+</aside>
+
+<!-- HERO -->
+<header id="home">
+  <div class="hero-img">
+    <svg class="hero-svg" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="1200" height="420" fill="#0e1e3d"/>
+      <rect x="0" y="280" width="1200" height="140" fill="#0a1628"/>
+      <ellipse cx="950" cy="200" rx="320" ry="220" fill="#1a2f52" opacity="0.55"/>
+      <circle cx="1000" cy="150" r="100" fill="#f5c030" opacity="0.05"/>
+      <circle cx="1000" cy="150" r="60" fill="#f5c030" opacity="0.08"/>
+      <circle cx="1000" cy="150" r="32" fill="#f5c030" opacity="0.14"/>
+      <circle cx="1000" cy="150" r="14" fill="#f5c030" opacity="0.5"/>
+      <rect x="260" y="290" width="680" height="90" rx="10" fill="#0d1e38"/>
+      <path d="M310 290 Q340 240 420 225 L760 225 Q840 240 870 290 Z" fill="#142035"/>
+      <rect x="420" y="232" width="165" height="52" rx="5" fill="#1a3a60" opacity="0.8"/>
+      <rect x="615" y="232" width="145" height="52" rx="5" fill="#1a3a60" opacity="0.8"/>
+      <circle cx="380" cy="378" r="38" fill="#0a1628"/>
+      <circle cx="380" cy="378" r="24" fill="#162540"/>
+      <circle cx="380" cy="378" r="10" fill="#f5c030" opacity="0.4"/>
+      <circle cx="820" cy="378" r="38" fill="#0a1628"/>
+      <circle cx="820" cy="378" r="24" fill="#162540"/>
+      <circle cx="820" cy="378" r="10" fill="#f5c030" opacity="0.4"/>
+      <rect x="490" y="260" width="80" height="40" rx="4" fill="#f5c030" opacity="0.9"/>
+      <rect x="570" y="272" width="8" height="16" rx="2" fill="#f5c030" opacity="0.9"/>
+      <text x="530" y="286" font-family="Barlow Condensed,sans-serif" font-size="13" font-weight="800" fill="#0e1e3d" text-anchor="middle">BATT</text>
+      <ellipse cx="872" cy="320" rx="22" ry="14" fill="#f5c030" opacity="0.7"/>
+      <ellipse cx="872" cy="320" rx="12" ry="8" fill="#ffe066" opacity="0.9"/>
+      <path d="M894 313 L950 300 M894 320 L960 320 M894 327 L950 340" stroke="#f5c030" stroke-width="1.5" opacity="0.25"/>
+      <text x="680" y="280" font-family="Barlow Condensed,sans-serif" font-size="22" fill="#7eb8e8" opacity="0.7" text-anchor="middle">❄</text>
+      <rect x="0" y="415" width="1200" height="5" fill="#0a1628"/>
+    </svg>
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1>MOON <em>LIGHT</em><br>CAR CARE</h1>
+      <div class="hero-delivery-strip">
+        <span class="hero-delivery-pill"><i class="ph ph-truck"></i> Delivery Available</span>
+        <span class="hero-delivery-pill"><i class="ph ph-lightning"></i> Same Day Service</span>
+      </div>
+      <div class="hero-slogan"><i class="ph ph-check-circle"></i> Reliable &amp; Trustworthy — Abu Dhabi, UAE</div>
+      <p>Car battery replacement, AC gas refilling &amp; car repairs across Abu Dhabi, UAE. All makes &amp; models. Fast, honest and affordable.</p>
+      <div class="hero-btns">
+        <a href="tel:+971523408703" class="hero-btn" aria-label="Call Moon Light Car Care Abu Dhabi"><i class="ph ph-phone-call"></i> Call Now</a>
+        <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light%20Car%20Care!%20I%20need%20help." class="hero-btn-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Care"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats-bar" aria-label="Key highlights">
+  <div class="stat"><div class="stat-num" data-count="4000" data-suffix="+" >4k+</div><div class="stat-lbl">Happy Customers</div></div>
+  <div class="stat"><div class="stat-num" data-count="4.9" data-suffix="★" data-float="1">4.9★</div><div class="stat-lbl">Customer Rating</div></div>
+  <div class="stat"><div class="stat-num" data-count="8" data-suffix="+ Yrs">8+ Yrs</div><div class="stat-lbl">In Business</div></div>
+  <div class="stat"><div class="stat-num" data-count="30" data-suffix=" Min">30 Min</div><div class="stat-lbl">Avg Service Time</div></div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-track">
+    <span class="mq-item">Car Battery Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Battery Delivery Available</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">AC Gas Refilling UAE</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Aircon Regas Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car AC Fixing Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Jump Start Service UAE</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">24 Hour Battery Service</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Amaron · Bosch · Yuasa Batteries</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Battery Shop Near Me</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car AC Not Cooling Fix</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Reliable &amp; Trustworthy</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car Repair UAE</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car Computer Scanning Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car Battery Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Battery Delivery Available</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">AC Gas Refilling UAE</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Aircon Regas Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car AC Fixing Abu Dhabi</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Jump Start Service UAE</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">24 Hour Battery Service</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Amaron · Bosch · Yuasa Batteries</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Battery Shop Near Me</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car AC Not Cooling Fix</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Reliable &amp; Trustworthy</span><span class="mq-dot"> ★ </span>
+    <span class="mq-item">Car Repair UAE</span><span class="mq-dot"> ★ </span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- SERVICES -->
+<section class="section" id="services" aria-labelledby="services-heading">
+  <div class="sec-label">What We Do</div>
+  <h2 class="sec-title" id="services-heading">Our Services in Abu Dhabi</h2>
+  <p class="sec-sub">From a dead car battery to a broken AC — Moon Light Car Care is your trusted one-stop auto care shop in Abu Dhabi, UAE. Battery delivery available. We service all car makes and models across Abu Dhabi.</p>
+  <div class="services-grid">
+
+    <article class="svc" itemscope itemtype="https://schema.org/Service" onclick="window.location='/car-battery-abu-dhabi'" style="cursor:pointer;">
+      <div class="svc-icon-box icon-battery"><i class="ph ph-battery-charging"></i></div>
+      <h3 class="svc-name" itemprop="name">Car Battery Replacement &amp; Delivery — Abu Dhabi</h3>
+      <p class="svc-desc" itemprop="description">Dead car battery in Abu Dhabi? We supply, deliver and fit premium car batteries for all vehicle makes and models — Toyota, Nissan, Honda, BMW, Mercedes, Hyundai, Kia and more. Same-day battery delivery available across Abu Dhabi. We carry Amaron, Bosch, Yuasa and Varta batteries. Jump start service also available 24 hours.</p>
+      <div class="svc-keywords" aria-label="Related searches">
+        <span class="kw-tag">Car battery Abu Dhabi</span>
+        <span class="kw-tag">Battery delivery Abu Dhabi</span>
+        <span class="kw-tag">Car battery home delivery UAE</span>
+        <span class="kw-tag">Jump start Abu Dhabi</span>
+        <span class="kw-tag">24 hour battery service</span>
+        <span class="kw-tag">Amaron battery Abu Dhabi</span>
+        <span class="kw-tag">Bosch battery Abu Dhabi</span>
+        <span class="kw-tag">Yuasa battery UAE</span>
+        <span class="kw-tag">Cheap car battery UAE</span>
+        <span class="kw-tag">Dead battery fix near me</span>
+      </div>
+    </article>
+
+    <article class="svc" itemscope itemtype="https://schema.org/Service" onclick="window.location='/ac-gas-refilling-abu-dhabi'" style="cursor:pointer;">
+      <div class="svc-icon-box icon-ac"><i class="ph ph-snowflake"></i></div>
+      <h3 class="svc-name" itemprop="name">Car AC Gas Refilling &amp; Regas — Abu Dhabi</h3>
+      <p class="svc-desc" itemprop="description">Is your car AC blowing warm air in Abu Dhabi's heat? We provide expert car AC gas refilling, AC regas and aircon regas services for all vehicles. Our specialists refill R134a and R1234yf refrigerant gas quickly and affordably. Don't suffer the UAE summer heat — get your car AC gas refilled today.</p>
+      <div class="svc-keywords" aria-label="Related searches">
+        <span class="kw-tag">AC gas refilling Abu Dhabi</span>
+        <span class="kw-tag">Car AC regas Abu Dhabi</span>
+        <span class="kw-tag">Aircon regas Abu Dhabi</span>
+        <span class="kw-tag">AC gas refill near me</span>
+        <span class="kw-tag">Car AC not cooling UAE</span>
+        <span class="kw-tag">AC refrigerant recharge UAE</span>
+        <span class="kw-tag">R134a refill Abu Dhabi</span>
+        <span class="kw-tag">AC gas top up UAE</span>
+      </div>
+    </article>
+
+    <article class="svc" itemscope itemtype="https://schema.org/Service" onclick="window.location='/car-repair-abu-dhabi'" style="cursor:pointer;">
+      <div class="svc-icon-box icon-repair"><i class="ph ph-wrench"></i></div>
+      <h3 class="svc-name" itemprop="name">Car AC Repair &amp; Car Repairs — Abu Dhabi</h3>
+      <p class="svc-desc" itemprop="description">Car AC not working in Abu Dhabi's heat? We fix all AC problems — compressor replacement, AC leak repair, condenser repair and full AC system servicing. We also handle general car repairs: engine diagnostics, brake repairs and electrical faults. Honest pricing, no hidden charges. Al Funoud St, Al Danah - Zone 1.</p>
+      <div class="svc-keywords" aria-label="Related searches">
+        <span class="kw-tag">Car AC repair Abu Dhabi</span>
+        <span class="kw-tag">Car AC fixing Abu Dhabi</span>
+        <span class="kw-tag">AC compressor repair UAE</span>
+        <span class="kw-tag">Car repair Abu Dhabi</span>
+        <span class="kw-tag">Auto repair Abu Dhabi</span>
+        <span class="kw-tag">Car service Abu Dhabi</span>
+        <span class="kw-tag">Engine diagnostics Abu Dhabi</span>
+        <span class="kw-tag">Brake repair Abu Dhabi</span>
+      </div>
+    </article>
+
+    <article class="svc" itemscope itemtype="https://schema.org/Service" onclick="window.location='/car-scanning-abu-dhabi'" style="cursor:pointer;">
+      <div class="svc-icon-box icon-repair" style="background:#f0f4ff;color:#5c7cfa;"><i class="ph ph-cpu"></i></div>
+      <h3 class="svc-name" itemprop="name">Car Computer Scanning & Diagnostics — Abu Dhabi</h3>
+      <p class="svc-desc" itemprop="description">Check engine light on? Strange warning on your dashboard? Moon Light Car Care provides professional car computer scanning and OBD diagnostics for all vehicle makes and models in Abu Dhabi. We read and clear engine fault codes, perform ECU scanning and full system diagnostics — Toyota, Nissan, BMW, Mercedes, Hyundai, Kia and more. Fast, accurate and affordable. Located at Al Funoud St, Al Danah - Zone 1.</p>
+      <div class="svc-keywords" aria-label="Related searches">
+        <span class="kw-tag">Car computer scanning Abu Dhabi</span>
+        <span class="kw-tag">Car diagnostics Abu Dhabi</span>
+        <span class="kw-tag">OBD scan Abu Dhabi</span>
+        <span class="kw-tag">Engine fault code reading UAE</span>
+        <span class="kw-tag">Check engine light Abu Dhabi</span>
+        <span class="kw-tag">Car ECU scanning Abu Dhabi</span>
+        <span class="kw-tag">Car scanning service Abu Dhabi</span>
+        <span class="kw-tag">Engine diagnostics near me</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section-alt" id="why" aria-labelledby="why-heading">
+  <div class="why-inner">
+    <div class="why-left">
+      <div>
+        <h2 class="why-big" id="why-heading">WHY<br>CHOOSE<br><em>US?</em></h2>
+        <div class="why-slogan"><i class="ph ph-check-circle"></i> Reliable &amp; Trustworthy</div>
+        <p class="why-desc">Moon Light Car Care Abu Dhabi — built on one promise. Honest, high-quality car battery, AC gas refilling and auto care you can count on. No shortcuts. No surprises.</p>
+      </div>
+    </div>
+    <div class="why-right">
+      <div class="trust">
+        <div class="t-icon-circle icon-lightning"><i class="ph ph-lightning"></i></div>
+        <div>
+          <div class="t-name">Fast Same-Day Service</div>
+          <div class="t-desc">Car battery replaced or AC gas refilled the same day. We move fast without cutting corners.</div>
+        </div>
+      </div>
+      <div class="trust">
+        <div class="t-icon-circle icon-shield"><i class="ph ph-shield-check"></i></div>
+        <div>
+          <div class="t-name">Honest &amp; Transparent Pricing</div>
+          <div class="t-desc">No hidden charges. Clear quote before work begins — always. Trusted by hundreds in Abu Dhabi.</div>
+        </div>
+      </div>
+      <div class="trust">
+        <div class="t-icon-circle icon-wrench"><i class="ph ph-wrench"></i></div>
+        <div>
+          <div class="t-name">Expert Certified Technicians</div>
+          <div class="t-desc">Our trained team handles car batteries, AC gas refills, AC compressor repairs and all mechanical services.</div>
+        </div>
+      </div>
+      <div class="trust">
+        <div class="t-icon-circle icon-clock"><i class="ph ph-clock"></i></div>
+        <div>
+          <div class="t-name">Trusted Across Abu Dhabi, UAE — Open Daily</div>
+          <div class="t-desc">Open every day 8am – 11:30pm. Hundreds of satisfied customers across Abu Dhabi rely on Moon Light.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews" aria-labelledby="reviews-heading">
+  <div class="sec-label">What Customers Say</div>
+  <h2 class="sec-title" id="reviews-heading">Customer Reviews</h2>
+  <div class="rating-summary" aria-label="Overall rating">
+    <div class="rating-big">4.9</div>
+    <div>
+      <span class="rating-stars-big">★★★★★</span>
+      <div style="font-size:0.8rem;color:var(--muted);">Based on 4,000+ customer reviews</div>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">Car battery &amp; AC service — Abu Dhabi, UAE</div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-badge">Verified</div>
+      <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+      <p class="review-text">"Excellent and fast car battery service in Abu Dhabi. My battery was replaced within 30 minutes. Very honest pricing, no hidden charges. Highly recommend Moon Light Car Care!"</p>
+      <div class="review-author">Ahmed Al Mansoori</div>
+      <div class="review-location">Abu Dhabi, UAE</div>
+    </div>
+    <div class="review-card">
+      <div class="review-badge">Verified</div>
+      <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+      <p class="review-text">"Got my car AC gas refilled here. The AC is now blowing ice cold air again! Great technicians, fast work and very reasonable price. Best car AC gas refilling in Abu Dhabi!"</p>
+      <div class="review-author">Sara K.</div>
+      <div class="review-location">Abu Dhabi, UAE</div>
+    </div>
+    <div class="review-card">
+      <div class="review-badge">Verified</div>
+      <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+      <p class="review-text">"My car AC was not cooling at all in the Abu Dhabi heat. Moon Light fixed it same day — AC compressor was the issue. Very professional and trustworthy. Will come back for all car needs."</p>
+      <div class="review-author">Mohammed R.</div>
+      <div class="review-location">Abu Dhabi, UAE</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt" id="faq" aria-labelledby="faq-heading" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="sec-label">Common Questions</div>
+  <h2 class="sec-title" id="faq-heading">Frequently Asked Questions</h2>
+  <p class="sec-sub">Answers to the most common questions about car battery replacement, AC gas refilling and car repairs in Abu Dhabi, UAE.</p>
+  <div class="faq-list">
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">Where can I get a car battery replaced in Abu Dhabi?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Moon Light Car Care provides fast car battery replacement in Abu Dhabi, UAE. We supply and fit batteries for all car makes and models. Call or WhatsApp +971 52 340 8703 for same-day service.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">How much does car AC gas refilling cost in Abu Dhabi?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Car AC gas refilling prices in Abu Dhabi depend on your vehicle type and the refrigerant required. Moon Light Car Care offers competitive and fully transparent pricing with no hidden charges. Call +971 52 340 8703 for an instant quote.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">Why is my car AC not cooling in UAE?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">The most common causes of car AC not cooling in UAE include low or empty refrigerant gas, a faulty AC compressor, a blocked condenser, or an electrical fault. Moon Light Car Care can quickly diagnose and fix all car AC problems in Abu Dhabi. Call us on +971 52 340 8703.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">Do you replace batteries for all car brands in Abu Dhabi?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Yes. We replace batteries for all car makes including Toyota, Nissan, Honda, Hyundai, Kia, Mitsubishi, BMW, Mercedes-Benz, Audi, Ford, Chevrolet, Land Rover and more across Abu Dhabi and UAE.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">Are you open on weekends and public holidays?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Yes! Moon Light Car Care is open every day including weekends and public holidays from 8:00 AM to 11:30 PM in Abu Dhabi, UAE. Call or WhatsApp +971 52 340 8703 anytime.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">How long does a car AC gas refill take?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">A standard car AC gas refill at Moon Light Car Care takes approximately 30 to 60 minutes. If there is an AC leak that needs repairing first, it may take longer. We always explain the process before starting.</span>
+      </div>
+    </div>
+
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span itemprop="name">Do you offer car computer scanning and diagnostics in Abu Dhabi?</span>
+        <span class="faq-arrow"><i class="ph ph-caret-down"></i></span>
+      </div>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <span itemprop="text">Yes! Moon Light Car Care provides professional car computer scanning and OBD diagnostics in Abu Dhabi. If your check engine light is on or you have a dashboard warning, we scan all makes and models — Toyota, Nissan, BMW, Mercedes, Hyundai, Kia and more. Call +971 52 340 8703 for same-day scanning service.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AREAS WE COVER -->
+<section class="section" id="areas" aria-labelledby="areas-heading" style="background:var(--white);padding-top:2.5rem;padding-bottom:2.5rem;">
+  <div class="sec-label">Where We Serve</div>
+  <h2 class="sec-title" id="areas-heading">Areas We Cover in Abu Dhabi</h2>
+  <p class="sec-sub">Moon Light Car Care delivers car batteries and provides AC gas refilling and car repairs across all major areas of Abu Dhabi, UAE. Can't come to us? We come to you.</p>
+
+  <!-- MAP + LIST LAYOUT -->
+  <div class="map-layout">
+
+    <!-- INTERACTIVE ABU DHABI MAP -->
+    <div class="map-container">
+      <div class="map-label-top"><i class="ph ph-map-trifold" style="font-size:1.1rem;color:var(--amber);vertical-align:middle;margin-right:0.4rem;"></i> Abu Dhabi — Service Coverage Map</div>
+      <div class="map-wrap">
+        <svg id="abuDhabiMap" viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#1a2f52;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1"/>
+            </radialGradient>
+            <radialGradient id="glowAmber" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#f5c030;stop-opacity:0.6"/>
+              <stop offset="100%" style="stop-color:#f5c030;stop-opacity:0"/>
+            </radialGradient>
+            <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" style="stop-color:#25d366;stop-opacity:0.5"/>
+              <stop offset="100%" style="stop-color:#25d366;stop-opacity:0"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="softglow">
+              <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Background -->
+          <rect width="700" height="500" fill="url(#bgGrad)" rx="12"/>
+
+          <!-- Grid lines -->
+          <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+            <line x1="0" y1="100" x2="700" y2="100"/>
+            <line x1="0" y1="200" x2="700" y2="200"/>
+            <line x1="0" y1="300" x2="700" y2="300"/>
+            <line x1="0" y1="400" x2="700" y2="400"/>
+            <line x1="100" y1="0" x2="100" y2="500"/>
+            <line x1="200" y1="0" x2="200" y2="500"/>
+            <line x1="300" y1="0" x2="300" y2="500"/>
+            <line x1="400" y1="0" x2="400" y2="500"/>
+            <line x1="500" y1="0" x2="500" y2="500"/>
+            <line x1="600" y1="0" x2="600" y2="500"/>
+          </g>
+
+          <!-- COASTLINE — Abu Dhabi island shape (simplified) -->
+          <path d="M 80 200 Q 120 160 160 155 Q 200 150 240 145 Q 280 140 310 150 Q 340 155 370 148 Q 410 140 450 145 Q 490 148 520 155 Q 550 162 570 175 Q 590 188 600 200 Q 610 215 605 230 Q 598 245 580 255 Q 560 265 540 268 Q 510 272 480 270 Q 460 268 440 275 Q 420 282 400 285 Q 380 288 360 282 Q 340 276 320 278 Q 300 280 280 290 Q 255 302 230 308 Q 200 315 170 310 Q 140 305 115 295 Q 90 282 80 265 Q 70 248 75 230 Q 78 215 80 200Z"
+            fill="rgba(30,55,100,0.9)" stroke="rgba(100,150,220,0.4)" stroke-width="1.5"/>
+
+          <!-- Water areas -->
+          <path d="M0 0 L80 0 L80 200 Q75 230 80 265 Q90 282 115 295 Q140 305 170 310 L160 400 L0 400Z"
+            fill="rgba(10,30,70,0.5)"/>
+          <path d="M600 200 Q610 215 605 230 Q598 245 580 255 L620 320 L700 320 L700 0 L600 0Z"
+            fill="rgba(10,30,70,0.5)"/>
+          <path d="M170 310 Q200 315 230 308 Q255 302 280 290 Q300 280 320 278 Q340 276 360 282 Q380 288 400 285 Q420 282 440 275 Q460 268 480 270 Q510 272 540 268 Q560 265 580 255 L620 320 L500 380 L300 420 L160 400Z"
+            fill="rgba(10,30,70,0.35)"/>
+
+          <!-- Sea label -->
+          <text x="30" y="350" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic">Arabian Gulf</text>
+          <text x="620" y="180" font-family="Barlow,sans-serif" font-size="10" fill="rgba(100,150,220,0.5)" font-style="italic" transform="rotate(90,630,200)">Arabian Gulf</text>
+
+          <!-- Service radius rings (static dashes — no animateTransform to prevent scroll jank) -->
+          <circle cx="340" cy="210" r="180" fill="none" stroke="rgba(245,192,48,0.06)" stroke-width="1" stroke-dasharray="6,4"/>
+          <circle cx="340" cy="210" r="130" fill="none" stroke="rgba(245,192,48,0.08)" stroke-width="1" stroke-dasharray="4,6"/>
+
+          <!-- CENTER GLOW — business location -->
+          <circle cx="340" cy="215" r="40" fill="url(#glowAmber)" opacity="0.7"/>
+
+          <!-- AREA PINS — real Abu Dhabi approximate positions -->
+          <!-- Al Markaziyah (City Centre) -->
+          <g class="map-pin" data-area="Al Markaziyah" onclick="selectArea('Al Markaziyah')" style="cursor:pointer;">
+            <circle cx="310" cy="195" r="18" fill="rgba(245,192,48,0.12)" class="pin-pulse"/>
+            <circle cx="310" cy="195" r="9" fill="#f5c030"/>
+            <circle cx="310" cy="195" r="4" fill="#fff"/>
+          </g>
+
+          <!-- Al Khalidiyah -->
+          <g class="map-pin" data-area="Al Khalidiyah" onclick="selectArea('Al Khalidiyah')" style="cursor:pointer;">
+            <circle cx="265" cy="200" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="265" cy="200" r="8" fill="#f5c030"/>
+            <circle cx="265" cy="200" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Corniche -->
+          <g class="map-pin" data-area="Corniche Abu Dhabi" onclick="selectArea('Corniche Abu Dhabi')" style="cursor:pointer;">
+            <circle cx="230" cy="178" r="16" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="230" cy="178" r="8" fill="#f5c030"/>
+            <circle cx="230" cy="178" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Al Reem Island -->
+          <g class="map-pin" data-area="Al Reem Island" onclick="selectArea('Al Reem Island')" style="cursor:pointer;">
+            <circle cx="370" cy="165" r="16" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="370" cy="165" r="8" fill="#25d366"/>
+            <circle cx="370" cy="165" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Tourist Club Area -->
+          <g class="map-pin" data-area="Tourist Club Area" onclick="selectArea('Tourist Club Area')" style="cursor:pointer;">
+            <circle cx="345" cy="185" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="345" cy="185" r="7" fill="#f5c030"/>
+            <circle cx="345" cy="185" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Zahiyah -->
+          <g class="map-pin" data-area="Al Zahiyah" onclick="selectArea('Al Zahiyah')" style="cursor:pointer;">
+            <circle cx="360" cy="200" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="360" cy="200" r="7" fill="#f5c030"/>
+            <circle cx="360" cy="200" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Karamah -->
+          <g class="map-pin" data-area="Al Karamah" onclick="selectArea('Al Karamah')" style="cursor:pointer;">
+            <circle cx="290" cy="215" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="290" cy="215" r="7" fill="#f5c030"/>
+            <circle cx="290" cy="215" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Nahyan -->
+          <g class="map-pin" data-area="Al Nahyan" onclick="selectArea('Al Nahyan')" style="cursor:pointer;">
+            <circle cx="340" cy="235" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="340" cy="235" r="7" fill="#f5c030"/>
+            <circle cx="340" cy="235" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Mushrif -->
+          <g class="map-pin" data-area="Al Mushrif" onclick="selectArea('Al Mushrif')" style="cursor:pointer;">
+            <circle cx="390" cy="240" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="390" cy="240" r="7" fill="#f5c030"/>
+            <circle cx="390" cy="240" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Madinat Zayed -->
+          <g class="map-pin" data-area="Madinat Zayed" onclick="selectArea('Madinat Zayed')" style="cursor:pointer;">
+            <circle cx="200" cy="225" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="200" cy="225" r="7" fill="#f5c030"/>
+            <circle cx="200" cy="225" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Saadiyat Island -->
+          <g class="map-pin" data-area="Saadiyat Island" onclick="selectArea('Saadiyat Island')" style="cursor:pointer;">
+            <circle cx="430" cy="158" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="430" cy="158" r="8" fill="#25d366"/>
+            <circle cx="430" cy="158" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Yas Island -->
+          <g class="map-pin" data-area="Yas Island" onclick="selectArea('Yas Island')" style="cursor:pointer;">
+            <circle cx="490" cy="175" r="15" fill="rgba(37,211,102,0.12)" class="pin-pulse"/>
+            <circle cx="490" cy="175" r="8" fill="#25d366"/>
+            <circle cx="490" cy="175" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Mohammed Bin Zayed City -->
+          <g class="map-pin" data-area="Mohammed Bin Zayed City" onclick="selectArea('Mohammed Bin Zayed City')" style="cursor:pointer;">
+            <circle cx="430" cy="280" r="15" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="430" cy="280" r="8" fill="#f5c030"/>
+            <circle cx="430" cy="280" r="3.5" fill="#fff"/>
+          </g>
+
+          <!-- Al Shamkha -->
+          <g class="map-pin" data-area="Al Shamkha" onclick="selectArea('Al Shamkha')" style="cursor:pointer;">
+            <circle cx="310" cy="310" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="310" cy="310" r="7" fill="#f5c030"/>
+            <circle cx="310" cy="310" r="3" fill="#fff"/>
+          </g>
+
+          <!-- Al Falah -->
+          <g class="map-pin" data-area="Al Falah" onclick="selectArea('Al Falah')" style="cursor:pointer;">
+            <circle cx="380" cy="330" r="14" fill="rgba(245,192,48,0.1)" class="pin-pulse"/>
+            <circle cx="380" cy="330" r="7" fill="#f5c030"/>
+            <circle cx="380" cy="330" r="3" fill="#fff"/>
+          </g>
+
+          <!-- PIN LABELS -->
+          <g font-family="Barlow Condensed,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.92)" font-weight="700" letter-spacing="0.02em">
+            <text x="310" y="180" text-anchor="middle">Al Markaziyah</text>
+            <text x="255" y="188" text-anchor="middle">Al Khalidiyah</text>
+            <text x="218" y="166" text-anchor="middle">Corniche</text>
+            <text x="378" y="153" text-anchor="middle">Al Reem Island</text>
+            <text x="348" y="172" text-anchor="middle">Tourist Club</text>
+            <text x="372" y="213" text-anchor="middle">Al Zahiyah</text>
+            <text x="278" y="230" text-anchor="middle">Al Karamah</text>
+            <text x="352" y="250" text-anchor="middle">Al Nahyan</text>
+            <text x="402" y="256" text-anchor="middle">Al Mushrif</text>
+            <text x="190" y="240" text-anchor="middle">Madinat Zayed</text>
+            <text x="432" y="146" text-anchor="middle">Saadiyat</text>
+            <text x="492" y="163" text-anchor="middle">Yas Island</text>
+            <text x="445" y="295" text-anchor="middle">MBZ City</text>
+            <text x="310" y="325" text-anchor="middle">Al Shamkha</text>
+            <text x="382" y="346" text-anchor="middle">Al Falah</text>
+          </g>
+
+          <!-- TOOLTIP BOX — bottom centre, away from Moon Light label -->
+          <g id="mapTooltip" style="display:none;">
+            <rect id="tooltipBg" x="175" y="415" width="350" height="56" rx="8" fill="rgba(14,30,61,0.97)" stroke="#f5c030" stroke-width="1.5"/>
+            <text id="tooltipName" x="350" y="436" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="15" fill="#f5c030" font-weight="800"></text>
+            <text id="tooltipDetail" x="350" y="456" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-size="11.5" fill="rgba(255,255,255,0.82)" font-weight="600"></text>
+          </g>
+
+          <!-- LEGEND — bottom left -->
+          <g transform="translate(16, 476)">
+            <circle cx="8" cy="6" r="6" fill="#f5c030"/>
+            <text x="19" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">City Area</text>
+            <circle cx="90" cy="6" r="6" fill="#25d366"/>
+            <text x="101" y="11" font-family="Barlow Condensed,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600">Island Area</text>
+          </g>
+
+          <!-- BUSINESS MARKER -->
+          <g>
+            <circle cx="310" cy="195" r="22" fill="none" stroke="#f5c030" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.5">
+              <animateTransform attributeName="transform" type="rotate" from="0 310 195" to="360 310 195" dur="8s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+
+          <!-- MOON LIGHT Label — bottom RIGHT, clear of tooltip -->
+          <g transform="translate(548, 472)">
+            <rect width="138" height="24" rx="5" fill="rgba(245,192,48,0.15)" stroke="rgba(245,192,48,0.3)" stroke-width="1"/>
+            <text x="8" y="16" font-family="Barlow Condensed,sans-serif" font-size="12" fill="#f5c030" font-weight="800">🌙 MOON LIGHT</text>
+          </g>
+
+          <!-- Tap hint — top right -->
+          <text x="686" y="18" font-family="Barlow,sans-serif" font-size="9" fill="rgba(255,255,255,0.35)" text-anchor="end">Tap any pin for details</text>
+        </svg>
+      </div>
+      <div class="map-hint"><i class="ph ph-cursor-click" style="color:var(--amber);font-size:1rem;"></i> Tap or click any glowing pin to see service details for that area</div>
+    </div>
+
+  </div>
+
+  <!-- Hidden SEO text -->
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:2rem;line-height:1.8;max-width:900px;">
+    Moon Light Car Care provides car battery replacement, car battery delivery, car AC gas refilling, aircon regas, AC refrigerant recharge, jump start service and car repairs across Abu Dhabi UAE including Al Khalidiyah, Al Reem Island, Al Nahyan, Al Mushrif, Al Karamah, Al Markaziyah, Corniche Abu Dhabi, Tourist Club Area, Al Zahiyah, Madinat Zayed, Mohammed Bin Zayed City, Yas Island, Saadiyat Island, Al Shamkha, Al Falah and all surrounding areas. We stock Amaron, Bosch, Yuasa and Varta batteries. Call or WhatsApp +971 52 340 8703 for same-day car battery delivery and AC gas refilling in Abu Dhabi.
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" aria-labelledby="contact-heading">
+  <div class="sec-label">Reach Us</div>
+  <h2 class="sec-title" id="contact-heading">Get In Touch</h2>
+  <p class="sec-sub">Our team is available every day — call, WhatsApp or drop us a message and we'll respond within minutes.</p>
+
+  <div class="contact-v2">
+
+    <!-- Left: CTAs + info -->
+    <div>
+      <div class="online-badge">
+        <span class="online-dot"></span>
+        Team Available Now — Open Daily
+      </div>
+      <p class="contact-tagline">Need a battery replaced, AC gas refilled or a car repair in Abu Dhabi? We're fast, honest and ready to help right now.</p>
+
+      <div class="cta-btns">
+        <a href="tel:+971523408703" class="cta-call" aria-label="Call Moon Light Car Care">
+          <i class="ph ph-phone-call"></i> Call Now
+        </a>
+        <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light!%20I%20need%20help%20with%20my%20car." target="_blank" rel="noopener" class="cta-wa-big" aria-label="WhatsApp Moon Light Car Care">
+          <i class="ph ph-whatsapp-logo"></i> WhatsApp
+        </a>
+      </div>
+
+      <div class="ci-list">
+        <a href="tel:+971523408703" class="ci">
+          <div class="ci-icon ci-ph"><i class="ph ph-phone-call"></i></div>
+          <div><div class="ci-lbl">Phone — Call Anytime</div><div class="ci-val">+971 52 340 8703</div></div>
+        </a>
+        <a href="https://wa.me/971523408703" target="_blank" rel="noopener" class="ci">
+          <div class="ci-icon ci-wa"><i class="ph ph-whatsapp-logo"></i></div>
+          <div><div class="ci-lbl">WhatsApp — Quick Reply</div><div class="ci-val" style="color:#25d366;">+971 52 340 8703</div></div>
+        </a>
+        <a href="mailto:info@moonlightautocare.com" class="ci">
+          <div class="ci-icon ci-em"><i class="ph ph-envelope-simple"></i></div>
+          <div><div class="ci-lbl">Email</div><div class="ci-val">info@moonlightautocare.com</div></div>
+        </a>
+        <a href="https://maps.google.com/?q=Moon+Light+Car+Care+Al+Funoud+St+Al+Danah+Abu+Dhabi" target="_blank" rel="noopener" class="ci">
+          <div class="ci-icon ci-loc"><i class="ph ph-map-pin"></i></div>
+          <div><div class="ci-lbl">Our Location</div><div class="ci-val">Al Funoud St, Al Danah – Zone 1, Abu Dhabi</div></div>
+        </a>
+        <div class="ci">
+          <div class="ci-icon ci-clk"><i class="ph ph-clock"></i></div>
+          <div><div class="ci-lbl">Working Hours — Every Day</div><div class="ci-val">8:00 AM – 11:30 PM</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form card -->
+    <div class="contact-form-card">
+      <div class="form-card-title">Send a Message</div>
+      <p class="form-card-sub">We'll reply on WhatsApp or phone within minutes.</p>
+      <div class="fg-row">
+        <div class="fg"><label for="f-name">Your Name</label><input type="text" id="f-name" name="name" placeholder="Ahmed Al Mansouri" autocomplete="name"></div>
+        <div class="fg"><label for="f-phone">Phone / WhatsApp</label><input type="tel" id="f-phone" name="phone" placeholder="+971 50 000 0000" autocomplete="tel"></div>
+      </div>
+      <div class="fg">
+        <label for="f-service">Service Needed</label>
+        <select id="f-service" name="service">
+          <option value="">Select a service...</option>
+          <option value="battery">Car Battery Replacement</option>
+          <option value="ac-gas">Car AC Gas Refilling</option>
+          <option value="ac-repair">Car AC Repair</option>
+          <option value="car-repair">General Car Repair</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fg"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Describe your issue — e.g. battery dead, AC not cooling..."></textarea></div>
+      <div class="submit-row">
+        <button type="button" class="submit" onclick="handleSubmit('email')"><i class="ph ph-paper-plane-tilt"></i> Send Message</button>
+        <button type="button" class="submit-wa" onclick="handleSubmit('wa')"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+</main><!-- end #main-content -->
+
+<footer role="contentinfo" itemscope itemtype="https://schema.org/AutoRepair">
+  <div class="footer-top">
+    <div>
+      <div class="f-logo" style="margin-bottom:0.6rem;">
+        <svg width="46" height="46" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0;">
+          <defs>
+            <mask id="ft-moon-mask">
+              <circle cx="340" cy="340" r="145" fill="white"/>
+              <circle cx="412" cy="285" r="128" fill="black"/>
+            </mask>
+          </defs>
+          <circle cx="340" cy="340" r="145" fill="#f5c030" mask="url(#ft-moon-mask)"/>
+          <circle cx="185" cy="125" r="28" fill="#f5c030"/>
+          <circle cx="338" cy="108" r="22" fill="#f5c030"/>
+          <circle cx="490" cy="122" r="25" fill="#f5c030"/>
+          <circle cx="118" cy="275" r="19" fill="#f5c030" opacity="0.85"/>
+          <circle cx="562" cy="248" r="17" fill="#f5c030" opacity="0.85"/>
+          <circle cx="248" cy="100" r="13" fill="#f5c030" opacity="0.7"/>
+          <circle cx="428" cy="95"  r="12" fill="#f5c030" opacity="0.7"/>
+        </svg>
+        <div class="f-logo-name">MOON <em>LIGHT</em> Car Care</div>
+      </div>
+      <div class="f-logo-arabic" itemprop="name">مون لايت كار كير — أبوظبي</div>
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.3);max-width:280px;line-height:1.65;margin-top:0.8rem;">Trusted for car battery replacement, AC gas refilling &amp; car repairs. Al Funoud St, Al Danah - Zone 1, Abu Dhabi.</p>
+    </div>
+    <div class="f-col">
+      <h3>Services</h3>
+      <a href="#services">Car Battery Replacement Abu Dhabi</a>
+      <a href="#services">Car Battery Delivery UAE</a>
+      <a href="#services">Battery Jump Start Abu Dhabi</a>
+      <a href="#services">Car AC Gas Refilling UAE</a>
+      <a href="#services">Aircon Regas Abu Dhabi</a>
+      <a href="#services">Car AC Fixing Abu Dhabi</a>
+      <a href="#services">Car Repair Abu Dhabi</a>
+      <a href="#services">Car Computer Scanning Abu Dhabi</a>
+      <a href="#areas">Areas We Cover</a>
+    </div>
+    <div class="f-col">
+      <h3>Contact</h3>
+      <a href="tel:+971523408703" itemprop="telephone" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
+      <a href="https://wa.me/971523408703" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+      <a href="mailto:info@moonlightautocare.com" itemprop="email" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-envelope-simple"></i> info@moonlightautocare.com</a>
+      <p itemprop="openingHours" content="Mo-Su 08:00-23:30" style="display:flex;align-items:center;gap:0.5rem;"><i class="ph ph-clock"></i> Open Daily: 8am – 11:30pm</p>
+      <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="display:flex;align-items:flex-start;gap:0.5rem;"><i class="ph ph-map-pin" style="margin-top:2px;flex-shrink:0;"></i> <span><span itemprop="streetAddress">Al Funoud St, Al Danah - Zone 1</span>, <span itemprop="addressLocality">Abu Dhabi</span>, <span itemprop="addressCountry">UAE</span></span></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="f-copy">© 2026 Moon Light Car Care — Al Funoud St, Al Danah - Zone 1, Abu Dhabi, UAE. All rights reserved.<br>Car battery replacement · Battery delivery · AC gas refilling · Aircon regas · Car AC repair · Car repair · Jump start Abu Dhabi</div>
+    <div class="f-seo-links">
+      <a href="#services">Car Battery Abu Dhabi</a>
+      <a href="#services">Battery Delivery UAE</a>
+      <a href="#services">AC Gas Refilling</a>
+      <a href="#services">Aircon Regas</a>
+      <a href="#services">Car AC Repair</a>
+      <a href="#services">Car Scanning Abu Dhabi</a>
+      <a href="#areas">Areas Covered</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// MAP PIN INTERACTION
+var areaDetails = {
+  'Al Markaziyah': 'Car battery & jump start service',
+  'Al Khalidiyah': 'Car battery delivery & AC gas refilling',
+  'Corniche Abu Dhabi': 'Car battery delivery & AC regas',
+  'Al Reem Island': 'Car battery replacement & car AC repair',
+  'Tourist Club Area': '24hr battery service & car repair',
+  'Al Zahiyah': 'Car battery & AC gas refill',
+  'Al Karamah': 'Battery shop near me — we deliver',
+  'Al Nahyan': 'Battery delivery & aircon regas',
+  'Al Mushrif': 'Car battery & AC gas refilling',
+  'Madinat Zayed': 'Battery replacement & AC repair',
+  'Saadiyat Island': 'Battery & AC gas refilling service',
+  'Yas Island': 'Car battery delivery & car repair',
+  'Mohammed Bin Zayed City': 'Car battery & aircon regas',
+  'Al Shamkha': 'Car battery & AC repair',
+  'Al Falah': 'Battery delivery & car AC fixing'
+};
+function selectArea(name, scrollSidebar) {
+  // Show tooltip at bottom of map
+  var tooltip = document.getElementById('mapTooltip');
+  var tName = document.getElementById('tooltipName');
+  var tDetail = document.getElementById('tooltipDetail');
+  if(tooltip && tName && tDetail) {
+    tName.textContent = name;
+    tDetail.textContent = areaDetails[name] || '';
+    tooltip.style.display = 'block';
+  }
+  // Highlight selected pin, dim others
+  document.querySelectorAll('.map-pin').forEach(function(pin){
+    pin.style.opacity = pin.getAttribute('data-area') === name ? '1' : '0.45';
+    pin.style.transition = 'opacity 0.4s';
+  });
+}
+// Auto-cycle — never touches page scroll
+var areas = Object.keys(areaDetails);
+var cycleIdx = 0;
+setInterval(function(){
+  if(!document.querySelector('.map-pin:hover')){
+    selectArea(areas[cycleIdx % areas.length], false);
+    cycleIdx++;
+  }
+}, 2800);
+/* ── Mobile sidebar open/close ── */
+function openSidebar(){
+  document.getElementById('mobDrawer').classList.add('open');
+  document.getElementById('mobOverlay').classList.add('open');
+  document.getElementById('hamburger').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeSidebar(){
+  document.getElementById('mobDrawer').classList.remove('open');
+  document.getElementById('mobOverlay').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.getElementById('hamburger').addEventListener('click', openSidebar);
+// Close on Escape key
+document.addEventListener('keydown',function(e){if(e.key==='Escape') closeSidebar();});
+function toggleFAQ(el){
+  var item=el.parentElement;
+  item.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATION ENGINE
+   ═══════════════════════════════════════════ */
+(function(){
+
+  /* ── 1. Scroll reveal ── */
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.13,rootMargin:'0px 0px -30px 0px'});
+
+  /* Register elements for scroll reveal.
+     Skip elements already in the viewport when JS runs — avoids
+     flash-of-invisible-content and stutter on sections near top. */
+  function reg(sel,extraClass,delay){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      var r=el.getBoundingClientRect();
+      if(r.top < window.innerHeight && r.bottom > 0){
+        /* already visible — show immediately, no animation */
+        return;
+      }
+      el.classList.add('will-anim');
+      if(extraClass) el.classList.add(extraClass);
+      if(delay) el.classList.add('d'+Math.min(i%6+1,6));
+      revealObs.observe(el);
+    });
+  }
+
+  reg('.sec-label');
+  reg('.sec-title');
+  reg('.sec-sub');
+  reg('.svc','',true);
+  reg('.review-card','',true);
+  reg('.faq-item','',true);
+  reg('.trust','',true);          /* fade-only — no translateX to avoid paint burst */
+  reg('.c-item','',true);
+  reg('.stat','from-scale',true);
+  reg('.rating-summary','from-scale');
+  reg('.form-box','from-right');
+  reg('.contact-intro');
+  reg('.map-container');
+  reg('.area-card','',true);
+  reg('.why-slogan');              /* fade-only on Why section items */
+  reg('.why-desc');
+
+  /* ── 2. Counter animation ── */
+  function countUp(el,target,duration,suffix,isFloat){
+    var start=performance.now();
+    function step(now){
+      var p=Math.min((now-start)/duration,1);
+      var ease=1-Math.pow(1-p,3);
+      var val=isFloat?(target*ease).toFixed(1):Math.floor(target*ease);
+      el.textContent=val+suffix;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var counterObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target;
+        var target=parseFloat(el.dataset.count);
+        var suffix=el.dataset.suffix||'';
+        var isFloat=el.dataset.float==='1';
+        countUp(el,target,1800,suffix,isFloat);
+        counterObs.unobserve(el);
+      }
+    });
+  },{threshold:0.6});
+
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    counterObs.observe(el);
+  });
+
+  /* ── 3. Nav scroll shadow ── */
+  var nav=document.querySelector('nav');
+  window.addEventListener('scroll',function(){
+    nav&&nav.classList.toggle('scrolled',window.scrollY>8);
+  },{passive:true});
+
+  /* ── 4. Hero star particles ── */
+  var hero=document.querySelector('.hero-img');
+  if(hero){
+    for(var i=0;i<20;i++){
+      var s=document.createElement('div');
+      s.className='star-pt';
+      var sz=Math.random()*2.5+1;
+      s.style.cssText=[
+        'width:'+sz+'px','height:'+sz+'px',
+        'left:'+(Math.random()*98)+'%',
+        'top:'+(Math.random()*98)+'%',
+        '--d:'+(Math.random()*3+2)+'s',
+        '--dl:'+(Math.random()*5)+'s',
+        '--lo:'+(Math.random()*.2+.08),
+        '--hi:'+(Math.random()*.5+.35)
+      ].join(';');
+      hero.appendChild(s);
+    }
+  }
+
+  /* ── 5. Map — start pin animations only when visible, pause when off-screen ── */
+  var mapSvg=document.getElementById('abuDhabiMap');
+  if(mapSvg&&'IntersectionObserver' in window){
+    var mapObs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        mapSvg.classList.toggle('map-active',e.isIntersecting);
+      });
+    },{threshold:0.1});
+    mapObs.observe(mapSvg);
+  }
+
+})();
 function handleSubmit(mode){
   var name=document.getElementById('f-name').value.trim();
   var phone=document.getElementById('f-phone').value.trim();
-  var car=document.getElementById('f-car').value.trim();
   var service=document.getElementById('f-service').value;
   var msg=document.getElementById('f-msg').value.trim();
   if(!name||!phone){alert('Please fill in your name and phone number.');return;}
-  var text='Hello Moon Light Car Care!%0A%0AName: '+encodeURIComponent(name)+'%0APhone: '+encodeURIComponent(phone)+'%0ACar: '+encodeURIComponent(car||'Not specified')+'%0AService: '+encodeURIComponent(service||'Not specified')+'%0AMessage: '+encodeURIComponent(msg||'No message');
+  var text='Hello Moon Light Car Care!%0A%0AName: '+encodeURIComponent(name)+'%0APhone: '+encodeURIComponent(phone)+'%0AService: '+encodeURIComponent(service||'Not specified')+'%0AMessage: '+encodeURIComponent(msg||'No message');
   window.open('https://wa.me/971523408703?text='+text,'_blank');
 }
 
@@ -485,12 +3568,14 @@ function handleSubmit(mode){
 (function(){
   function updateOpenStatus(){
     var now = new Date();
+    // UAE is UTC+4
     var uaeOffset = 4 * 60;
     var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
     var uae = new Date(utc + (uaeOffset * 60000));
     var h = uae.getHours();
     var m = uae.getMinutes();
     var mins = h * 60 + m;
+    // Open: 8:00 (480) to 23:30 (1410)
     var isOpen = mins >= 480 && mins < 1410;
     var badge = document.getElementById('mobOpenBadge');
     var dot = document.getElementById('mobOpenDot');
@@ -499,12 +3584,14 @@ function handleSubmit(mode){
     if(isOpen){
       badge.style.background = 'rgba(37,211,102,0.07)';
       badge.style.borderBottom = '1px solid rgba(37,211,102,0.12)';
+      badge.style.color = 'rgba(255,255,255,0.55)';
       dot.style.background = '#25d366';
       dot.style.boxShadow = '0 0 7px rgba(37,211,102,0.8)';
       text.innerHTML = 'Open Now &nbsp;&middot;&nbsp; Until 11:30pm';
     } else {
       badge.style.background = 'rgba(192,57,43,0.07)';
       badge.style.borderBottom = '1px solid rgba(192,57,43,0.12)';
+      badge.style.color = 'rgba(255,255,255,0.55)';
       dot.style.background = '#e74c3c';
       dot.style.boxShadow = '0 0 7px rgba(192,57,43,0.8)';
       dot.style.animation = 'none';
@@ -512,6 +3599,7 @@ function handleSubmit(mode){
     }
   }
   updateOpenStatus();
+  // Update every minute
   setInterval(updateOpenStatus, 60000);
 })();
 </script>
