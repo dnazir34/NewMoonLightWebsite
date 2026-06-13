@@ -463,6 +463,42 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 .nav-dropdown-menu li{list-style:none;}
 .nav-dropdown-menu li a:hover{background:var(--amber-light);color:var(--amber);}
 .nav-dropdown-menu li a i{font-size:1rem;color:var(--amber);width:1rem;text-align:center;flex-shrink:0;}
+/* ── Mobile sidebar sub-dropdown ── */
+.mob-nav-sub{
+  overflow:hidden;
+  max-height:0;
+  transition:max-height .38s cubic-bezier(.22,1,.36,1);
+  background:rgba(0,0,0,0.18);
+  border-left:3px solid rgba(245,192,48,0.25);
+  margin-left:0;
+}
+.mob-nav-sub.open{ max-height:260px; }
+.mob-nav-sub a{
+  display:flex;align-items:center;gap:0.7rem;
+  padding:0.65rem 1.2rem 0.65rem 1.5rem;
+  color:rgba(255,255,255,0.65);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  transition:color .2s,background .2s;
+  border-left:3px solid transparent;
+  position:relative;
+}
+.mob-nav-sub a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:2px;background:var(--amber-mid);
+  border-radius:2px;transition:width .25s ease;
+}
+.mob-nav-sub a:hover::after{ width:100%; }
+.mob-nav-sub a:hover{color:var(--amber-mid);background:rgba(245,192,48,0.07);}
+.mob-nav-sub a i{font-size:1rem;color:var(--amber-mid);width:1.1rem;text-align:center;flex-shrink:0;}
+.mob-svc-toggle{cursor:pointer;user-select:none;justify-content:space-between;}
+.mob-svc-toggle .mob-caret{
+  font-size:0.8rem;color:rgba(255,255,255,0.4);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  flex-shrink:0;
+}
+.mob-svc-toggle.open .mob-caret{ transform:rotate(180deg); }
+
 </style>
 </head>
 <body>
@@ -532,14 +568,22 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <button class="mob-close-btn" onclick="closeSidebar()" aria-label="Close menu">✕</button>
   </div>
   <div class="mob-open-badge"><span class="mob-open-dot"></span>Open Now · 8am – 11:30pm Daily</div>
-    <div class="mob-nav" role="menubar">
+  <div class="mob-nav" role="menubar">
     <a href="/" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-house"></i></span>Home</a>
-    <a href="/#services" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-layout"></i></span>Services</a>
+    <div class="mob-nav-link mob-svc-toggle" id="mobSvcToggle" onclick="toggleMobServices()" role="button" tabindex="0" aria-expanded="false">
+      <span style="display:flex;align-items:center;gap:0.8rem;"><span class="mob-nav-ico"><i class="ph ph-layout"></i></span>Services</span>
+      <i class="ph ph-caret-down mob-caret"></i>
+    </div>
+    <div class="mob-nav-sub" id="mobSvcSub">
+      <a href="/car-battery-abu-dhabi" onclick="closeSidebar()"><i class="ph ph-battery-charging"></i> Car Battery</a>
+      <a href="/ac-gas-refilling-abu-dhabi" onclick="closeSidebar()"><i class="ph ph-snowflake"></i> AC Gas Refilling</a>
+      <a href="/car-repair-abu-dhabi" onclick="closeSidebar()"><i class="ph ph-wrench"></i> Car Repair</a>
+      <a href="/car-scanning-abu-dhabi" onclick="closeSidebar()"><i class="ph ph-cpu"></i> Car Scanning</a>
+    </div>
     <a href="/#areas" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-map-pin"></i></span>Areas</a>
     <a href="/about-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-info"></i></span>About Us</a>
     <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us</a>
   </div>
-
   <div class="mob-ctas">
     <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
     <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
@@ -1113,6 +1157,14 @@ var areas=Object.keys(areaDetails),cycleIdx=0;
 setInterval(function(){if(!document.querySelector('.map-pin:hover')){selectArea(areas[cycleIdx%areas.length]);cycleIdx++;}},2800);
 
 // SIDEBAR
+function toggleMobServices(){
+  var toggle=document.getElementById('mobSvcToggle');
+  var sub=document.getElementById('mobSvcSub');
+  var isOpen=sub.classList.contains('open');
+  sub.classList.toggle('open',!isOpen);
+  toggle.classList.toggle('open',!isOpen);
+  toggle.setAttribute('aria-expanded', !isOpen);
+}
 function openSidebar(){document.getElementById('mobDrawer').classList.add('open');document.getElementById('mobOverlay').classList.add('open');document.getElementById('hamburger').classList.add('active');document.body.style.overflow='hidden';}
 function closeSidebar(){document.getElementById('mobDrawer').classList.remove('open');document.getElementById('mobOverlay').classList.remove('open');document.getElementById('hamburger').classList.remove('active');document.body.style.overflow='';}
 document.getElementById('hamburger').addEventListener('click',openSidebar);
