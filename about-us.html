@@ -280,6 +280,69 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 }
 .mob-svc-toggle.open .mob-caret{ transform:rotate(180deg); }
 
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+   ═══════════════════════════════════════════ */
+.will-anim{
+  opacity:0;
+  transform:translateY(28px);
+  will-change:opacity,transform;
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),
+             transform .65s cubic-bezier(.22,1,.36,1);
+}
+.will-anim.from-left{ transform:translateX(-28px); }
+.will-anim.from-right{ transform:translateX(28px); }
+.will-anim.from-scale{ transform:scale(0.94); }
+.will-anim.visible{
+  opacity:1;
+  transform:translateY(0) translateX(0) scale(1);
+  will-change:auto;
+}
+.will-anim.d1{transition-delay:.08s;}
+.will-anim.d2{transition-delay:.17s;}
+.will-anim.d3{transition-delay:.26s;}
+.will-anim.d4{transition-delay:.35s;}
+.will-anim.d5{transition-delay:.44s;}
+
+/* Hero entrance */
+.page-hero h1{animation:heroSlideUp .85s cubic-bezier(.22,1,.36,1) both;}
+.page-hero .page-hero-label{animation:heroSlideUp .85s .1s cubic-bezier(.22,1,.36,1) both;}
+.page-hero p{animation:heroSlideUp .85s .22s cubic-bezier(.22,1,.36,1) both;}
+.page-hero .hero-btns,.page-hero .cta-btns-hero{animation:heroSlideUp .85s .34s cubic-bezier(.22,1,.36,1) both;}
+@keyframes heroSlideUp{
+  from{opacity:0;transform:translateY(22px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Section title gold underline */
+.sec-title{position:relative;display:inline-block;}
+.sec-title::after{
+  content:'';position:absolute;bottom:-6px;left:0;
+  width:0;height:3px;background:var(--amber-mid);
+  border-radius:2px;transition:width .9s .35s cubic-bezier(.22,1,.36,1);
+}
+.sec-title.visible::after{width:56px;}
+
+/* Card hover lift */
+.value-card,.team-card,.ci{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s cubic-bezier(.22,1,.36,1);
+}
+.value-card:hover,.team-card:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(14,30,61,.13);}
+
+/* Stat number glow */
+.stat-num{transition:text-shadow .5s;}
+.stat.visible .stat-num{text-shadow:0 0 24px rgba(245,192,48,.35);}
+
+/* Nav scroll shadow */
+nav{transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
+
+@media(prefers-reduced-motion:reduce){
+  .will-anim,.will-anim.visible{opacity:1!important;transform:none!important;transition:none!important;}
+  .page-hero h1,.page-hero .page-hero-label,.page-hero p{animation:none!important;}
+  .sec-title::after{transition:none!important;width:56px!important;}
+}
 </style>
 </head>
 <body>
@@ -590,6 +653,72 @@ function closeSidebar(){document.getElementById('mobDrawer').classList.remove('o
 document.getElementById('hamburger').addEventListener('click',openSidebar);
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSidebar();});
 window.addEventListener('scroll',function(){document.querySelector('nav').classList.toggle('scrolled',window.scrollY>8);},{passive:true});
+
+/* ── Scroll reveal engine ── */
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.13,rootMargin:'0px 0px -30px 0px'});
+
+  function reg(sel,extra,delay){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      var r=el.getBoundingClientRect();
+      if(r.top<window.innerHeight&&r.bottom>0)return;
+      el.classList.add('will-anim');
+      if(extra)el.classList.add(extra);
+      if(delay)el.classList.add('d'+Math.min(i%5+1,5));
+      obs.observe(el);
+    });
+  }
+
+  reg('.sec-label');
+  reg('.sec-title');
+  reg('.sec-sub');
+  reg('.value-card','',true);
+  reg('.team-card','',true);
+  reg('.story-text','from-left');
+  reg('.story-img','from-right');
+  reg('.ci','',true);
+  reg('.stat','from-scale',true);
+  reg('.contact-form-card','from-right');
+  reg('.contact-info-col','from-left');
+  reg('.cta-section','from-scale');
+  reg('.online-badge');
+  reg('.contact-tagline');
+  reg('.cta-btns');
+
+  /* Nav scroll shadow */
+  var nav=document.querySelector('nav');
+  window.addEventListener('scroll',function(){
+    nav&&nav.classList.toggle('scrolled',window.scrollY>8);
+  },{passive:true});
+
+  /* Counter animation for stats */
+  function countUp(el,target,duration,suffix,isFloat){
+    var start=performance.now();
+    function step(now){
+      var p=Math.min((now-start)/duration,1);
+      var ease=1-Math.pow(1-p,3);
+      var val=isFloat?(target*ease).toFixed(1):Math.floor(target*ease);
+      el.textContent=val+suffix;
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var cObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target;
+        countUp(el,parseFloat(el.dataset.count),1800,el.dataset.suffix||'',el.dataset.float==='1');
+        cObs.unobserve(el);
+      }
+    });
+  },{threshold:0.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){cObs.observe(el);});
+})();
+
 </script>
 </body>
 </html>
