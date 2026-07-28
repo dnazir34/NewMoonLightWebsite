@@ -11,6 +11,26 @@
   gtag("config", "AW-11173017967");
   gtag("config", "GT-K5M9D6GB");
 </script>
+<!-- Event snippet for Click to call conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the
+chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-11173017967/v9H3CPH8pdccEO_y2s8p',
+      'value': 1.0,
+      'currency': 'AED',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -504,7 +524,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
 <body>
 
 <!-- FLOAT BUTTONS -->
-<a href="tel:+971523408703" class="float-call" aria-label="Call Moon Light Car Care"><i class="ph ph-phone-call"></i><span class="float-txt">Call Now</span></a>
+<a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="float-call" aria-label="Call Moon Light Car Care"><i class="ph ph-phone-call"></i><span class="float-txt">Call Now</span></a>
 <a href="https://wa.me/971523408703?text=Hello+Moon+Light+Car+Care!+I+need+car+repair+in+Abu+Dhabi." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp Moon Light Car Care"><i class="ph ph-whatsapp-logo"></i><span class="float-txt">WhatsApp</span></a>
 
 <!-- NAV -->
@@ -542,7 +562,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
     <span class="bat-wrap">
-      <a href="tel:+971523408703" class="nav-cta" aria-label="Call Moon Light Car Care now">
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="nav-cta" aria-label="Call Moon Light Car Care now">
         <i class="ph ph-wrench"></i>
         <span class="cta-txt">Call Now</span>
       </a>
@@ -585,7 +605,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us</a>
   </div>
   <div class="mob-ctas">
-    <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
+    <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
     <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
   </div>
   <div class="mob-drawer-foot">Moon Light Car Care · Al Danah Zone 1, Abu Dhabi</div>
@@ -645,7 +665,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
       <span class="hero-pill"><i class="ph ph-check-circle"></i> All Makes &amp; Models</span>
     </div>
     <div class="hero-btns">
-      <a href="tel:+971523408703" class="hero-btn"><i class="ph ph-phone-call"></i> Call Now</a>
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="hero-btn"><i class="ph ph-phone-call"></i> Call Now</a>
       <a href="https://wa.me/971523408703?text=Hello!%20I%20need%20car%20repair%20in%20Abu%20Dhabi." class="hero-btn-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
     </div>
   </div>
@@ -991,7 +1011,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
   <h2 class="cta-title">CAR PROBLEM?<br><em>CALL US NOW!</em></h2>
   <p class="cta-sub">Expert car repair at honest prices in Abu Dhabi. Open daily 8AM – 11:30PM.</p>
   <div class="cta-btns">
-    <a href="tel:+971523408703" class="cta-call">
+    <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="cta-call">
       <i class="ph ph-phone-call"></i> Call Now
     </a>
     <a href="https://wa.me/971523408703?text=Hello!%20I%20need%20car%20repair%20in%20Abu%20Dhabi." target="_blank" rel="noopener" class="cta-wa">
@@ -1043,7 +1063,7 @@ footer{background:var(--navy);padding:2.5rem 3rem;}
     </div>
     <div class="f-col">
       <h4>Contact</h4>
-      <a href="tel:+971523408703" itemprop="telephone"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" itemprop="telephone"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
       <a href="https://wa.me/971523408703" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
       <a href="mailto:info@moonlightautocare.com" itemprop="email"><i class="ph ph-envelope-simple"></i> info@moonlightautocare.com</a>
       <p itemprop="openingHours" content="Mo-Su 08:00-23:30"><i class="ph ph-clock"></i> Open Daily: 8am – 11:30pm</p>
