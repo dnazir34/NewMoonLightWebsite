@@ -18,6 +18,26 @@
   gtag('config', 'AW-11173017967');
   gtag('config', 'GT-K5M9D6GB');
 </script>
+<!-- Event snippet for Click to call conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the
+chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-11173017967/v9H3CPH8pdccEO_y2s8p',
+      'value': 1.0,
+      'currency': 'AED',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
 
 <title>Contact Us | Moon Light Car Care — Abu Dhabi +971 52 340 8703</title>
 <meta name="description" content="Contact Moon Light Car Care Abu Dhabi. Call or WhatsApp +971 52 340 8703 for car battery replacement, AC gas refilling and car repair. Open daily 8am – 11:30pm.">
@@ -367,7 +387,7 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 <body>
 
 <!-- FLOATING BUTTONS -->
-<a href="tel:+971523408703" class="float-call" aria-label="Call Moon Light Car Care">
+<a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="float-call" aria-label="Call Moon Light Car Care">
   <i class="ph ph-phone-call"></i>
   <span>Call Now</span>
 </a>
@@ -410,7 +430,7 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
   <div class="nav-actions">
     <a href="https://wa.me/971523408703" class="nav-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
     <span class="bat-wrap">
-      <a href="tel:+971523408703" class="nav-cta" aria-label="Call Now">
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="nav-cta" aria-label="Call Now">
         <i class="ph ph-phone-call"></i>
         <span class="cta-txt">Call Now</span>
       </a>
@@ -455,7 +475,7 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
     <a href="/contact-us" class="mob-nav-link" onclick="closeSidebar()"><span class="mob-nav-ico"><i class="ph ph-envelope"></i></span>Contact Us</a>
   </div>
   <div class="mob-ctas">
-    <a href="tel:+971523408703" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
+    <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="mob-cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
     <a href="https://wa.me/971523408703" class="mob-cta-wa" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp Us</a>
   </div>
   <div class="mob-drawer-foot">Moon Light Car Care · Al Danah Zone 1, Abu Dhabi</div>
@@ -475,7 +495,7 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
 
 <!-- QUICK CONTACT CARDS -->
 <div class="quick-contacts">
-  <a href="tel:+971523408703" class="qc-card">
+  <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="qc-card">
     <div class="qc-icon ph-icon"><i class="ph ph-phone-call"></i></div>
     <div class="qc-label">Call Us Anytime</div>
     <div class="qc-val">+971 52 340 8703</div>
@@ -508,12 +528,12 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
     <p class="contact-tagline">Need a car battery replaced, AC gas refilled or a car repair in Abu Dhabi? Describe your issue and we'll get back to you within minutes via WhatsApp or phone.</p>
 
     <div class="cta-btns">
-      <a href="tel:+971523408703" class="cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="cta-call"><i class="ph ph-phone-call"></i> Call Now</a>
       <a href="https://wa.me/971523408703?text=Hello%20Moon%20Light!" target="_blank" rel="noopener" class="cta-wa-big"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
     </div>
 
     <div class="ci-list">
-      <a href="tel:+971523408703" class="ci">
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');" class="ci">
         <div class="ci-icon ci-ph"><i class="ph ph-phone-call"></i></div>
         <div><div class="ci-lbl">Phone — Call Anytime</div><div class="ci-val">+971 52 340 8703</div></div>
       </a>
@@ -609,7 +629,7 @@ nav.scrolled{box-shadow:0 3px 20px rgba(14,30,61,.12);}
     </div>
     <div class="f-col">
       <h3>Contact</h3>
-      <a href="tel:+971523408703"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
+      <a href="tel:+971523408703" onclick="return gtag_report_conversion('tel:+971523408703');"><i class="ph ph-phone-call"></i> +971 52 340 8703</a>
       <a href="https://wa.me/971523408703" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
       <a href="mailto:info@moonlightautocare.com"><i class="ph ph-envelope-simple"></i> info@moonlightautocare.com</a>
       <p><i class="ph ph-clock"></i> Open Daily: 8am – 11:30pm</p>
